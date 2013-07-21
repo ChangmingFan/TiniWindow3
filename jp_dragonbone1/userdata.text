@@ -1,0 +1,7 @@
+This is the data file for the dragon bone user interface
+you may alter the data in this file
+but be careful to correctly close opening tags
+this file is overwritten each time the program is run
+therefore any notes you make will be erased and the order of data members change
+
+[start Name][end Name]

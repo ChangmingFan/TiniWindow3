@@ -1,0 +1,16 @@
+This is the data file for Tini window
+Manually editing this file is not recomended 
+If you do, be careful to correctly close opening tags
+This file is overwritten each time the program is run
+Therefore any notes you make will be erased
+
+[start Name][end Name]
+[start DataFileExtentions]*.text; *.txt; *.dat; *.bat; [end DataFileExtentions]
+[start TrickFileExtentions][end TrickFileExtentions]
+[start OpenFilePath]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.05 versions\002\tiniwindow 1.05.002.20081016D\tiniwindow 1.05.002.20081016D\jp_dragonbone1\bin\Debug[end OpenFilePath]
+[start SaveFilePath]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.05 versions\002\tiniwindow 1.05.002.20081016D\tiniwindow 1.05.002.20081016D\jp_dragonbone1\bin\Debug[end SaveFilePath]
+[start OpenTrickPath]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.05 versions\002\tiniwindow 1.05.002.20081016D\tiniwindow 1.05.002.20081016D\jp_dragonbone1\bin\Debug[end OpenTrickPath]
+[start SaveTrickPath]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.05 versions\002\tiniwindow 1.05.002.20081016D\tiniwindow 1.05.002.20081016D\jp_dragonbone1\bin\Debug[end SaveTrickPath]
+[start defaultfile]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.05 versions\002\tiniwindow 1.05.002.20081016D\tiniwindow 1.05.002.20081016D\jp_dragonbone1\bin\Debug/Test-Alpha-Num.text[end defaultfile]
+[start PictureUpLoadPath]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.06 versions\005\tiniwindow 1.06.005.curent\jp_dragonbone1\bin\Debug\Pictures[end PictureUpLoadPath]
+[start displayPatternPath]C:\Documents and Settings\J.P. Denoyer\Desktop\TiniLite\tiniwindow versions\1.06 versions\005\tiniwindow 1.06.005.curent\jp_dragonbone1\bin\Debug\configuration testing[end displayPatternPath]

@@ -1,0 +1,12 @@
+This is the settings file for TiniWindow
+Manually changinging the value in this file is not recomended
+This file is overwritten each time the program is run
+therefore any notes you make will be erased
+
+[keepuserdata]0 
+[askforname]0 
+[showwelcomeform]0 
+[opentrickfileaction]0 
+[openfilewithtoomanycharsaction]0 
+[showbeginnershelp]-1 
+[linelength]13 

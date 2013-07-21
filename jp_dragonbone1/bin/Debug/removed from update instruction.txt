@@ -1,0 +1,17 @@
+
+option('tiniwindowcommandline', "'button5':button:ok"); 
+
+
+
+(tiniwindowcommandline == "" and CallingApplication <> "")->
+{
+    option('no commandline', "'button5':button:ok");
+    run(CallingApplication, tiniwindowcommandline);
+   exit (0);
+}
+
+(CallingApplication = "")->
+{
+   option('no calling app', "'button5':button:ok");  
+   exit (1);
+}

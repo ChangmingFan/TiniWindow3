@@ -1,0 +1,599 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ED81E4CD-261F-40B4-B5F8-EF8648540066}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <StartupObject>jp_dragonbone1.My.MyApplication</StartupObject>
+    <RootNamespace>jp_dragonbone1</RootNamespace>
+    <AssemblyName>TiniWindow-3.01</AssemblyName>
+    <MyType>WindowsForms</MyType>
+    <ManifestCertificateThumbprint>514CA3BF694EED285D2FD44C58B73836A2E4F128</ManifestCertificateThumbprint>
+    <ManifestKeyFile>jp_dragonbone1_TemporaryKey.pfx</ManifestKeyFile>
+    <GenerateManifests>true</GenerateManifests>
+    <SignManifests>true</SignManifests>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <ApplicationIcon>Thick-Logo-small1117.ico</ApplicationIcon>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <PublishUrl>C:\Documents and Settings\J P\Desktop\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <AutorunEnabled>true</AutorunEnabled>
+    <ApplicationRevision>3</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DocumentationFile>TiniWindow-2.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+    <PlatformTarget>x86</PlatformTarget>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DocumentationFile>TiniWindow-2.xml</DocumentationFile>
+    <NoWarn>42016,41999,42017,42018,42019,42032,42036,42020,42021,42022,42353,42354,42355</NoWarn>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>My Project\app.manifest</ApplicationManifest>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib, Version=0.85.5.452, Culture=neutral, PublicKeyToken=1b03e6acf1164f73, processorArchitecture=MSIL" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.Data" />
+    <Import Include="System.Drawing" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="System.Windows.Forms" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="about_form.Designer.vb">
+      <DependentUpon>about_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="about_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="animatedimageviewer.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="attemptimporttrickswithunsupporteddata.Designer.vb">
+      <DependentUpon>attemptimporttrickswithunsupporteddata.vb</DependentUpon>
+    </Compile>
+    <Compile Include="attemptimporttrickswithunsupporteddata.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="attemptopenfilewithunsupporteddata.Designer.vb">
+      <DependentUpon>attemptopenfilewithunsupporteddata.vb</DependentUpon>
+    </Compile>
+    <Compile Include="attemptopenfilewithunsupporteddata.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="attempttogetunsuporteddatafromsign.Designer.vb">
+      <DependentUpon>attempttogetunsuporteddatafromsign.vb</DependentUpon>
+    </Compile>
+    <Compile Include="attempttogetunsuporteddatafromsign.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="attempttoopenfilewithunrecognizedtrickcodingversion.Designer.vb">
+      <DependentUpon>attempttoopenfilewithunrecognizedtrickcodingversion.vb</DependentUpon>
+    </Compile>
+    <Compile Include="attempttoopenfilewithunrecognizedtrickcodingversion.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="attepttoopentrickfileasdata_form.Designer.vb">
+      <DependentUpon>attepttoopentrickfileasdata_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="attepttoopentrickfileasdata_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="backgroung_worker_tracer_form.Designer.vb">
+      <DependentUpon>backgroung_worker_tracer_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="backgroung_worker_tracer_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="checkoutobject.vb" />
+    <Compile Include="colorpatterns.Designer.vb">
+      <DependentUpon>colorpatterns.vb</DependentUpon>
+    </Compile>
+    <Compile Include="colorpatterns.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ComportManager.vb" />
+    <Compile Include="compression.vb" />
+    <Compile Include="configure_internet.Designer.vb">
+      <DependentUpon>configure_internet.vb</DependentUpon>
+    </Compile>
+    <Compile Include="configure_internet.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmEnterMonitorMode.Designer.vb">
+      <DependentUpon>ConfirmEnterMonitorMode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmEnterMonitorMode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmImportTricksInMonitorMode.Designer.vb">
+      <DependentUpon>ConfirmImportTricksInMonitorMode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmImportTricksInMonitorMode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ConfirmOpenFileInMonitorMode.Designer.vb">
+      <DependentUpon>ConfirmOpenFileInMonitorMode.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ConfirmOpenFileInMonitorMode.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dialog_unable_to_display_combo_tab.Designer.vb">
+      <DependentUpon>dialog_unable_to_display_combo_tab.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialog_unable_to_display_combo_tab.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="entertextform.Designer.vb">
+      <DependentUpon>entertextform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="entertextform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="node.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="ProgressForm.Designer.vb">
+      <DependentUpon>ProgressForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ProgressForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="coordinates_functions.designer.vb">
+      <DependentUpon>coordinates_functions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="coordinates_functions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dialog_unable_to_display_easy_tab.Designer.vb">
+      <DependentUpon>dialog_unable_to_display_easy_tab.vb</DependentUpon>
+    </Compile>
+    <Compile Include="dialog_unable_to_display_easy_tab.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="enter_name_form.Designer.vb">
+      <DependentUpon>enter_name_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="enter_name_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="font_functions.Designer.vb">
+      <DependentUpon>font_functions.vb</DependentUpon>
+    </Compile>
+    <Compile Include="font_functions.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1.Designer.vb">
+      <DependentUpon>Form1.vb</DependentUpon>
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="jpstringfunctions.vb" />
+    <Compile Include="line_configuration.Designer.vb">
+      <DependentUpon>line_configuration.vb</DependentUpon>
+    </Compile>
+    <Compile Include="line_configuration.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LiteCard.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Mod_textboxfunctions.vb" />
+    <Compile Include="mymsg.designer.vb">
+      <DependentUpon>mymsg.vb</DependentUpon>
+    </Compile>
+    <Compile Include="mymsg.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="openoldfiledialog.Designer.vb">
+      <DependentUpon>openoldfiledialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="openoldfiledialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="operationfreazeupdialog.Designer.vb">
+      <DependentUpon>operationfreazeupdialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="operationfreazeupdialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="jpmsgform.Designer.vb">
+      <DependentUpon>jpmsgform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="jpmsgform.vb">
+    </Compile>
+    <Compile Include="RemoteSignsForm.Designer.vb">
+      <DependentUpon>RemoteSignsForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="RemoteSignsForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="show_trick_data.Designer.vb">
+      <DependentUpon>show_trick_data.vb</DependentUpon>
+    </Compile>
+    <Compile Include="show_trick_data.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SignConnection_Base.vb" />
+    <Compile Include="SignConnection_Broadcast.vb" />
+    <Compile Include="SignConnection_Internet_Via_Server.vb" />
+    <Compile Include="SignConnection_OneSign.vb" />
+    <Compile Include="SignConnection_OneSign_internet.vb" />
+    <Compile Include="SignConnection_OneSign_USB.vb" />
+    <Compile Include="SignConnection_OneSign_Wireless.vb" />
+    <Compile Include="SignConnectio_oneSign_wireless_Atmel.vb" />
+    <Compile Include="SimpleHash.vb" />
+    <Compile Include="TCP_Client.vb" />
+    <Compile Include="tcp_server.vb" />
+    <Compile Include="testform.Designer.vb">
+      <DependentUpon>testform.vb</DependentUpon>
+    </Compile>
+    <Compile Include="testform.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="tricks_disabled_form.Designer.vb">
+      <DependentUpon>tricks_disabled_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="tricks_disabled_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="help.Designer.vb">
+      <DependentUpon>help.vb</DependentUpon>
+    </Compile>
+    <Compile Include="help.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="oldprogress_form.Designer.vb">
+      <DependentUpon>oldprogress_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="oldprogress_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="reestablish_communication_form.Designer.vb">
+      <DependentUpon>reestablish_communication_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="reestablish_communication_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="select_comport_form.Designer.vb">
+      <DependentUpon>select_comport_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="select_comport_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="settings_form.Designer.vb">
+      <DependentUpon>settings_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="settings_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="simulator_form.Designer.vb">
+      <DependentUpon>simulator_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="simulator_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UserManuelViewer.Designer.vb">
+      <DependentUpon>UserManuelViewer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="UserManuelViewer.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="utilities.Designer.vb">
+      <DependentUpon>utilities.vb</DependentUpon>
+    </Compile>
+    <Compile Include="utilities.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="welcome_form.Designer.vb">
+      <DependentUpon>welcome_form.vb</DependentUpon>
+    </Compile>
+    <Compile Include="welcome_form.vb">
+      <SubType>Form</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="about_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>about_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="attemptimporttrickswithunsupporteddata.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>attemptimporttrickswithunsupporteddata.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="attemptopenfilewithunsupporteddata.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>attemptopenfilewithunsupporteddata.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="attempttogetunsuporteddatafromsign.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>attempttogetunsuporteddatafromsign.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="attempttoopenfilewithunrecognizedtrickcodingversion.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>attempttoopenfilewithunrecognizedtrickcodingversion.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="attepttoopentrickfileasdata_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>attepttoopentrickfileasdata_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="backgroung_worker_tracer_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>backgroung_worker_tracer_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="colorpatterns.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>colorpatterns.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="configure_internet.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>configure_internet.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmEnterMonitorMode.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConfirmEnterMonitorMode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmImportTricksInMonitorMode.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConfirmImportTricksInMonitorMode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ConfirmOpenFileInMonitorMode.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ConfirmOpenFileInMonitorMode.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dialog_unable_to_display_combo_tab.resx">
+      <DependentUpon>dialog_unable_to_display_combo_tab.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="entertextform.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>entertextform.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ProgressForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ProgressForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="coordinates_functions.resx">
+      <DependentUpon>coordinates_functions.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dialog_unable_to_display_easy_tab.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>dialog_unable_to_display_easy_tab.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="enter_name_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>enter_name_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="font_functions.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>font_functions.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Form1.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Form1.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="line_configuration.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>line_configuration.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="mymsg.resx">
+      <DependentUpon>mymsg.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="openoldfiledialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>openoldfiledialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="operationfreazeupdialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>operationfreazeupdialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="jpmsgform.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>jpmsgform.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RemoteSignsForm.resx">
+      <DependentUpon>RemoteSignsForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="show_trick_data.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>show_trick_data.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="testform.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>testform.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="tricks_disabled_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>tricks_disabled_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="help.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>help.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="oldprogress_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>oldprogress_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="reestablish_communication_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>reestablish_communication_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="select_comport_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>select_comport_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="settings_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>settings_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="simulator_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>simulator_form.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UserManuelViewer.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>UserManuelViewer.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="utilities.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>utilities.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="welcome_form.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>welcome_form.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="help.text" />
+    <None Include="jp_dragonbone1_TemporaryKey.pfx" />
+    <None Include="My Project\app.manifest" />
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="settings.text" />
+    <None Include="userdata.text" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.2.0">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 2.0</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="bin\Debug\corp-logo-93KB.jpg" />
+    <None Include="Resources\Logo-corp-82Kb.jpg" />
+    <None Include="Resources\Logo-corp-82Kb1.jpg" />
+    <None Include="snail bk-icon-2 k.gif" />
+    <None Include="Resources\horse-icon-2k.gif" />
+    <None Include="Resources\line-icon.gif" />
+    <None Include="Resources\v-line-icon.gif" />
+    <None Include="Resources\U-arch-icon.gif" />
+    <None Include="Resources\may2008 001.JPG" />
+    <None Include="Resources\hand move icon1.jpg" />
+    <None Include="Resources\magnify glass icon0.jpg" />
+    <None Include="Resources\horse-icon-2k.tif" />
+    <None Include="Resources\Text-bakground.tif" />
+    <None Include="Resources\Text-bakground1.tif" />
+    <None Include="Resources\Text-bkg.gif" />
+    <None Include="Resources\Text-bkg.jpg" />
+    <None Include="Resources\blackboard.jpg" />
+    <None Include="Resources\dog1.png" />
+    <None Include="Resources\wood069.gif" />
+    <None Include="Resources\wood0691.gif" />
+    <None Include="Resources\TiniWindowUserManu_Page_1.png" />
+    <None Include="Resources\TiniWindowUserManu_Page_1.jpg" />
+    <Content Include="Thick-Logo-small1117.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="AcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+    <COMReference Include="AxAcroPDFLib">
+      <Guid>{05BFD3F1-6319-4F30-B752-C7A22889BCC4}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>0</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>aximp</WrapperTool>
+      <Isolated>False</Isolated>
+    </COMReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

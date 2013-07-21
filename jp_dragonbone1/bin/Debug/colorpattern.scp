@@ -1,0 +1,26 @@
+This is an exported Color pattern file
+Manually editing this file is not recomended 
+If you do, be careful that opening and closing tags are correct 
+
+This file is frequently overwritten by TiniWindow
+
+[start pattername0]All Red[end pattername0]
+[start pattername1]All Green[end pattername1]
+[start pattername2]All Blude[end pattername2]
+[start pattername3]All White[end pattername3]
+[start pattername4]RGWBRGWBRG[end pattername4]
+[start pattername5]RGRGRGRGRG[end pattername5]
+[start pattername6]RGGRWWRBBR[end pattername6]
+[start pattername7]RRGWWRRGWW[end pattername7]
+[start pattername8]WWGGWGWWGG[end pattername8]
+[start pattername9]WBRWWBBRR[end pattername9]
+[start patterndef0]RRRRRRRRRR[end patterndef0]
+[start patterndef1]GGGGGGGGGG[end patterndef1]
+[start patterndef2][end patterndef2]
+[start patterndef3]WWWWWWWWWW[end patterndef3]
+[start patterndef4]RGWBRGWBRG[end patterndef4]
+[start patterndef5]RGRGRGRGRG[end patterndef5]
+[start patterndef6]RGGRWWRBBR[end patterndef6]
+[start patterndef7]RRGWWRRGWW[end patterndef7]
+[start patterndef8]WWGGWGWWGG[end patterndef8]
+[start patterndef9]WBRWWBBRR[end patterndef9]

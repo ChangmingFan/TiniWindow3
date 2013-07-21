@@ -1,0 +1,8 @@
+This is the settings file for the dragon bone user interface
+you may change the settings in this file
+this file is overwritten each time the program is run
+therefore any notes you make will be erased and the order of settings may change
+
+[keepuserdata]TRUE
+[sendtodeviceastype]FALS
+[askforname]TRUE

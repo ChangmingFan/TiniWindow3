@@ -1,0 +1,498 @@
+<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+Partial Class Form1
+    Inherits System.Windows.Forms.Form
+
+    'Form overrides dispose to clean up the component list.
+    <System.Diagnostics.DebuggerNonUserCode()> _
+    Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+        If disposing AndAlso components IsNot Nothing Then
+            components.Dispose()
+        End If
+        MyBase.Dispose(disposing)
+    End Sub
+
+    'Required by the Windows Form Designer
+    Private components As System.ComponentModel.IContainer
+
+    'NOTE: The following procedure is required by the Windows Form Designer
+    'It can be modified using the Windows Form Designer.  
+    'Do not modify it using the code editor.
+    <System.Diagnostics.DebuggerStepThrough()> _
+    Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Form1))
+        Me.TB1 = New System.Windows.Forms.TextBox
+        Me.TB2 = New System.Windows.Forms.TextBox
+        Me.TB3 = New System.Windows.Forms.TextBox
+        Me.TB4 = New System.Windows.Forms.TextBox
+        Me.TB5 = New System.Windows.Forms.TextBox
+        Me.TB6 = New System.Windows.Forms.TextBox
+        Me.TB7 = New System.Windows.Forms.TextBox
+        Me.TB8 = New System.Windows.Forms.TextBox
+        Me.TB9 = New System.Windows.Forms.TextBox
+        Me.TB10 = New System.Windows.Forms.TextBox
+        Me.But_read_file = New System.Windows.Forms.Button
+        Me.But_write_file = New System.Windows.Forms.Button
+        Me.But_read_device = New System.Windows.Forms.Button
+        Me.But_write_device = New System.Windows.Forms.Button
+        Me.But_write_new_file = New System.Windows.Forms.Button
+        Me.SFD = New System.Windows.Forms.SaveFileDialog
+        Me.OFD = New System.Windows.Forms.OpenFileDialog
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.Label5 = New System.Windows.Forms.Label
+        Me.Label6 = New System.Windows.Forms.Label
+        Me.Label7 = New System.Windows.Forms.Label
+        Me.Label8 = New System.Windows.Forms.Label
+        Me.Label9 = New System.Windows.Forms.Label
+        Me.Label10 = New System.Windows.Forms.Label
+        Me.But_comport = New System.Windows.Forms.Button
+        Me.PictureBox1 = New System.Windows.Forms.PictureBox
+        Me.Panel1 = New System.Windows.Forms.Panel
+        Me.Label12 = New System.Windows.Forms.Label
+        Me.Label11 = New System.Windows.Forms.Label
+        Me.Label13 = New System.Windows.Forms.Label
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.Panel1.SuspendLayout()
+        Me.SuspendLayout()
+        '
+        'TB1
+        '
+        Me.TB1.BackColor = System.Drawing.Color.White
+        Me.TB1.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB1.ForeColor = System.Drawing.Color.Blue
+        Me.TB1.Location = New System.Drawing.Point(157, 44)
+        Me.TB1.MaxLength = 20
+        Me.TB1.Name = "TB1"
+        Me.TB1.Size = New System.Drawing.Size(210, 26)
+        Me.TB1.TabIndex = 0
+        '
+        'TB2
+        '
+        Me.TB2.BackColor = System.Drawing.Color.White
+        Me.TB2.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB2.ForeColor = System.Drawing.Color.Blue
+        Me.TB2.Location = New System.Drawing.Point(157, 70)
+        Me.TB2.MaxLength = 20
+        Me.TB2.Name = "TB2"
+        Me.TB2.Size = New System.Drawing.Size(210, 26)
+        Me.TB2.TabIndex = 1
+        '
+        'TB3
+        '
+        Me.TB3.BackColor = System.Drawing.Color.White
+        Me.TB3.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB3.ForeColor = System.Drawing.Color.Blue
+        Me.TB3.Location = New System.Drawing.Point(157, 96)
+        Me.TB3.MaxLength = 20
+        Me.TB3.Name = "TB3"
+        Me.TB3.Size = New System.Drawing.Size(210, 26)
+        Me.TB3.TabIndex = 2
+        '
+        'TB4
+        '
+        Me.TB4.BackColor = System.Drawing.Color.White
+        Me.TB4.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB4.ForeColor = System.Drawing.Color.Blue
+        Me.TB4.Location = New System.Drawing.Point(157, 122)
+        Me.TB4.MaxLength = 20
+        Me.TB4.Name = "TB4"
+        Me.TB4.Size = New System.Drawing.Size(210, 26)
+        Me.TB4.TabIndex = 3
+        '
+        'TB5
+        '
+        Me.TB5.BackColor = System.Drawing.Color.White
+        Me.TB5.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB5.ForeColor = System.Drawing.Color.Blue
+        Me.TB5.Location = New System.Drawing.Point(157, 148)
+        Me.TB5.MaxLength = 20
+        Me.TB5.Name = "TB5"
+        Me.TB5.Size = New System.Drawing.Size(210, 26)
+        Me.TB5.TabIndex = 4
+        '
+        'TB6
+        '
+        Me.TB6.BackColor = System.Drawing.Color.White
+        Me.TB6.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB6.ForeColor = System.Drawing.Color.Blue
+        Me.TB6.Location = New System.Drawing.Point(157, 174)
+        Me.TB6.MaxLength = 20
+        Me.TB6.Name = "TB6"
+        Me.TB6.Size = New System.Drawing.Size(210, 26)
+        Me.TB6.TabIndex = 5
+        '
+        'TB7
+        '
+        Me.TB7.BackColor = System.Drawing.Color.White
+        Me.TB7.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB7.ForeColor = System.Drawing.Color.Blue
+        Me.TB7.Location = New System.Drawing.Point(157, 200)
+        Me.TB7.MaxLength = 20
+        Me.TB7.Name = "TB7"
+        Me.TB7.Size = New System.Drawing.Size(210, 26)
+        Me.TB7.TabIndex = 6
+        '
+        'TB8
+        '
+        Me.TB8.BackColor = System.Drawing.Color.White
+        Me.TB8.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB8.ForeColor = System.Drawing.Color.Blue
+        Me.TB8.Location = New System.Drawing.Point(157, 226)
+        Me.TB8.MaxLength = 20
+        Me.TB8.Name = "TB8"
+        Me.TB8.Size = New System.Drawing.Size(210, 26)
+        Me.TB8.TabIndex = 7
+        '
+        'TB9
+        '
+        Me.TB9.BackColor = System.Drawing.Color.White
+        Me.TB9.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB9.ForeColor = System.Drawing.Color.Blue
+        Me.TB9.Location = New System.Drawing.Point(157, 252)
+        Me.TB9.MaxLength = 20
+        Me.TB9.Name = "TB9"
+        Me.TB9.Size = New System.Drawing.Size(210, 26)
+        Me.TB9.TabIndex = 8
+        '
+        'TB10
+        '
+        Me.TB10.BackColor = System.Drawing.Color.White
+        Me.TB10.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.TB10.ForeColor = System.Drawing.Color.Blue
+        Me.TB10.Location = New System.Drawing.Point(157, 278)
+        Me.TB10.MaxLength = 20
+        Me.TB10.Name = "TB10"
+        Me.TB10.Size = New System.Drawing.Size(210, 26)
+        Me.TB10.TabIndex = 9
+        '
+        'But_read_file
+        '
+        Me.But_read_file.BackColor = System.Drawing.Color.Yellow
+        Me.But_read_file.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.But_read_file.ForeColor = System.Drawing.Color.Black
+        Me.But_read_file.Location = New System.Drawing.Point(12, 50)
+        Me.But_read_file.Name = "But_read_file"
+        Me.But_read_file.Size = New System.Drawing.Size(92, 39)
+        Me.But_read_file.TabIndex = 10
+        Me.But_read_file.Text = "Open"
+        Me.But_read_file.UseVisualStyleBackColor = False
+        '
+        'But_write_file
+        '
+        Me.But_write_file.BackColor = System.Drawing.Color.Yellow
+        Me.But_write_file.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.But_write_file.ForeColor = System.Drawing.Color.Black
+        Me.But_write_file.Location = New System.Drawing.Point(12, 103)
+        Me.But_write_file.Name = "But_write_file"
+        Me.But_write_file.Size = New System.Drawing.Size(92, 39)
+        Me.But_write_file.TabIndex = 11
+        Me.But_write_file.Text = "Save"
+        Me.But_write_file.UseVisualStyleBackColor = False
+        '
+        'But_read_device
+        '
+        Me.But_read_device.BackColor = System.Drawing.Color.Yellow
+        Me.But_read_device.Enabled = False
+        Me.But_read_device.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.But_read_device.ForeColor = System.Drawing.Color.Black
+        Me.But_read_device.Location = New System.Drawing.Point(12, 209)
+        Me.But_read_device.Name = "But_read_device"
+        Me.But_read_device.Size = New System.Drawing.Size(92, 39)
+        Me.But_read_device.TabIndex = 12
+        Me.But_read_device.Text = "Get From Controller"
+        Me.But_read_device.UseVisualStyleBackColor = False
+        '
+        'But_write_device
+        '
+        Me.But_write_device.BackColor = System.Drawing.Color.Yellow
+        Me.But_write_device.Enabled = False
+        Me.But_write_device.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.But_write_device.ForeColor = System.Drawing.Color.Black
+        Me.But_write_device.Location = New System.Drawing.Point(12, 262)
+        Me.But_write_device.Name = "But_write_device"
+        Me.But_write_device.Size = New System.Drawing.Size(92, 39)
+        Me.But_write_device.TabIndex = 13
+        Me.But_write_device.Text = "Save To Controller"
+        Me.But_write_device.UseVisualStyleBackColor = False
+        '
+        'But_write_new_file
+        '
+        Me.But_write_new_file.BackColor = System.Drawing.Color.Yellow
+        Me.But_write_new_file.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.But_write_new_file.ForeColor = System.Drawing.Color.Black
+        Me.But_write_new_file.Location = New System.Drawing.Point(12, 156)
+        Me.But_write_new_file.Name = "But_write_new_file"
+        Me.But_write_new_file.Size = New System.Drawing.Size(92, 39)
+        Me.But_write_new_file.TabIndex = 14
+        Me.But_write_new_file.Text = "Save As"
+        Me.But_write_new_file.UseVisualStyleBackColor = False
+        '
+        'SFD
+        '
+        Me.SFD.FileName = "SelectFileDialog"
+        '
+        'OFD
+        '
+        Me.OFD.FileName = "OpenFileDialog1"
+        '
+        'Label1
+        '
+        Me.Label1.AutoSize = True
+        Me.Label1.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label1.Location = New System.Drawing.Point(112, 52)
+        Me.Label1.Name = "Label1"
+        Me.Label1.Size = New System.Drawing.Size(38, 13)
+        Me.Label1.TabIndex = 15
+        Me.Label1.Text = "Line1"
+        '
+        'Label2
+        '
+        Me.Label2.AutoSize = True
+        Me.Label2.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label2.Location = New System.Drawing.Point(113, 78)
+        Me.Label2.Name = "Label2"
+        Me.Label2.Size = New System.Drawing.Size(38, 13)
+        Me.Label2.TabIndex = 16
+        Me.Label2.Text = "Line2"
+        '
+        'Label3
+        '
+        Me.Label3.AutoSize = True
+        Me.Label3.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label3.Location = New System.Drawing.Point(113, 104)
+        Me.Label3.Name = "Label3"
+        Me.Label3.Size = New System.Drawing.Size(38, 13)
+        Me.Label3.TabIndex = 18
+        Me.Label3.Text = "Line3"
+        '
+        'Label4
+        '
+        Me.Label4.AutoSize = True
+        Me.Label4.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label4.Location = New System.Drawing.Point(113, 130)
+        Me.Label4.Name = "Label4"
+        Me.Label4.Size = New System.Drawing.Size(38, 13)
+        Me.Label4.TabIndex = 17
+        Me.Label4.Text = "Line4"
+        '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label5.Location = New System.Drawing.Point(113, 156)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(38, 13)
+        Me.Label5.TabIndex = 19
+        Me.Label5.Text = "Line5"
+        '
+        'Label6
+        '
+        Me.Label6.AutoSize = True
+        Me.Label6.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label6.Location = New System.Drawing.Point(113, 182)
+        Me.Label6.Name = "Label6"
+        Me.Label6.Size = New System.Drawing.Size(38, 13)
+        Me.Label6.TabIndex = 24
+        Me.Label6.Text = "Line6"
+        '
+        'Label7
+        '
+        Me.Label7.AutoSize = True
+        Me.Label7.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label7.Location = New System.Drawing.Point(113, 208)
+        Me.Label7.Name = "Label7"
+        Me.Label7.Size = New System.Drawing.Size(38, 13)
+        Me.Label7.TabIndex = 23
+        Me.Label7.Text = "Line7"
+        '
+        'Label8
+        '
+        Me.Label8.AutoSize = True
+        Me.Label8.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label8.Location = New System.Drawing.Point(113, 234)
+        Me.Label8.Name = "Label8"
+        Me.Label8.Size = New System.Drawing.Size(38, 13)
+        Me.Label8.TabIndex = 22
+        Me.Label8.Text = "Line8"
+        '
+        'Label9
+        '
+        Me.Label9.AutoSize = True
+        Me.Label9.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label9.Location = New System.Drawing.Point(113, 257)
+        Me.Label9.Name = "Label9"
+        Me.Label9.Size = New System.Drawing.Size(38, 13)
+        Me.Label9.TabIndex = 21
+        Me.Label9.Text = "Line9"
+        '
+        'Label10
+        '
+        Me.Label10.AutoSize = True
+        Me.Label10.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label10.Location = New System.Drawing.Point(112, 283)
+        Me.Label10.Name = "Label10"
+        Me.Label10.Size = New System.Drawing.Size(45, 13)
+        Me.Label10.TabIndex = 20
+        Me.Label10.Text = "Line10"
+        '
+        'But_comport
+        '
+        Me.But_comport.BackColor = System.Drawing.Color.Lime
+        Me.But_comport.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.But_comport.Location = New System.Drawing.Point(306, 3)
+        Me.But_comport.Name = "But_comport"
+        Me.But_comport.Size = New System.Drawing.Size(61, 40)
+        Me.But_comport.TabIndex = 25
+        Me.But_comport.Text = "Select Comport"
+        Me.But_comport.UseVisualStyleBackColor = False
+        '
+        'PictureBox1
+        '
+        Me.PictureBox1.BackColor = System.Drawing.Color.White
+        Me.PictureBox1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.PictureBox1.Image = CType(resources.GetObject("PictureBox1.Image"), System.Drawing.Image)
+        Me.PictureBox1.Location = New System.Drawing.Point(5, 5)
+        Me.PictureBox1.Margin = New System.Windows.Forms.Padding(5)
+        Me.PictureBox1.Name = "PictureBox1"
+        Me.PictureBox1.Padding = New System.Windows.Forms.Padding(3)
+        Me.PictureBox1.Size = New System.Drawing.Size(341, 68)
+        Me.PictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.PictureBox1.TabIndex = 26
+        Me.PictureBox1.TabStop = False
+        '
+        'Panel1
+        '
+        Me.Panel1.BackColor = System.Drawing.Color.Yellow
+        Me.Panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Panel1.Controls.Add(Me.PictureBox1)
+        Me.Panel1.Location = New System.Drawing.Point(12, 308)
+        Me.Panel1.Name = "Panel1"
+        Me.Panel1.Size = New System.Drawing.Size(355, 82)
+        Me.Panel1.TabIndex = 27
+        '
+        'Label12
+        '
+        Me.Label12.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                    Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.Label12.BackColor = System.Drawing.Color.Yellow
+        Me.Label12.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label12.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.Label12.Font = New System.Drawing.Font("Microsoft Sans Serif", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label12.ForeColor = System.Drawing.Color.Red
+        Me.Label12.Location = New System.Drawing.Point(19, 3)
+        Me.Label12.Margin = New System.Windows.Forms.Padding(3)
+        Me.Label12.Name = "Label12"
+        Me.Label12.Padding = New System.Windows.Forms.Padding(0, 4, 4, 4)
+        Me.Label12.Size = New System.Drawing.Size(288, 37)
+        Me.Label12.TabIndex = 29
+        Me.Label12.Text = "    TiniPokerLite Text Editor    "
+        Me.Label12.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label11
+        '
+        Me.Label11.BackColor = System.Drawing.Color.Red
+        Me.Label11.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label11.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label11.ForeColor = System.Drawing.Color.Blue
+        Me.Label11.Location = New System.Drawing.Point(12, 393)
+        Me.Label11.Name = "Label11"
+        Me.Label11.Size = New System.Drawing.Size(53, 46)
+        Me.Label11.TabIndex = 30
+        Me.Label11.Text = "Mission"
+        Me.Label11.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Label13
+        '
+        Me.Label13.BackColor = System.Drawing.Color.White
+        Me.Label13.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D
+        Me.Label13.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.Label13.Location = New System.Drawing.Point(68, 393)
+        Me.Label13.Name = "Label13"
+        Me.Label13.Size = New System.Drawing.Size(299, 46)
+        Me.Label13.TabIndex = 31
+        Me.Label13.Text = "To satisfy people's ever increasing needs " & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "of lighting through new product, new " & _
+            "service" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & " and the new art of TiniLite"
+        Me.Label13.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+        '
+        'Form1
+        '
+        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackColor = System.Drawing.Color.PaleTurquoise
+        Me.ClientSize = New System.Drawing.Size(379, 456)
+        Me.Controls.Add(Me.Label13)
+        Me.Controls.Add(Me.Label11)
+        Me.Controls.Add(Me.Label12)
+        Me.Controls.Add(Me.Panel1)
+        Me.Controls.Add(Me.But_comport)
+        Me.Controls.Add(Me.Label6)
+        Me.Controls.Add(Me.Label7)
+        Me.Controls.Add(Me.Label8)
+        Me.Controls.Add(Me.Label9)
+        Me.Controls.Add(Me.Label10)
+        Me.Controls.Add(Me.Label5)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.But_write_new_file)
+        Me.Controls.Add(Me.But_write_device)
+        Me.Controls.Add(Me.But_read_device)
+        Me.Controls.Add(Me.But_write_file)
+        Me.Controls.Add(Me.But_read_file)
+        Me.Controls.Add(Me.TB10)
+        Me.Controls.Add(Me.TB9)
+        Me.Controls.Add(Me.TB8)
+        Me.Controls.Add(Me.TB7)
+        Me.Controls.Add(Me.TB6)
+        Me.Controls.Add(Me.TB5)
+        Me.Controls.Add(Me.TB4)
+        Me.Controls.Add(Me.TB3)
+        Me.Controls.Add(Me.TB2)
+        Me.Controls.Add(Me.TB1)
+        Me.Name = "Form1"
+        Me.Text = "TiniPokerLite Editor"
+        CType(Me.PictureBox1, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.Panel1.ResumeLayout(False)
+        Me.ResumeLayout(False)
+        Me.PerformLayout()
+
+    End Sub
+    Friend WithEvents TB1 As System.Windows.Forms.TextBox
+    Friend WithEvents TB2 As System.Windows.Forms.TextBox
+    Friend WithEvents TB3 As System.Windows.Forms.TextBox
+    Friend WithEvents TB4 As System.Windows.Forms.TextBox
+    Friend WithEvents TB5 As System.Windows.Forms.TextBox
+    Friend WithEvents TB6 As System.Windows.Forms.TextBox
+    Friend WithEvents TB7 As System.Windows.Forms.TextBox
+    Friend WithEvents TB8 As System.Windows.Forms.TextBox
+    Friend WithEvents TB9 As System.Windows.Forms.TextBox
+    Friend WithEvents TB10 As System.Windows.Forms.TextBox
+    Friend WithEvents But_read_file As System.Windows.Forms.Button
+    Friend WithEvents But_write_file As System.Windows.Forms.Button
+    Friend WithEvents But_read_device As System.Windows.Forms.Button
+    Friend WithEvents But_write_device As System.Windows.Forms.Button
+    Friend WithEvents But_write_new_file As System.Windows.Forms.Button
+    Friend WithEvents SFD As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents OFD As System.Windows.Forms.OpenFileDialog
+    Friend WithEvents Label1 As System.Windows.Forms.Label
+    Friend WithEvents Label2 As System.Windows.Forms.Label
+    Friend WithEvents Label3 As System.Windows.Forms.Label
+    Friend WithEvents Label4 As System.Windows.Forms.Label
+    Friend WithEvents Label5 As System.Windows.Forms.Label
+    Friend WithEvents Label6 As System.Windows.Forms.Label
+    Friend WithEvents Label7 As System.Windows.Forms.Label
+    Friend WithEvents Label8 As System.Windows.Forms.Label
+    Friend WithEvents Label9 As System.Windows.Forms.Label
+    Friend WithEvents Label10 As System.Windows.Forms.Label
+    Friend WithEvents But_comport As System.Windows.Forms.Button
+    Friend WithEvents PictureBox1 As System.Windows.Forms.PictureBox
+    Friend WithEvents Panel1 As System.Windows.Forms.Panel
+    Friend WithEvents Label12 As System.Windows.Forms.Label
+    Friend WithEvents Label11 As System.Windows.Forms.Label
+    Friend WithEvents Label13 As System.Windows.Forms.Label
+
+End Class

@@ -1,0 +1,14 @@
+This is the data file for Tini window
+Manually editing this file is not recomended 
+If you do, be careful to correctly close opening tags
+This file is overwritten each time the program is run
+Therefore any notes you make will be erased
+
+[start Name][end Name]
+[start DataFileExtentions]*.text; *.txt; *.dat; *.bat; [end DataFileExtentions]
+[start TrickFileExtentions]*.trk; *.trick; [end TrickFileExtentions]
+[start OpenFilePath]C:\Users\Omax\Desktop\TiniLite\tiniwindow versions\6characterversion\version 1.01.004\tiniwindow 6 char current\jp_dragonbone1\bin\Debug\sample files[end OpenFilePath]
+[start SaveFilePath]C:\Users\Omax\Desktop\TiniLite\tiniwindow versions\6characterversion\version 1.01.003\tiniwindow 6 char current\jp_dragonbone1\bin\Debug[end SaveFilePath]
+[start OpenTrickPath]C:\Users\Omax\Desktop\TiniLite\tiniwindow versions\6characterversion\version 1.01.003\tiniwindow 6 char current\jp_dragonbone1\bin\Debug[end OpenTrickPath]
+[start SaveTrickPath]C:\Users\Omax\Desktop\TiniLite\tiniwindow versions\6characterversion\version 1.01.003\tiniwindow 6 char current\jp_dragonbone1\bin\Debug[end SaveTrickPath]
+[start defaultfile]C:\Users\Omax\Desktop\TiniLite\tiniwindow versions\6characterversion\version 1.01.004\tiniwindow 6 char current\jp_dragonbone1\bin\Debug\open\tttt.text[end defaultfile]

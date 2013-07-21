@@ -1,0 +1,6 @@
+This directory contains file that are neccesary for Tiniwindow to run correctly. 
+
+DO NOT MODIFY THE CONTENTS UNLESS SPECIFICALLY TOLD TO DO SO BY TECHNICAL SUPPORT.
+
+if you ignore this warnig, TiniWindow might stop working
+
