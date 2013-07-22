@@ -23,9 +23,9 @@ Partial Class RemoteSignsForm
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
         Me.CB_remoteSignList = New System.Windows.Forms.ComboBox()
-        Me.TextBox1 = New System.Windows.Forms.TextBox()
-        Me.TextBox2 = New System.Windows.Forms.TextBox()
-        Me.TextBox3 = New System.Windows.Forms.TextBox()
+        Me.TB_signname = New System.Windows.Forms.TextBox()
+        Me.TB_username = New System.Windows.Forms.TextBox()
+        Me.TB_password = New System.Windows.Forms.TextBox()
         Me.Label1 = New System.Windows.Forms.Label()
         Me.Label2 = New System.Windows.Forms.Label()
         Me.Label3 = New System.Windows.Forms.Label()
@@ -35,6 +35,7 @@ Partial Class RemoteSignsForm
         Me.But_cancel = New System.Windows.Forms.Button()
         Me.But_newsign = New System.Windows.Forms.Button()
         Me.But_deleteSign = New System.Windows.Forms.Button()
+        Me.CB_promptforpassword = New System.Windows.Forms.CheckBox()
         Me.SuspendLayout()
         '
         'CB_remoteSignList
@@ -46,31 +47,32 @@ Partial Class RemoteSignsForm
         Me.CB_remoteSignList.TabIndex = 0
         Me.CB_remoteSignList.Text = "select sign to edit"
         '
-        'TextBox1
+        'TB_signname
         '
-        Me.TextBox1.Location = New System.Drawing.Point(2, 62)
-        Me.TextBox1.Name = "TextBox1"
-        Me.TextBox1.Size = New System.Drawing.Size(177, 20)
-        Me.TextBox1.TabIndex = 1
+        Me.TB_signname.Location = New System.Drawing.Point(2, 62)
+        Me.TB_signname.Name = "TB_signname"
+        Me.TB_signname.Size = New System.Drawing.Size(177, 20)
+        Me.TB_signname.TabIndex = 1
         '
-        'TextBox2
+        'TB_username
         '
-        Me.TextBox2.Location = New System.Drawing.Point(2, 108)
-        Me.TextBox2.Name = "TextBox2"
-        Me.TextBox2.Size = New System.Drawing.Size(177, 20)
-        Me.TextBox2.TabIndex = 2
+        Me.TB_username.Location = New System.Drawing.Point(2, 108)
+        Me.TB_username.Name = "TB_username"
+        Me.TB_username.Size = New System.Drawing.Size(177, 20)
+        Me.TB_username.TabIndex = 2
         '
-        'TextBox3
+        'TB_password
         '
-        Me.TextBox3.Location = New System.Drawing.Point(2, 159)
-        Me.TextBox3.Name = "TextBox3"
-        Me.TextBox3.Size = New System.Drawing.Size(177, 20)
-        Me.TextBox3.TabIndex = 3
+        Me.TB_password.Enabled = False
+        Me.TB_password.Location = New System.Drawing.Point(2, 159)
+        Me.TB_password.Name = "TB_password"
+        Me.TB_password.Size = New System.Drawing.Size(177, 20)
+        Me.TB_password.TabIndex = 3
         '
         'Label1
         '
         Me.Label1.AutoSize = True
-        Me.Label1.Location = New System.Drawing.Point(217, 68)
+        Me.Label1.Location = New System.Drawing.Point(188, 68)
         Me.Label1.Name = "Label1"
         Me.Label1.Size = New System.Drawing.Size(59, 13)
         Me.Label1.TabIndex = 4
@@ -79,7 +81,7 @@ Partial Class RemoteSignsForm
         'Label2
         '
         Me.Label2.AutoSize = True
-        Me.Label2.Location = New System.Drawing.Point(217, 115)
+        Me.Label2.Location = New System.Drawing.Point(187, 115)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(60, 13)
         Me.Label2.TabIndex = 5
@@ -88,7 +90,7 @@ Partial Class RemoteSignsForm
         'Label3
         '
         Me.Label3.AutoSize = True
-        Me.Label3.Location = New System.Drawing.Point(217, 166)
+        Me.Label3.Location = New System.Drawing.Point(188, 164)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(53, 13)
         Me.Label3.TabIndex = 6
@@ -148,11 +150,25 @@ Partial Class RemoteSignsForm
         Me.But_deleteSign.Text = "Delete Sign"
         Me.But_deleteSign.UseVisualStyleBackColor = True
         '
+        'CB_promptforpassword
+        '
+        Me.CB_promptforpassword.AutoSize = True
+        Me.CB_promptforpassword.Checked = True
+        Me.CB_promptforpassword.CheckState = System.Windows.Forms.CheckState.Checked
+        Me.CB_promptforpassword.Location = New System.Drawing.Point(256, 164)
+        Me.CB_promptforpassword.Name = "CB_promptforpassword"
+        Me.CB_promptforpassword.Size = New System.Drawing.Size(126, 17)
+        Me.CB_promptforpassword.TabIndex = 13
+        Me.CB_promptforpassword.Text = "Prompt For Password"
+        Me.CB_promptforpassword.UseVisualStyleBackColor = True
+        '
         'RemoteSignsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(408, 261)
+        Me.ControlBox = False
+        Me.Controls.Add(Me.CB_promptforpassword)
         Me.Controls.Add(Me.But_deleteSign)
         Me.Controls.Add(Me.But_newsign)
         Me.Controls.Add(Me.But_cancel)
@@ -162,20 +178,19 @@ Partial Class RemoteSignsForm
         Me.Controls.Add(Me.Label3)
         Me.Controls.Add(Me.Label2)
         Me.Controls.Add(Me.Label1)
-        Me.Controls.Add(Me.TextBox3)
-        Me.Controls.Add(Me.TextBox2)
-        Me.Controls.Add(Me.TextBox1)
+        Me.Controls.Add(Me.TB_password)
+        Me.Controls.Add(Me.TB_username)
+        Me.Controls.Add(Me.TB_signname)
         Me.Controls.Add(Me.CB_remoteSignList)
         Me.Name = "RemoteSignsForm"
-        Me.Text = "RemoteSignsForm"
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
     End Sub
     Friend WithEvents CB_remoteSignList As System.Windows.Forms.ComboBox
-    Friend WithEvents TextBox1 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox2 As System.Windows.Forms.TextBox
-    Friend WithEvents TextBox3 As System.Windows.Forms.TextBox
+    Friend WithEvents TB_signname As System.Windows.Forms.TextBox
+    Friend WithEvents TB_username As System.Windows.Forms.TextBox
+    Friend WithEvents TB_password As System.Windows.Forms.TextBox
     Friend WithEvents Label1 As System.Windows.Forms.Label
     Friend WithEvents Label2 As System.Windows.Forms.Label
     Friend WithEvents Label3 As System.Windows.Forms.Label
@@ -185,4 +200,5 @@ Partial Class RemoteSignsForm
     Friend WithEvents But_cancel As System.Windows.Forms.Button
     Friend WithEvents But_newsign As System.Windows.Forms.Button
     Friend WithEvents But_deleteSign As System.Windows.Forms.Button
+    Friend WithEvents CB_promptforpassword As System.Windows.Forms.CheckBox
 End Class

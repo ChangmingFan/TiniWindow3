@@ -65,7 +65,7 @@ Public Class Form1
     Public Const TiniWindowMajorVersion As Int16 = 3
     Public Const TiniWindowMinorVersion As String = "01.001"
 
-    Dim TiniWindoCompileDate As String = "20130720"
+    Dim TiniWindoCompileDate As String = "20130721"
     'working on creating remoteSignsForm
 
     Dim TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()

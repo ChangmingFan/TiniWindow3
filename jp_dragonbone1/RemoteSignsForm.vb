@@ -1,4 +1,5 @@
 ﻿Public Class RemoteSignsForm
+    Dim databeinginternallymanipulated = False
     Dim filename As String = "remoteSignlist.rsl"
     'format is
     '[start SIGNAME]
@@ -8,6 +9,7 @@
 
     'information not between start and end tag are ignored and may be used as notes
     Structure remoteSign
+        Shared default_ip As String = "184.168.86.30"
         Dim signname As String
         Dim username As String
         Dim password As String
@@ -16,9 +18,32 @@
     End Structure
 
     Dim remoteSignList As ArrayList = New ArrayList
+    Dim formloaded As Boolean = False
 
+    Private Sub savefile(fname)
+        Dim SW As IO.StreamWriter = IO.File.CreateText(fname)
+        For Each this_sign As remoteSign In remoteSignList
+            SW.Write("[start " & this_sign.signname & "]" & Constants.vbCrLf)
+            If this_sign.signname <> "" Then
+                SW.Write("username:" & this_sign.username & Constants.vbCrLf)
+            End If
+            If this_sign.password <> "" Then
+                SW.Write("password:" & this_sign.password & Constants.vbCrLf)
+            End If
+            If this_sign.ip <> "" Then
+                SW.Write("ip:" & this_sign.ip & Constants.vbCrLf)
+            End If
+            If this_sign.datafilename <> "" Then
+                SW.Write("datafilename:" & this_sign.datafilename & Constants.vbCrLf)
+            End If
+            SW.Write("[end " & this_sign.signname & "]" & Constants.vbCrLf)
+        Next
+
+        SW.Close()
+    End Sub
 
     Private Sub loadfile(ByVal fname As String)
+        databeinginternallymanipulated = True
         If (IO.File.Exists(fname)) Then
             remoteSignList.Clear()
 
@@ -27,9 +52,9 @@
 
             filetext = SR.ReadToEnd
 
-            Dim this_dataname As String = ""
+            'Dim this_dataname As String = ""
             Dim this_signsdata As String = ""
-            Dim this_dataindex As Integer
+            'Dim this_dataindex As Integer
 
 
             While (filetext.IndexOf("]") >= 0)
@@ -59,10 +84,18 @@
                     Dim endtag As String = "[end " + this_remoteSign.signname + "]"
                     Dim endtagindex As Integer = filetext.IndexOf(endtag)
                     this_signsdata = filetext.Substring(0, endtagindex)
-                    filetext = filetext.Substring(filetext.IndexOf("[end " + this_remoteSign.signname + "]") + 1)
+
+                    'remove this signs data from the sign buffer 
+                    filetext = filetext.Substring(endtagindex)
+                    filetext = filetext.Substring(filetext.IndexOf(Constants.vbLf))
+
 
                     Dim splitsigndata As String() = this_signsdata.Split(Constants.vbLf)
                     For Each this_data_item As String In splitsigndata
+                        If this_data_item.Trim = "" Then
+                            Continue For
+                        End If
+
                         Dim this_data_item_split As String() = this_data_item.Trim.Split(":")
                         Dim this_data_item_name As String = this_data_item_split(0)
                         Dim this_data_item_value As String = this_data_item_split(1)
@@ -82,19 +115,11 @@
 
 
                         End If
-                
 
 
+                    Next 'datafield in this sign
 
-                    Next
-
-
-
-
-
-
-
-
+                    remoteSignList.Add(this_remoteSign)
 
                 Catch ex As Exception
                     filetext = filetext.Substring(filetext.IndexOf("]") + 1)
@@ -104,16 +129,154 @@
             End While
 
             SR.Close()
-           
+
+
         End If
+        CB_remoteSignList.SelectedIndex = -1
+        CB_remoteSignList.Items.Clear()
+        For Each this_remotesign As remoteSign In remoteSignList
+            CB_remoteSignList.Items.Add(this_remotesign.signname)
+        Next
+        CB_remoteSignList.Text = "Select Sign To Edit"
+        TB_signname.Text = ""
+        TB_username.Text = ""
+        TB_password.Text = ""
+        TB_signname.Enabled = False
+        TB_username.Enabled = False
+        TB_password.Enabled = False
+
+        databeinginternallymanipulated = False
 
     End Sub
 
     Private Sub RemoteSignsForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
-        If (IO.File.Exists((filename))) Then
-            loadfile(filename)
+    End Sub
+
+    Private Sub CB_promptforpassword_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CB_promptforpassword.CheckedChanged
+        If Not formloaded Then
+            Return
+        End If
+        If databeinginternallymanipulated Then
+            Return
         End If
 
-        
+        Try
+            TB_password.Enabled = Not CB_promptforpassword.Checked
+
+            If Not TB_password.Enabled Then
+                Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+                this_remoteSign.password = ""
+                remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message)
+        End Try
+
+    End Sub
+
+    Private Sub But_newsign_Click(sender As System.Object, e As System.EventArgs) Handles But_newsign.Click
+        Try
+            Dim this_remoteSign As remoteSign = New remoteSign
+            this_remoteSign.signname = "unnamed_sign"
+            remoteSignList.Add(this_remoteSign)
+            CB_remoteSignList.Items.Add(this_remoteSign.signname)
+            'select the last item which should be the one just added
+            CB_remoteSignList.SelectedIndex = CB_remoteSignList.Items.Count - 1
+        Catch ex As Exception
+            MsgBox(2)
+        End Try
+
+    End Sub
+
+    Private Sub TB_signname_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_signname.TextChanged
+        If databeinginternallymanipulated Then
+            Return
+        End If
+
+        Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+        this_remoteSign.signname = TB_signname.Text
+        remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+        CB_remoteSignList.Items(CB_remoteSignList.SelectedIndex) = this_remoteSign.signname
+
+
+    End Sub
+
+
+    Private Sub TB_username_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_username.TextChanged
+        If databeinginternallymanipulated Then
+            Return
+        End If
+
+        Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+        this_remoteSign.username = TB_username.Text
+        remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+
+    End Sub
+
+    Private Sub TB_password_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_password.TextChanged
+        If databeinginternallymanipulated Then
+            Return
+        End If
+
+        Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+        this_remoteSign.password = TB_password.Text
+        remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+
+    End Sub
+
+    Private Sub CB_remoteSignList_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles CB_remoteSignList.SelectedIndexChanged
+        If CB_remoteSignList.SelectedIndex = -1 Then
+            TB_signname.Text = ""
+            TB_username.Text = ""
+            TB_password.Text = ""
+            TB_signname.Enabled = False
+            TB_username.Enabled = False
+            TB_password.Enabled = False
+        Else
+            TB_signname.Enabled = True
+            TB_username.Enabled = True
+
+            'this is set when CB_promptforpassword.Checked is
+            'TB_password.Enabled = True
+            Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+            TB_signname.Text = this_remoteSign.signname
+            TB_username.Text = this_remoteSign.username
+            If this_remoteSign.password = "" Then
+                CB_promptforpassword.Checked = True
+                TB_password.Text = ""
+            Else
+                CB_promptforpassword.Checked = False
+                TB_password.Text = this_remoteSign.password
+            End If
+        End If
+
+    End Sub
+
+    Private Sub But_OK_Click(sender As System.Object, e As System.EventArgs) Handles But_OK.Click
+        savefile(filename)
+        Me.Close()
+    End Sub
+
+    Private Sub But_apply_Click(sender As System.Object, e As System.EventArgs) Handles But_apply.Click
+        savefile(filename)
+    End Sub
+
+    Private Sub But_cancel_Click(sender As System.Object, e As System.EventArgs) Handles But_cancel.Click
+        Me.Close()
+    End Sub
+
+    Private Sub RemoteSignsForm_VisibleChanged(sender As System.Object, e As System.EventArgs) Handles MyBase.VisibleChanged
+
+        If Me.Visible Then
+            If (IO.File.Exists((filename))) Then
+                loadfile(filename)
+            End If
+            formloaded = True
+
+        Else
+            formloaded = False
+
+        End If
     End Sub
 End Class
