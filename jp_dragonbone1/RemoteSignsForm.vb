@@ -8,7 +8,7 @@
     '[end SIGNAME]
 
     'information not between start and end tag are ignored and may be used as notes
-    Structure remoteSign
+    Public Structure remoteSign
         Shared default_ip As String = "184.168.86.30"
         Dim signname As String
         Dim username As String
@@ -17,12 +17,25 @@
         Dim datafilename As String
     End Structure
 
-    Dim remoteSignList As ArrayList = New ArrayList
+    Dim m_remoteSignList As ArrayList = New ArrayList
     Dim formloaded As Boolean = False
+    Public ReadOnly Property remoteSignList As remoteSign()
+        Get
+            Dim returnvalue(m_remoteSignList.Count - 1) As remoteSign
+            Dim i As Integer = 0
+            For Each sign As remoteSign In m_remoteSignList
+                returnvalue(i) = sign
+                i += 1
+            Next
+
+            Return returnvalue
+
+        End Get
+    End Property
 
     Private Sub savefile(fname)
         Dim SW As IO.StreamWriter = IO.File.CreateText(fname)
-        For Each this_sign As remoteSign In remoteSignList
+        For Each this_sign As remoteSign In m_remoteSignList
             SW.Write("[start " & this_sign.signname & "]" & Constants.vbCrLf)
             If this_sign.signname <> "" Then
                 SW.Write("username:" & this_sign.username & Constants.vbCrLf)
@@ -45,7 +58,7 @@
     Private Sub loadfile(ByVal fname As String)
         databeinginternallymanipulated = True
         If (IO.File.Exists(fname)) Then
-            remoteSignList.Clear()
+            m_remoteSignList.Clear()
 
             Dim SR As IO.StreamReader = IO.File.OpenText(fname)
             Dim filetext As String = ""
@@ -119,7 +132,7 @@
 
                     Next 'datafield in this sign
 
-                    remoteSignList.Add(this_remoteSign)
+                    m_remoteSignList.Add(this_remoteSign)
 
                 Catch ex As Exception
                     filetext = filetext.Substring(filetext.IndexOf("]") + 1)
@@ -134,7 +147,7 @@
         End If
         CB_remoteSignList.SelectedIndex = -1
         CB_remoteSignList.Items.Clear()
-        For Each this_remotesign As remoteSign In remoteSignList
+        For Each this_remotesign As remoteSign In m_remoteSignList
             CB_remoteSignList.Items.Add(this_remotesign.signname)
         Next
         CB_remoteSignList.Text = "Select Sign To Edit"
@@ -148,9 +161,13 @@
         databeinginternallymanipulated = False
 
     End Sub
-
-    Private Sub RemoteSignsForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+    Public Sub init()
+        If (IO.File.Exists((filename))) Then
+            loadfile(filename)
+        End If
+        Form1.refreshSignMenue()
     End Sub
+   
 
     Private Sub CB_promptforpassword_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CB_promptforpassword.CheckedChanged
         If Not formloaded Then
@@ -164,9 +181,9 @@
             TB_password.Enabled = Not CB_promptforpassword.Checked
 
             If Not TB_password.Enabled Then
-                Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+                Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
                 this_remoteSign.password = ""
-                remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+                m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
 
             End If
         Catch ex As Exception
@@ -179,7 +196,7 @@
         Try
             Dim this_remoteSign As remoteSign = New remoteSign
             this_remoteSign.signname = "unnamed_sign"
-            remoteSignList.Add(this_remoteSign)
+            m_remoteSignList.Add(this_remoteSign)
             CB_remoteSignList.Items.Add(this_remoteSign.signname)
             'select the last item which should be the one just added
             CB_remoteSignList.SelectedIndex = CB_remoteSignList.Items.Count - 1
@@ -194,9 +211,9 @@
             Return
         End If
 
-        Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+        Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
         this_remoteSign.signname = TB_signname.Text
-        remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+        m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
         CB_remoteSignList.Items(CB_remoteSignList.SelectedIndex) = this_remoteSign.signname
 
 
@@ -208,9 +225,9 @@
             Return
         End If
 
-        Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+        Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
         this_remoteSign.username = TB_username.Text
-        remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+        m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
 
     End Sub
 
@@ -219,9 +236,9 @@
             Return
         End If
 
-        Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+        Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
         this_remoteSign.password = TB_password.Text
-        remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+        m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
 
     End Sub
 
@@ -239,7 +256,7 @@
 
             'this is set when CB_promptforpassword.Checked is
             'TB_password.Enabled = True
-            Dim this_remoteSign As remoteSign = remoteSignList(CB_remoteSignList.SelectedIndex)
+            Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
             TB_signname.Text = this_remoteSign.signname
             TB_username.Text = this_remoteSign.username
             If this_remoteSign.password = "" Then
@@ -255,6 +272,7 @@
 
     Private Sub But_OK_Click(sender As System.Object, e As System.EventArgs) Handles But_OK.Click
         savefile(filename)
+
         Me.Close()
     End Sub
 
@@ -276,7 +294,8 @@
 
         Else
             formloaded = False
-
+            Form1.refreshSignMenue()
         End If
     End Sub
+
 End Class

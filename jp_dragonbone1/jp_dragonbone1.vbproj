@@ -261,6 +261,7 @@
     </Compile>
     <Compile Include="SignConnection_Base.vb" />
     <Compile Include="SignConnection_Broadcast.vb" />
+    <Compile Include="SignConnection_FTP.vb" />
     <Compile Include="SignConnection_Internet_Via_Server.vb" />
     <Compile Include="SignConnection_OneSign.vb" />
     <Compile Include="SignConnection_OneSign_internet.vb" />

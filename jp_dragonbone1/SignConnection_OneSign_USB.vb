@@ -38,46 +38,7 @@ Public Class SignConnection_OneSign_USB
         Return True
     End Function
 
-    Public Overrides Function connect(ByVal signidentifyer As Object, Optional ByVal autoCloseDialogWhenComplete As Boolean = False) As Object
-        'this function MUST be overidden by classes that inherit it
-
-        If Me.connected Then
-            Me.disconnect()
-        End If
-
-        _selectedsign = signidentifyer
-
-        myProgressForm = New ProgressForm()
-
-        myProgressForm.autocloseatcompletions = autoCloseDialogWhenComplete
-        myProgressForm.retryfunction = AddressOf connect_do
-        connect_do()
-        myProgressForm.ShowDialog()
-
-
-        'this function completes when the user clicks OK on the dialog form
-        'it returns whether of not a succesfull connection has been made   
-
-        Return Me.connected
-
-    End Function
-    Protected Overridable Sub connect_do()
-        'the pupose of seperating this from connect is to be able to call 
-        'this function if retry is clicked from the dialog form after a failure
-        '
-
-        Dim bgw As System.ComponentModel.BackgroundWorker = New System.ComponentModel.BackgroundWorker
-        myProgressForm.bgw = bgw 'stored on pregress form only for purpose of allowing cancelation
-        bgw.WorkerReportsProgress = True
-        bgw.WorkerSupportsCancellation = True
-        AddHandler bgw.DoWork, AddressOf Connect_backgroundWork
-        AddHandler bgw.ProgressChanged, AddressOf common_backgroundwork_ProgressChanged
-        AddHandler bgw.RunWorkerCompleted, AddressOf common_backgroundwork_RunWorkerCompleted
-
-
-        bgw.RunWorkerAsync()
-
-    End Sub
+    
     Protected Overridable Sub Connect_backgroundWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
 
         

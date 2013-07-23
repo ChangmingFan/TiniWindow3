@@ -1217,8 +1217,11 @@ Public Class ComportManager
 
         m_firstscancomplete = True
         Try
-            Form1.refreshSignMenue()
-            'sometimes while form1 is loading this cause an exception
+            If (Not Form1.formloaded) Then
+                Form1.refreshSignMenue()
+                'sometimes while form1 is loading this cause an exception
+            End If
+            
         Catch ex As Exception
 
         End Try

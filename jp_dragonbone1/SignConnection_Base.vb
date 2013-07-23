@@ -294,7 +294,7 @@ Public Class SignConnection_Base
     Public Const MIN_FIRMWARE_MINOR_VERSION As Integer = 1
 
 
-    Public ReadOnly Property allSigns_working() As ArrayList
+    Public Overridable ReadOnly Property allSigns_working() As ArrayList
         Get
             Return _allSigns_working
         End Get

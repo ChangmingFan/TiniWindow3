@@ -19,8 +19,9 @@ Public Class Form1
         none = -1
         USB = 0
         wireless = 1
-        internet_via_server = 2 'jp changed from internet april/3/2010
-        'internet_direct_to_sign = 3 'not currently used
+        TCPsocket_via_server = 2 'jp changed from internet april/3/2010
+        'TCPsocket_direct_to_sign = 3 'not currently used
+        FTP = 3
     End Enum
     Dim selectedConnectionindex As signconnectionindex = -1
 
@@ -28,7 +29,7 @@ Public Class Form1
     'Dim mysignconnections As SignConnection_Base() = {New SignConnection_OneSign_USB(mycomportmanger), New SignConnection_OneSign_Wireless_XB(mycomportmanger)}
 
     'jp jan/21/2010: added internet conncetion typ to list
-    Dim mysignconnections As SignConnection_Base() = {New SignConnection_OneSign_USB(mycomportmanger), New SignConnection_OneSign_Wireless_Atmel(mycomportmanger), New SignConnection_Internet_Via_Server(mycomportmanger)}
+    Dim mysignconnections As SignConnection_Base() = {New SignConnection_OneSign_USB(mycomportmanger), New SignConnection_OneSign_Wireless_Atmel(mycomportmanger), New SignConnection_Internet_Via_Server(mycomportmanger), New SignConnection_FTP()}
     
    
     Dim _databeinginternallymanipulated As Boolean = False
@@ -65,8 +66,11 @@ Public Class Form1
     Public Const TiniWindowMajorVersion As Int16 = 3
     Public Const TiniWindowMinorVersion As String = "01.001"
 
-    Dim TiniWindoCompileDate As String = "20130721"
-    'working on creating remoteSignsForm
+    Dim TiniWindoCompileDate As String = "20130723"
+    'remoteSignsForm works well enough to work on subsequbt parts
+    '(delete sign and advanced options not yet implimentd)
+    'this version succesfully converts list of FTP signs into clickable icons and connects/disconnects 
+    'correctly when they are clicked
 
     Dim TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()
 
@@ -4662,9 +4666,13 @@ Public Class Form1
 
         'MsgBox('NUDreps06.Value)
 
-        formloaded = True
 
-        Txt_keyword.MaxLength = Me.MAX_LINELENGTH + 1
+
+
+        formloaded = True
+        RemoteSignsForm.init()
+
+        Txt_keyword.MaxLength = Form1.MAX_LINELENGTH + 1
         Txt_keyword.Focus()
 
 
@@ -26035,10 +26043,17 @@ Public Class Form1
 
         'Node_internet5.state = node.nodestate.unselected
 
-        If mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count = 0 Then
+
+
+
+        'show TCP socket signs first
+
+
+
+        If (mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count + mysignconnections(signconnectionindex.FTP).allSigns_working.Count = 0) Then
             'no internet signs 
 
-            If DirectCast(mysignconnections(signconnectionindex.internet_via_server), SignConnection_Internet_Via_Server).serverConncetionCount > 0 Then
+            If DirectCast(mysignconnections(signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server).serverConncetionCount > 0 Then
                 'connected to server
                 Pan_server_no_signs.Visible = True
                 Pan_noServer.Visible = False
@@ -26049,7 +26064,7 @@ Public Class Form1
 
             End If
 
-            Return
+            'Return
         Else
 
             'signs have been found
@@ -26058,11 +26073,12 @@ Public Class Form1
 
         End If
 
-        If mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count >= 1 Then
+
+        If mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count >= 1 Then
             '
             Node_internet1.Visible = True
 
-            Dim signidentifyer As String = mysignconnections(signconnectionindex.internet_via_server).allSigns_working(0)
+            Dim signidentifyer As String = mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(0)
             Dim splitsignidentfyer As String() = signidentifyer.Split(".")
 
 
@@ -26070,30 +26086,23 @@ Public Class Form1
 
 
             Node_internet1.Tag = signidentifyer
-            If mysignconnections(signconnectionindex.internet_via_server).connected And mysignconnections(signconnectionindex.internet_via_server).selectedsign = Node_internet1.Tag Then
+            If mysignconnections(signconnectionindex.TCPsocket_via_server).connected And mysignconnections(signconnectionindex.TCPsocket_via_server).selectedsign = Node_internet1.Tag Then
                 Node_internet1.state = node.nodestate.selected
             Else
                 Node_internet1.state = node.nodestate.unselected
 
             End If
 
-        Else
-            Node_internet1.Visible = False
-            Node_internet2.Visible = False
-            Node_internet3.Visible = False
-            'Node_internet4.Visible = False
-            'Node_internet5.Visible = False
-
-            Return
+        
         End If
 
 
 
-        If mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count >= 2 Then
+        If mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count >= 2 Then
             '
             Node_internet2.Visible = True
 
-            Dim signidentifyer As String = mysignconnections(signconnectionindex.internet_via_server).allSigns_working(1)
+            Dim signidentifyer As String = mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(1)
             Dim splitsignidentfyer As String() = signidentifyer.Split(".")
 
 
@@ -26101,29 +26110,22 @@ Public Class Form1
 
 
             Node_internet2.Tag = signidentifyer
-            If mysignconnections(signconnectionindex.internet_via_server).connected And mysignconnections(signconnectionindex.internet_via_server).selectedsign = Node_internet2.Tag Then
+            If mysignconnections(signconnectionindex.TCPsocket_via_server).connected And mysignconnections(signconnectionindex.TCPsocket_via_server).selectedsign = Node_internet2.Tag Then
                 Node_internet2.state = node.nodestate.selected
             Else
                 Node_internet2.state = node.nodestate.unselected
 
             End If
 
-        Else
-
-            Node_internet2.Visible = False
-            Node_internet3.Visible = False
-            'Node_internet4.Visible = False
-            'Node_internet5.Visible = False
-
-            Return
+        
         End If
 
 
-        If mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count >= 3 Then
+        If mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count >= 3 Then
 
             Node_internet3.Visible = True
 
-            Dim signidentifyer As String = mysignconnections(signconnectionindex.internet_via_server).allSigns_working(2)
+            Dim signidentifyer As String = mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(2)
             Dim splitsignidentfyer As String() = signidentifyer.Split(".")
 
 
@@ -26131,19 +26133,14 @@ Public Class Form1
 
 
             Node_internet3.Tag = signidentifyer
-            If mysignconnections(signconnectionindex.internet_via_server).connected And mysignconnections(signconnectionindex.internet_via_server).selectedsign = signidentifyer Then
+            If mysignconnections(signconnectionindex.TCPsocket_via_server).connected And mysignconnections(signconnectionindex.TCPsocket_via_server).selectedsign = signidentifyer Then
                 Node_internet3.state = node.nodestate.selected
             Else
                 Node_internet3.state = node.nodestate.unselected
 
             End If
 
-        Else
-            Node_internet3.Visible = False
-            'Node_internet4.Visible = False
-            'Node_internet5.Visible = False
-
-            Return
+        
         End If
 
         'If mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count >= 4 Then
@@ -26199,9 +26196,129 @@ Public Class Form1
 
         '    Return
         'End If
+        If mysignconnections(signconnectionindex.FTP).allSigns_working.Count >= 1 Then
+            If mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count = 0 Then
+                Node_internet1.Visible = True
+
+                Dim signidentifyer As String = mysignconnections(signconnectionindex.FTP).allSigns_working(0)
 
 
+
+                Node_internet1.text = signidentifyer
+
+
+                Node_internet1.Tag = "ftp"
+                If mysignconnections(signconnectionindex.FTP).connected And mysignconnections(signconnectionindex.FTP).selectedsign = Node_internet1.selected_text Then
+                    Node_internet1.state = node.nodestate.selected
+                Else
+                    Node_internet1.state = node.nodestate.unselected
+
+                End If
+
+            End If
+        ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count = 1 Then
+            Node_internet2.Visible = True
+
+            Dim signidentifyer As String = mysignconnections(signconnectionindex.FTP).allSigns_working(0)
+
+
+
+            Node_internet2.text = signidentifyer
+
+
+            Node_internet2.Tag = "ftp"
+            If mysignconnections(signconnectionindex.FTP).connected And mysignconnections(signconnectionindex.FTP).selectedsign = Node_internet2.selected_text Then
+                Node_internet2.state = node.nodestate.selected
+            Else
+                Node_internet2.state = node.nodestate.unselected
+
+            End If
+        ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count = 2 Then
+            Node_internet3.Visible = True
+
+            Dim signidentifyer As String = mysignconnections(signconnectionindex.FTP).allSigns_working(0)
+
+
+
+            Node_internet3.text = signidentifyer
+
+
+            Node_internet3.Tag = "ftp"
+            If mysignconnections(signconnectionindex.FTP).connected And mysignconnections(signconnectionindex.FTP).selectedsign = Node_internet3.selected_text Then
+                Node_internet3.state = node.nodestate.selected
+            Else
+                Node_internet3.state = node.nodestate.unselected
+
+            End If
+        End If
+       
+
+        '''''''''''''''
+
+        If mysignconnections(signconnectionindex.FTP).allSigns_working.Count >= 2 Then
+            If mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count = 0 Then
+                Node_internet2.Visible = True
+
+                Dim signidentifyer As String = mysignconnections(signconnectionindex.FTP).allSigns_working(1)
+
+
+
+                Node_internet2.text = signidentifyer
+
+
+                Node_internet2.Tag = "ftp"
+                If mysignconnections(signconnectionindex.FTP).connected And mysignconnections(signconnectionindex.FTP).selectedsign = Node_internet2.selected_text Then
+                    Node_internet2.state = node.nodestate.selected
+                Else
+                    Node_internet2.state = node.nodestate.unselected
+
+                End If
+
+            End If
+        ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count = 1 Then
+            Node_internet3.Visible = True
+
+            Dim signidentifyer As String = mysignconnections(signconnectionindex.FTP).allSigns_working(1)
+
+
+
+            Node_internet3.text = signidentifyer
+
+
+            Node_internet3.Tag = "ftp"
+            If mysignconnections(signconnectionindex.FTP).connected And mysignconnections(signconnectionindex.FTP).selectedsign = Node_internet3.selected_text Then
+                Node_internet3.state = node.nodestate.selected
+            Else
+                Node_internet3.state = node.nodestate.unselected
+
+            End If
+         End If
+
+        ''''''''''''
+        If mysignconnections(signconnectionindex.FTP).allSigns_working.Count >= 3 Then
+            If mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count = 0 Then
+                Node_internet3.Visible = True
+
+                Dim signidentifyer As String = mysignconnections(signconnectionindex.FTP).allSigns_working(2)
+
+
+
+                Node_internet3.text = signidentifyer
+
+
+                Node_internet3.Tag = "ftp"
+                If mysignconnections(signconnectionindex.FTP).connected And mysignconnections(signconnectionindex.FTP).selectedsign = Node_internet3.selected_text Then
+                    Node_internet3.state = node.nodestate.selected
+                Else
+                    Node_internet3.state = node.nodestate.unselected
+
+                End If
+
+            End If
+        End If
     End Sub
+
+
     Sub refresh_Pan_USBnodes()
 
 
@@ -26576,18 +26693,18 @@ Public Class Form1
                         End If
 
 
-                    ElseIf mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count >= 1 Then
+                    ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count >= 1 Then
 
                         'at least one internet detected
 
                         'auto connect to first wireless sign on list sign
-                        Dim tempwirecon As SignConnection_Internet_Via_Server = mysignconnections(signconnectionindex.internet_via_server)
+                        Dim tempwirecon As SignConnection_Internet_Via_Server = mysignconnections(signconnectionindex.TCPsocket_via_server)
                         If tempwirecon.connect(tempwirecon.allSigns_working(0), True) Then
 
                             connectionbuttons_markavailable(But_send)
                             connectionbuttons_markavailable(But_get)
 
-                            selectedConnectionindex = signconnectionindex.internet_via_server
+                            selectedConnectionindex = signconnectionindex.TCPsocket_via_server
 
 
                         Else
@@ -26601,6 +26718,17 @@ Public Class Form1
                             tempwirecon.allSigns_working.RemoveAt(0)
                             busy = False
                             Return
+                        End If
+
+                    ElseIf mysignconnections(signconnectionindex.FTP).allSigns_working.Count >= 1 Then
+                        Dim tempFTPcon As SignConnection_FTP = mysignconnections(signconnectionindex.FTP)
+                        If tempFTPcon.connect(tempFTPcon.allSigns_working(0), True) Then
+
+                            connectionbuttons_markavailable(But_send)
+                            connectionbuttons_markavailable(But_get)
+
+                            selectedConnectionindex = signconnectionindex.FTP
+
                         End If
 
                     End If
@@ -26804,7 +26932,7 @@ Public Class Form1
 
 
 
-                If DirectCast(mysignconnections(signconnectionindex.internet_via_server), SignConnection_Internet_Via_Server).serverConncetionCount >= 1 Then
+                If DirectCast(mysignconnections(signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server).serverConncetionCount + DirectCast(mysignconnections(signconnectionindex.FTP), SignConnection_FTP).allSigns_working.Count >= 1 Then
                     ' connected to server
                     lbl_internet_text.Visible = False
 
@@ -27201,12 +27329,13 @@ Public Class Form1
 
             'this section add internet signs found to dropdown menu
 
-            If (mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count > 0) Then
+            'make menu viviable if either TCP signs or FTP signs
+            If (mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count > 0 + mysignconnections(signconnectionindex.FTP).allSigns_working.Count > 0) Then
                 InternetToolStripMenuItem.Visible = True
 
             Else
 
-                'no wireless signs currently found
+                'no remote signs currently found
                 InternetToolStripMenuItem.Visible = False
 
 
@@ -27214,18 +27343,18 @@ Public Class Form1
 
 
 
-
+            'add TCP socket signs
             workingsignswalker = 0
             menuitemswalker = 0
 
-            mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Sort()
-            While workingsignswalker < mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count
+            mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Sort()
+            While workingsignswalker < mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count
                 If (menuitemswalker >= InternetToolStripMenuItem.DropDownItems.Count) Then
                     'need to add sign at end of menue list. 
                     'seperate condition becuase can not compare worrking signs item to 
                     'nonexisting "item" coming one after last menue item
 
-                    Dim thisSignIdentifier As String = mysignconnections(signconnectionindex.internet_via_server).allSigns_working(workingsignswalker).ToString
+                    Dim thisSignIdentifier As String = mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(workingsignswalker).ToString
                     Dim split_thisSignIdentifier As String() = thisSignIdentifier.Split(".")
                     Dim thisSignServerConnection As String = split_thisSignIdentifier(0)
                     Dim thisSignName As String = split_thisSignIdentifier(1)
@@ -27239,12 +27368,12 @@ Public Class Form1
                     workingsignswalker += 1
                     menuitemswalker += 1
 
-                ElseIf mysignconnections(signconnectionindex.internet_via_server).allSigns_working(workingsignswalker) = (InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Tag & "." & InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Text) Then
+                ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(workingsignswalker) = (InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Tag & "." & InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Text) Then
                     'sign in both list mach
                     'simpliest situation
                     workingsignswalker += 1
                     menuitemswalker += 1
-                ElseIf InternetToolStripMenuItem.DropDownItems.IndexOfKey(mysignconnections(signconnectionindex.internet_via_server).allSigns_working(workingsignswalker).ToString.Split(".")(1)) = -1 Then
+                ElseIf InternetToolStripMenuItem.DropDownItems.IndexOfKey(mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(workingsignswalker).ToString.Split(".")(1)) = -1 Then
                     'sign in working signs list needs to be inserted because it does not appear in menu list
 
                     Dim thisSignIdentifier As String = mysignconnections(signconnectionindex.wireless).allSigns_working(workingsignswalker).ToString
@@ -27267,7 +27396,7 @@ Public Class Form1
                     'else if a sign of the same name is connected to a different coordinator
                     '       add another entry to dropdown menue 
 
-                ElseIf mysignconnections(signconnectionindex.internet_via_server).allSigns_working.IndexOf(InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Tag & "." & InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Text) = -1 Then
+                ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.IndexOf(InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Tag & "." & InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Text) = -1 Then
                     'sign currently in menue needs to be removed because it is not in working signs list
 
                     InternetToolStripMenuItem.DropDownItems.RemoveAt(menuitemswalker)
@@ -27283,7 +27412,7 @@ Public Class Form1
             End While
 
 
-            While InternetToolStripMenuItem.DropDownItems.Count > mysignconnections(signconnectionindex.internet_via_server).allSigns_working.Count
+            While InternetToolStripMenuItem.DropDownItems.Count > mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count
 
                 'in some cases the above inserts new items pushing old items to the end
                 InternetToolStripMenuItem.DropDownItems.RemoveAt(InternetToolStripMenuItem.DropDownItems.Count - 1)
@@ -27291,9 +27420,88 @@ Public Class Form1
 
             End While
 
+
+
+
+
+
+
+
             ''''vvvvvvvvvvvvvvv
 
+            'add FTP signs to internet dropdown menu
+            workingsignswalker = 0
+            menuitemswalker = 0
 
+            'mysignconnections(signconnectionindex.TCPsocket_via_serve).allSigns_working.Sort()
+            While workingsignswalker < mysignconnections(signconnectionindex.FTP).allSigns_working.Count
+                If (menuitemswalker >= InternetToolStripMenuItem.DropDownItems.Count) Then
+                    'need to add sign at end of menue list. 
+                    'seperate condition becuase can not compare worrking signs item to 
+                    'nonexisting "item" coming one after last menue item
+
+                    Dim thisSignName As String = mysignconnections(signconnectionindex.FTP).allSigns_working(workingsignswalker).ToString
+                    
+                    Dim thisMenuItem As System.Windows.Forms.ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem(thisSignName)
+                    thisMenuItem.Tag = "ftp"
+                    AddHandler thisMenuItem.Click, AddressOf internetconnection_common_Click
+
+                    InternetToolStripMenuItem.DropDownItems.Add(thisMenuItem)
+
+                    workingsignswalker += 1
+                    menuitemswalker += 1
+
+                ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(workingsignswalker) = (InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Tag & "." & InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Text) Then
+                    'sign in both list mach
+                    'simpliest situation
+                    workingsignswalker += 1
+                    menuitemswalker += 1
+                ElseIf InternetToolStripMenuItem.DropDownItems.IndexOfKey(mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working(workingsignswalker).ToString.Split(".")(1)) = -1 Then
+                    'sign in working signs list needs to be inserted because it does not appear in menu list
+
+                    Dim thisSignIdentifier As String = mysignconnections(signconnectionindex.wireless).allSigns_working(workingsignswalker).ToString
+                    Dim split_thisSignIdentifier As String() = thisSignIdentifier.Split(".")
+                    Dim thisSignServerCOnnection As String = split_thisSignIdentifier(0)
+                    Dim thisSignName As String = split_thisSignIdentifier(1)
+
+                    Dim thisMenuItem As System.Windows.Forms.ToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem(thisSignName)
+                    thisMenuItem.Tag = thisSignServerCOnnection
+                    AddHandler thisMenuItem.Click, AddressOf internetconnection_common_Click
+                    InternetToolStripMenuItem.DropDownItems.Insert(menuitemswalker, thisMenuItem)
+
+
+
+                    workingsignswalker += 1
+                    menuitemswalker += 1
+
+
+
+                    'else if a sign of the same name is connected to a different coordinator
+                    '       add another entry to dropdown menue 
+
+                ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.IndexOf(InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Tag & "." & InternetToolStripMenuItem.DropDownItems.Item(menuitemswalker).Text) = -1 Then
+                    'sign currently in menue needs to be removed because it is not in working signs list
+
+                    InternetToolStripMenuItem.DropDownItems.RemoveAt(menuitemswalker)
+                    'do not increment walkers
+
+                Else
+                    'should not reach here
+                    MsgBox("bug while regenerating internet dropdown menue")
+                End If
+
+
+
+            End While
+
+
+            While InternetToolStripMenuItem.DropDownItems.Count > mysignconnections(signconnectionindex.TCPsocket_via_server).allSigns_working.Count
+
+                'in some cases the above inserts new items pushing old items to the end
+                InternetToolStripMenuItem.DropDownItems.RemoveAt(InternetToolStripMenuItem.DropDownItems.Count - 1)
+
+
+            End While
 
 
 
@@ -27308,13 +27516,21 @@ Public Class Form1
     Private Sub internet_node_CommonClick(ByVal sender As System.Object) Handles Node_internet3.click, Node_internet2.click, Node_internet1.click
         'MsgBox("click")
 
-        If mysignconnections(signconnectionindex.internet_via_server).selectedsign <> sender.tag Then
-            'we are mot currently connected to the sign reperesented by the node
-            connect(DirectCast(mysignconnections(signconnectionindex.internet_via_server), SignConnection_Internet_Via_Server), sender.tag)
+        If sender.tag.ToString.ToLower = "ftp" Then
+            If mysignconnections(signconnectionindex.FTP).selectedsign <> sender.selected_text Then
+                'we are mot currently connected to the FTP sign reperesented by the node
+                connect(DirectCast(mysignconnections(signconnectionindex.FTP), SignConnection_FTP), sender.selected_text)
+            End If
+
+        ElseIf mysignconnections(signconnectionindex.TCPsocket_via_server).selectedsign <> sender.tag Then
+            'we are mot currently connected to the TCP socket sign reperesented by the node
+            connect(DirectCast(mysignconnections(signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server), sender.tag)
 
         End If
 
+        refreshSignMenue()
     End Sub
+
     Private Sub usb_node_CommonClick(ByVal sender As System.Object) Handles Node_usb1.click, Node_usb2.click, Node_usb5.click, Node_usb4.click, Node_usb3.click
         'MsgBox("click")
 
@@ -27670,8 +27886,9 @@ Public Class Form1
 
             mysignconnections(signconnectionindex.wireless).disconnect()
             mysignconnections(signconnectionindex.USB).disconnect()
+            mysignconnections(signconnectionindex.FTP).disconnect()
 
-            selectedConnectionindex = signconnectionindex.internet_via_server
+            selectedConnectionindex = signconnectionindex.TCPsocket_via_server
             ' Me.refresh_pan_wirelessDialog()
             'Me.refresh_pan_USBDialog()
             connectionbuttons_markavailable(But_send)
@@ -27684,6 +27901,30 @@ Public Class Form1
 
     End Sub
 
+    Public Sub connect(ByRef type As SignConnection_FTP, ByVal signidentifyer As String)
+        'function has to by public so it is accesable from a menu item click event
+
+        type.connect(signidentifyer, True)
+
+
+        If type.connected Then
+
+            mysignconnections(signconnectionindex.wireless).disconnect()
+            mysignconnections(signconnectionindex.USB).disconnect()
+            mysignconnections(signconnectionindex.TCPsocket_via_server).disconnect()
+
+            selectedConnectionindex = signconnectionindex.FTP
+            ' Me.refresh_pan_wirelessDialog()
+            'Me.refresh_pan_USBDialog()
+            connectionbuttons_markavailable(But_send)
+            connectionbuttons_markavailable(But_get)
+
+
+        End If
+
+
+
+    End Sub
 
     Public Sub connect(ByRef type As SignConnection_OneSign_internet, ByVal signidentifyer As String)
         'function has to by public so it is accesable from a menu item click event
@@ -27695,8 +27936,10 @@ Public Class Form1
 
             mysignconnections(signconnectionindex.wireless).disconnect()
             mysignconnections(signconnectionindex.USB).disconnect()
+            mysignconnections(signconnectionindex.FTP).disconnect()
 
-            selectedConnectionindex = signconnectionindex.internet_via_server
+
+            selectedConnectionindex = signconnectionindex.TCPsocket_via_server
             ' Me.refresh_pan_wirelessDialog()
             'Me.refresh_pan_USBDialog()
             connectionbuttons_markavailable(But_send)
@@ -27718,7 +27961,10 @@ Public Class Form1
         If type.connected Then
 
             mysignconnections(signconnectionindex.wireless).disconnect()
-            mysignconnections(signconnectionindex.internet_via_server).disconnect()
+            mysignconnections(signconnectionindex.TCPsocket_via_server).disconnect()
+            mysignconnections(signconnectionindex.FTP).disconnect()
+
+
             selectedConnectionindex = signconnectionindex.USB
             ' Me.refresh_pan_wirelessDialog()
             'Me.refresh_pan_USBDialog()
@@ -27746,7 +27992,9 @@ Public Class Form1
 
 
             mysignconnections(signconnectionindex.USB).disconnect()
-            mysignconnections(signconnectionindex.internet_via_server).disconnect()
+            mysignconnections(signconnectionindex.TCPsocket_via_server).disconnect()
+            mysignconnections(signconnectionindex.FTP).disconnect()
+
             selectedConnectionindex = signconnectionindex.wireless
             'Me.refresh_pan_wirelessDialog()
             'Me.refresh_pan_USBDialog()
@@ -27829,7 +28077,7 @@ Public Class Form1
 
         Dim signidentifier As String = sender.tag & "." & sender.text
 
-        Dim tempusb As SignConnection_Internet_Via_Server = DirectCast(mysignconnections(signconnectionindex.internet_via_server), SignConnection_Internet_Via_Server)
+        Dim tempusb As SignConnection_Internet_Via_Server = DirectCast(mysignconnections(signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server)
 
 
 
@@ -27838,6 +28086,31 @@ Public Class Form1
 
 
 
+        '20110506 I forget what this panel is. code was copied from wirelessconnection_common_click event handler
+        If Pan_coonnect_menu.Visible Then
+            While men_connect.Items.Count > 0           'men_select_comport.DropDownItems.Count
+                men_connect.Items(0).TextAlign = ContentAlignment.MiddleCenter
+                men_select_comport.DropDownItems.Add(men_connect.Items(0))
+            End While
+            Pan_coonnect_menu.Visible = False
+        End If
+    End Sub
+    Private Sub FTP_common_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+
+
+
+        Dim signidentifier As String = sender.text
+
+        Dim tempusb As SignConnection_FTP = DirectCast(mysignconnections(signconnectionindex.FTP), SignConnection_FTP)
+
+
+
+        connect(tempusb, signidentifier)
+        '        Me.mysignconnections(signconnectionindex.wireless).connect(signidentifier)
+
+
+        '20130723 cpied this code from internetconnection_common_Click
         '20110506 I forget what this panel is. code was copied from wirelessconnection_common_click event handler
         If Pan_coonnect_menu.Visible Then
             While men_connect.Items.Count > 0           'men_select_comport.DropDownItems.Count
@@ -28654,7 +28927,7 @@ Public Class Form1
             Return
         ElseIf newconnectiontype = configure_internet.connectiontype.Use_TiniLite_Server Then
 
-            DirectCast(Me.mysignconnections(Me.signconnectionindex.internet_via_server), SignConnection_Internet_Via_Server).addServer(newip, newport, newcompany, newusername, newpassword)
+            DirectCast(Me.mysignconnections(Me.signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server).addServer(newip, newport, newcompany, newusername, newpassword)
             'DirectCast(Me.mysignconnections(Me.signconnectionindex.internet), SignConnection_OneSign_internet).logon()
 
 
@@ -28687,7 +28960,7 @@ Public Class Form1
             truncatedfilename = truncatedfilename.Substring(truncatedfilename.LastIndexOf("\") + 1)
         End If
 
-        DirectCast(mysignconnections(signconnectionindex.internet_via_server), SignConnection_OneSign_internet).savefiletoserver(truncatedfilename)
+        DirectCast(mysignconnections(signconnectionindex.TCPsocket_via_server), SignConnection_OneSign_internet).savefiletoserver(truncatedfilename)
 
     End Sub
 
@@ -28697,7 +28970,7 @@ Public Class Form1
         entertextform.prompt = "enter file name"
         entertextform.ShowDialog()
 
-        DirectCast(mysignconnections(signconnectionindex.internet_via_server), SignConnection_OneSign_internet).getfilefromserver(entertextform.input)
+        DirectCast(mysignconnections(signconnectionindex.TCPsocket_via_server), SignConnection_OneSign_internet).getfilefromserver(entertextform.input)
         'getfilefromserver()
 
     End Sub
