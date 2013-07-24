@@ -56,7 +56,7 @@ Public Class Form1
     Dim jpstringsfunctions As jpstringfunctions = New jpstringfunctions
     Public formloaded As Boolean = False ' set true at end of formload to avoid selection change problems
     Dim defaultfilename As String = IO.Directory.GetCurrentDirectory + "/Test-Alpha-Num.text"
-    Public updatetinidisk As Boolean = False 'passed to update process
+    Public updatetinidisk As Boolean = False 'passed to update process!jp_dragonbone1/bin/Debug/TiniWindowUpdate*
     Dim commandline As String = Command()
     Const ApplicationName = "TiniWindow-3.01.exe"
     Public backgroundworkerdebugvalue As String = "none"

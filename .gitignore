@@ -1,0 +1,17 @@
+!jp_dragonbone1/bin/Debug/TiniWindowUpdate*
+!jp_dragonbone1/bin/Debug/TiniWindow*.exe.config
+!jp_dragonbone1/bin/Debug/TiniWindow*.vshost.exe.config
+jp_dragonbone1/bin/Debug/TiniWindow-*
+jp_dragonbone1/bin/Debug/*.txt
+jp_dragonbone1/bin/Debug/*.text
+jp_dragonbone1/bin/Debug/*.dat*
+jp_dragonbone1/bin/Debug/*.udat
+jp_dragonbone1/bin/Debug/*.scp
+jp_dragonbone1/bin/Debug/*.rslTiniWindow-*
+jp_dragonbone1/obj/Debug/*
+
+#these 2 .dll files should have versions left in the
+#the repository but automated updates should not be 
+#added to repository 
+jp_dragonbone1/bin/Debug/AxInterop.AcroPDFLib.dll
+jp_dragonbone1/bin/Debug/Interop.AcroPDFLib.dll
