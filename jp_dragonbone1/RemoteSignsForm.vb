@@ -207,27 +207,101 @@
     End Sub
 
     Private Sub TB_signname_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_signname.TextChanged
+
+        Static Dim previous_text As String = TB_signname.Text
+        Static Dim previous_selection_start As Int16 = TB_signname.SelectionStart
+        Static Dim previous_selection_length As Int16 = TB_signname.SelectionLength
+
+        Static Dim recursive As Boolean = False
+
         If databeinginternallymanipulated Then
             Return
         End If
 
-        Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
-        this_remoteSign.signname = TB_signname.Text
-        m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
-        CB_remoteSignList.Items(CB_remoteSignList.SelectedIndex) = this_remoteSign.signname
+        If Not recursive Then
+
+            recursive = True
+            'check validity of text
+            Dim invalidchars As String = Chr(0) & Chr(1) & Chr(2) & Chr(3) & Chr(4) & Chr(5) & Chr(6) & Chr(7) & Chr(8) & Chr(9) & Chr(10) & Chr(11) & Chr(12) & Chr(13) _
+                & Chr(14) & Chr(15) & Chr(16) & Chr(17) & Chr(18) & Chr(19) & Chr(20) & Chr(21) & Chr(22) & Chr(23) & Chr(24) & Chr(25) & Chr(26) & Chr(27) & Chr(28) _
+                & Chr(29) & Chr(30) & Chr(31) & " " & Chr(127) & Chr(129) & Chr(141) & Chr(143) & Chr(144) & Chr(157) & Chr(16)
+            For Each letter As Char In TB_signname.Text
+                If invalidchars.IndexOf(letter) >= 0 Then
+                    'Invalidate letters present
+                    TB_signname.Text = previous_text
+                    TB_signname.SelectionStart = previous_selection_start
+                    TB_signname.SelectionLength = previous_selection_length
+                    Beep()
+
+                    recursive = False
+                    Return
+                End If
+
+            Next
 
 
+            Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
+            this_remoteSign.signname = TB_signname.Text
+            m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+            CB_remoteSignList.Items(CB_remoteSignList.SelectedIndex) = this_remoteSign.signname
+
+
+            previous_text = TB_signname.Text
+            previous_selection_start = TB_signname.SelectionStart
+            previous_selection_length = TB_signname.SelectionLength
+
+
+            recursive = False
+        End If
     End Sub
 
 
     Private Sub TB_username_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_username.TextChanged
+        Static Dim previous_text As String = TB_username.Text
+        Static Dim previous_selection_start As Int16 = TB_username.SelectionStart
+        Static Dim previous_selection_length As Int16 = TB_username.SelectionLength
+
+        Static Dim recursive As Boolean = False
+
         If databeinginternallymanipulated Then
             Return
         End If
 
-        Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
-        this_remoteSign.username = TB_username.Text
-        m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+        If Not recursive Then
+
+            recursive = True
+            'check validity of text
+            Dim invalidchars As String = Chr(0) & Chr(1) & Chr(2) & Chr(3) & Chr(4) & Chr(5) & Chr(6) & Chr(7) & Chr(8) & Chr(9) & Chr(10) & Chr(11) & Chr(12) & Chr(13) _
+                & Chr(14) & Chr(15) & Chr(16) & Chr(17) & Chr(18) & Chr(19) & Chr(20) & Chr(21) & Chr(22) & Chr(23) & Chr(24) & Chr(25) & Chr(26) & Chr(27) & Chr(28) _
+                & Chr(29) & Chr(30) & Chr(31) & " " & Chr(127) & Chr(129) & Chr(141) & Chr(143) & Chr(144) & Chr(157) & Chr(16)
+            For Each letter As Char In TB_username.Text
+                If invalidchars.IndexOf(letter) >= 0 Then
+                    'Invalidate letters present
+                    TB_username.Text = previous_text
+                    TB_username.SelectionStart = previous_selection_start
+                    TB_username.SelectionLength = previous_selection_length
+                    Beep()
+
+                    recursive = False
+                    Return
+                End If
+
+            Next
+
+
+            Dim this_remoteSign As remoteSign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
+            this_remoteSign.username = TB_username.Text
+            m_remoteSignList(CB_remoteSignList.SelectedIndex) = this_remoteSign
+
+
+            previous_text = TB_username.Text
+            previous_selection_start = TB_username.SelectionStart
+            previous_selection_length = TB_username.SelectionLength
+
+
+            recursive = False
+
+        End If
 
     End Sub
 

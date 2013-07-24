@@ -58,23 +58,53 @@ Public Class Form1
     Dim defaultfilename As String = IO.Directory.GetCurrentDirectory + "/Test-Alpha-Num.text"
     Public updatetinidisk As Boolean = False 'passed to update process!jp_dragonbone1/bin/Debug/TiniWindowUpdate*
     Dim commandline As String = Command()
-    Const ApplicationName = "TiniWindow-3.01.exe"
+    ReadOnly Property ApplicationName As String
+        Get
+            Return (version_info.ApplicationName)
+        End Get
+    End Property
     Public backgroundworkerdebugvalue As String = "none"
 
-    Dim TiniWindowVersionStandard As Int16 = 1 'first used with version 1.01.005 its abscence warns the update process of inconsistencies in other value
+    ReadOnly Property TiniWindowVersionStandard As Int16
+        Get
+            'first used with version 1.01.005 its abscence warns the update process of inconsistencies in other value
+            Return (version_info.TiniWindowVersionStandard)
+        End Get
+    End Property
 
-    Public Const TiniWindowMajorVersion As Int16 = 3
-    Public Const TiniWindowMinorVersion As String = "01.001"
 
-    Dim TiniWindoCompileDate As String = "20130723"
-    'remoteSignsForm works well enough to work on subsequbt parts
-    '(delete sign and advanced options not yet implimentd)
-    'this version succesfully converts list of FTP signs into clickable icons and connects/disconnects 
-    'correctly when they are clicked
+    Public ReadOnly Property TiniWindowMajorVersion As Int16
+        Get
+            Return (version_info.TiniWindowMajorVersion)
+        End Get
+    End Property
+    Public ReadOnly Property TiniWindowMinorVersion As String
+        Get
+            Return (version_info.TiniWindowVersionStandard)
+        End Get
+    End Property
 
-    Dim TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()
+    Public ReadOnly Property TiniWindoCompileDate As String
+        Get
+            Return (version_info.TiniWindoCompileDate)
+        End Get
+    End Property
 
-    Public TiniWindowVersion_display_string As String = TiniWindowVersion + "." + TiniWindoCompileDate.ToString + " (Tini-Pi-Lite supported) " ' not used in update process
+
+    'Dim TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()
+
+    ReadOnly Property TiniWindowVersion As String
+        Get
+            Return version_info.TiniWindowVersion
+        End Get
+    End Property
+
+    'Public TiniWindowVersion_display_string As String = TiniWindowVersion + "." + TiniWindoCompileDate.ToString + " (Tini-Pi-Lite supported) " ' not used in update process
+    Public ReadOnly Property TiniWindowVersion_display_string As String
+        Get
+            Return version_info.TiniWindowVersion_display_string
+        End Get
+    End Property
 
     'Dim versiondateext As Char = "" 'A,B,C etc used when multiple changes are made in one day
     'Dim versiondate_displaystring = zerofillinteger(versiondate.Month, 2) + zerofillinteger(versiondate.Day, 2) + versiondate.Year.ToString + versiondateext
@@ -28975,19 +29005,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub AddEditRemoteSignsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
-        RemoteSignsForm.ShowDialog()
-    End Sub
-
-
-    
-   
-
-
-
-
-
-    Private Sub ConfigureRemoteSignsToolStripMenuItem_Click(sender As System.Object, e As System.EventArgs) Handles ConfigureRemoteSignsToolStripMenuItem.Click
+    Private Sub ConfigureRemoteSignsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConfigureRemoteSignsToolStripMenuItem.Click
         RemoteSignsForm.ShowDialog()
 
     End Sub
