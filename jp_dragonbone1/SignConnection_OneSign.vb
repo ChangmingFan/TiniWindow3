@@ -1265,7 +1265,7 @@ Public Class SignConnection_OneSign
         Return True 'need to impliment way of checking result, perhaps on progress form
     End Function
 
-    Private Sub sendData_do()
+    Protected Overridable Sub sendData_do()
         'this function seperated from sendData so that it can be called when the retry button is pressed on progress form
 
         Dim bgw As System.ComponentModel.BackgroundWorker = New System.ComponentModel.BackgroundWorker

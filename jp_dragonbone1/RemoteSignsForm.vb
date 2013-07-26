@@ -1,6 +1,8 @@
 ﻿Public Class RemoteSignsForm
     Dim databeinginternallymanipulated = False
     Dim filename As String = "remoteSignlist.rsl"
+    Dim initialized As Boolean = False
+
     'format is
     '[start SIGNAME]
     'username:USERNAME
@@ -19,17 +21,26 @@
 
     Dim m_remoteSignList As ArrayList = New ArrayList
     Dim formloaded As Boolean = False
+
+    'function delegates used so properties can be defined to marshal in a multi-threaded invironment
+    Delegate Function getremoteSignDelegate() As remoteSign()
+    Dim generate_remoteSignList_delegate As getremoteSignDelegate '= AddressOf generate_remoteSignList
+    Private Function generate_remoteSignList() As remoteSign()
+        Dim returnvalue(m_remoteSignList.Count - 1) As remoteSign
+        Dim i As Integer = 0
+        For Each sign As remoteSign In m_remoteSignList
+            returnvalue(i) = sign
+            i += 1
+        Next
+
+        Return returnvalue
+
+    End Function
+
     Public ReadOnly Property remoteSignList As remoteSign()
         Get
-            Dim returnvalue(m_remoteSignList.Count - 1) As remoteSign
-            Dim i As Integer = 0
-            For Each sign As remoteSign In m_remoteSignList
-                returnvalue(i) = sign
-                i += 1
-            Next
-
-            Return returnvalue
-
+            'written this way to work in multi-threaded invironment
+            Return generate_remoteSignList_delegate.Invoke
         End Get
     End Property
 
@@ -162,12 +173,20 @@
 
     End Sub
     Public Sub init()
-        If (IO.File.Exists((filename))) Then
-            loadfile(filename)
+
+        If Not initialized Then
+
+
+            initialized = True
+            generate_remoteSignList_delegate = AddressOf generate_remoteSignList
+            If (IO.File.Exists((filename))) Then
+                loadfile(filename)
+            End If
+            'Form1.refreshSignMenue()
+
         End If
-        Form1.refreshSignMenue()
     End Sub
-   
+
 
     Private Sub CB_promptforpassword_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CB_promptforpassword.CheckedChanged
         If Not formloaded Then
@@ -372,4 +391,7 @@
         End If
     End Sub
 
+    Private Sub RemoteSignsForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
+        init()
+    End Sub
 End Class

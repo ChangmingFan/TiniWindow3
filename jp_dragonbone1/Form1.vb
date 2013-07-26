@@ -4438,7 +4438,7 @@ Public Class Form1
         Shortcut.Save()
 
     End Sub
-
+    Public myRemoteSignsForm As RemoteSignsForm = New RemoteSignsForm
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Tab_Easy.Hide()
         Tab_Combo.Hide()
@@ -4700,14 +4700,15 @@ Public Class Form1
 
 
         formloaded = True
-        RemoteSignsForm.init()
+        myRemoteSignsForm.init()
+        refreshSignMenue()
 
         Txt_keyword.MaxLength = Form1.MAX_LINELENGTH + 1
         Txt_keyword.Focus()
 
 
         'JP oct 18 2011 coment out command to show configure internet form at start up
-        'men_configure_internet_Click(Nothing, Nothing)
+        'men_configure_internet_Click(Nothing, Nothing)me
 
         'Timer_formloaded.Start()
     End Sub
@@ -29006,7 +29007,7 @@ Public Class Form1
     End Sub
 
     Private Sub ConfigureRemoteSignsToolStripMenuItem_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles ConfigureRemoteSignsToolStripMenuItem.Click
-        RemoteSignsForm.ShowDialog()
+        myRemoteSignsForm.ShowDialog()
 
     End Sub
 End Class

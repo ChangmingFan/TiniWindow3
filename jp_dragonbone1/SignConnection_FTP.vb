@@ -6,13 +6,13 @@ Public Class SignConnection_FTP
 
     Dim FTP_username As String
     Dim FTP_password As String
-    Dim FTP_URI As Uri
+    Dim FTP_IP As String
 
 
     Public Overrides ReadOnly Property allSigns_working() As ArrayList
         Get
             Dim returnvalue As ArrayList = New ArrayList
-            For Each sign As RemoteSignsForm.remoteSign In RemoteSignsForm.remoteSignList
+            For Each sign As RemoteSignsForm.remoteSign In Form1.myRemoteSignsForm.remoteSignList
                 returnvalue.Add(sign.signname)
                 If (sign.signname Is Nothing) Then
                     Dim breakpointholder = ""
@@ -52,19 +52,28 @@ Public Class SignConnection_FTP
         Dim process As String = "Connecting to " & selectedsign & Constants.vbCr
         Dim bgw As System.ComponentModel.BackgroundWorker = sender
 
-
+        'we have a temporary instance of form open the file each time.
+        'this is one (sloppy) way to get around thread issues
+        Dim temp_remote_signform As RemoteSignsForm = New RemoteSignsForm
+        temp_remote_signform.init()
         ''
 
-        For Each sign As RemoteSignsForm.remoteSign In RemoteSignsForm.remoteSignList
+        For Each sign As RemoteSignsForm.remoteSign In temp_remote_signform.remoteSignList
 
             If (sign.signname = selectedsign) Then
                 FTP_username = sign.username
                 FTP_password = sign.password
 
                 If sign.ip = "" Then
-                    FTP_URI = New Uri(RemoteSignsForm.remoteSign.default_ip)
+
+                    FTP_IP = RemoteSignsForm.remoteSign.default_ip
+                    'FTP_URI = New Uri("ftp://" & RemoteSignsForm.remoteSign.default_ip)
                 Else
-                    FTP_URI = New Uri(sign.ip)
+                    FTP_IP = sign.ip
+
+                    'FTP_URI = New Uri("ftp://" & sign.ip)
+
+                    'FTP_URI = New Uri("ftp://" & FTP_IP)
                 End If
 
             End If
@@ -81,7 +90,11 @@ Public Class SignConnection_FTP
     End Sub
     Dim bgw As System.ComponentModel.BackgroundWorker
     Private WithEvents myFtpUploadWebClient As New Net.WebClient
+    Private Sub myFtpUploadWebClient_UploadProgress(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
+        MsgBox(e.Result)
+        Dim breakointholder As Int16 = 5
 
+    End Sub
     Private Sub myFtpUploadWebClient_UploadProgressChanged(ByVal sender As Object, ByVal e As System.Net.UploadProgressChangedEventArgs) Handles myFtpUploadWebClient.UploadProgressChanged
         Dim process As String = "Sending data to sign" & Constants.vbCr
 
@@ -93,8 +106,7 @@ Public Class SignConnection_FTP
 
         Dim totalBytesToSend As Long = e.TotalBytesToSend
 
-
-
+        Dim ustate = e.UserState
 
         'for reporting progress percentage, you have that already inside UploadProgressChangedEventArgs:
 
@@ -102,67 +114,93 @@ Public Class SignConnection_FTP
 
     End Sub
 
+
+    'this delegate can not be defined within a funtion running in a seperate thread
+    'the rules of marshalling required to be defined in the primay thread
+    'also it can not be defined outside of a function because an inner exceptions occurs durring startup
+    Dim generate_file_output As getStringDelegate
+    Protected Overrides Sub sendData_do()
+        generate_file_output = AddressOf Form1.generate_file_output
+        MyBase.sendData_do()
+    End Sub
     Protected Overrides Sub sendData_backgroundWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
         'Dim bgw As System.ComponentModel.BackgroundWorker = sender
 
         bgw = sender
 
-        MsgBox("bgw ok")
+        'MsgBox("bgw ok")
         Try
 
-        
 
 
 
 
-        'create temporary file
+
+            'create temporary file
+            'MsgBox(1)
 
 
-        'this section is to create a backup in the unlikely event that the user has a file with the name we need to upload
-        Dim tempfilcounter As Int16 = 0
-        If (My.Computer.FileSystem.FileExists(selectedsign & ".data")) Then
-            tempfilcounter += 1
-            While My.Computer.FileSystem.FileExists(selectedsign & "_back" & tempfilcounter & " .data")
+            'this section is to create a backup in the unlikely event that the user has a file with the name we need to upload
+            Dim tempfilcounter As Int16 = 0
+            If (My.Computer.FileSystem.FileExists(selectedsign & ".data")) Then
                 tempfilcounter += 1
+                While My.Computer.FileSystem.FileExists(selectedsign & "_back" & tempfilcounter & " .data")
+                    tempfilcounter += 1
+                End While
+
+                My.Computer.FileSystem.RenameFile(selectedsign & ".data", selectedsign & "_back" & tempfilcounter & " .data")
+            End If
+            'MsgBox(2)
+
+            'save the current sign data
+            Dim SW As IO.StreamWriter = IO.File.CreateText(selectedsign & ".data")
+            'MsgBox(3)
+
+
+            'MsgBox(4)
+
+            SW.Write(generate_file_output.Invoke)
+            'MsgBox(1)
+
+
+
+
+            SW.Close()
+
+            'MsgBox(2)
+
+
+
+            'upload file
+            myFtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
+
+            'MsgBox(3)
+            myFtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & selectedsign & ".data"), selectedsign & ".data")
+
+            'MsgBox(4)
+
+
+
+            While myFtpUploadWebClient.IsBusy
+                If bgw.CancellationPending Then
+                    myFtpUploadWebClient.CancelAsync()
+                    e.Cancel = True
+                    Return
+                End If
             End While
 
-            My.Computer.FileSystem.RenameFile(selectedsign & ".data", selectedsign & "_back" & tempfilcounter & " .data")
-        End If
 
-        'save the current sign data
-        Dim SW As IO.StreamWriter = IO.File.CreateText(selectedsign & ".data")
-        SW.Write(Form1.generate_file_output)
-        SW.Close()
+            MsgBox(5)
+            'MsgBox(5)
+            'delete temprary file
+            My.Computer.FileSystem.DeleteFile(selectedsign & ".data")
+            MsgBox(6)
+            If tempfilcounter <> 0 Then
+                'reach here if we started out with a user file that happend to have the same name as our data file
 
-
-
-
-
-        'upload file
-        myFtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
-
-
-        'we want a blocking function call because we are in a background thread
-        myFtpUploadWebClient.UploadFileAsync(FTP_URI, selectedsign & ".data")
-
-        While myFtpUploadWebClient.IsBusy
-            If bgw.CancellationPending Then
-                myFtpUploadWebClient.CancelAsync()
-                e.Cancel = True
-                Return
+                My.Computer.FileSystem.RenameFile(selectedsign & "_back" & tempfilcounter & " .data", selectedsign & ".data")
             End If
-        End While
-
-
-        'delete temprary file
-        My.Computer.FileSystem.DeleteFile(selectedsign & ".data")
-
-        If tempfilcounter <> 0 Then
-            'reach here if we started out with a user file that happend to have the same name as our data file
-
-            My.Computer.FileSystem.RenameFile(selectedsign & "_back" & tempfilcounter & " .data", selectedsign & ".data")
-        End If
-
+            MsgBox(7)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
