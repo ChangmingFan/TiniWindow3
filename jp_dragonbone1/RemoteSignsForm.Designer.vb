@@ -98,11 +98,12 @@ Partial Class RemoteSignsForm
         '
         'But_advanced
         '
+        Me.But_advanced.Enabled = False
         Me.But_advanced.Location = New System.Drawing.Point(2, 233)
         Me.But_advanced.Name = "But_advanced"
-        Me.But_advanced.Size = New System.Drawing.Size(75, 23)
+        Me.But_advanced.Size = New System.Drawing.Size(100, 23)
         Me.But_advanced.TabIndex = 7
-        Me.But_advanced.Text = "Advanced"
+        Me.But_advanced.Text = "Go To Advanced Form"
         Me.But_advanced.UseVisualStyleBackColor = True
         '
         'But_apply
@@ -125,7 +126,7 @@ Partial Class RemoteSignsForm
         '
         'But_cancel
         '
-        Me.But_cancel.Location = New System.Drawing.Point(93, 196)
+        Me.But_cancel.Location = New System.Drawing.Point(111, 196)
         Me.But_cancel.Name = "But_cancel"
         Me.But_cancel.Size = New System.Drawing.Size(75, 23)
         Me.But_cancel.TabIndex = 10
@@ -143,6 +144,7 @@ Partial Class RemoteSignsForm
         '
         'But_deleteSign
         '
+        Me.But_deleteSign.Enabled = False
         Me.But_deleteSign.Location = New System.Drawing.Point(167, 14)
         Me.But_deleteSign.Name = "But_deleteSign"
         Me.But_deleteSign.Size = New System.Drawing.Size(75, 23)

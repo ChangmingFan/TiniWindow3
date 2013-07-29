@@ -345,9 +345,13 @@
             TB_signname.Enabled = False
             TB_username.Enabled = False
             TB_password.Enabled = False
+            But_advanced.Enabled = False
+            But_deleteSign.Enabled = False
         Else
             TB_signname.Enabled = True
             TB_username.Enabled = True
+            But_advanced.Enabled = True
+            But_deleteSign.Enabled = True
 
             'this is set when CB_promptforpassword.Checked is
             'TB_password.Enabled = True
@@ -396,4 +400,57 @@
     Private Sub RemoteSignsForm_Load(sender As System.Object, e As System.EventArgs) Handles MyBase.Load
         init()
     End Sub
+
+
+    Private Sub CB_remotesignlist_refresh()
+
+        databeinginternallymanipulated = True
+
+
+        CB_remoteSignList.SelectedIndex = -1
+        CB_remoteSignList.Items.Clear()
+        For Each this_remotesign As remoteSign In m_remoteSignList
+            CB_remoteSignList.Items.Add(this_remotesign.signname)
+        Next
+        CB_remoteSignList.Text = "Select Sign To Edit"
+        TB_signname.Text = ""
+        TB_username.Text = ""
+        TB_password.Text = ""
+        TB_signname.Enabled = False
+        TB_username.Enabled = False
+        TB_password.Enabled = False
+
+        databeinginternallymanipulated = False
+
+
+    End Sub
+
+    Private Sub But_deleteSign_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_deleteSign.Click
+        Dim user_response As DialogResult = MsgBox("Are you sure you want to delete this sign?", MsgBoxStyle.OkCancel)
+
+        If user_response = DialogResult.OK Then
+            m_remoteSignList.RemoveAt(CB_remoteSignList.SelectedIndex)
+            CB_remotesignlist_refresh()
+
+        End If
+        
+    End Sub
+
+    Private Sub But_advanced_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_advanced.Click
+        ' 3 jobs to do:
+        ' 1-copy the data into the advanced form
+
+        Remote_sign_advanced_config.Working_sign = m_remoteSignList(CB_remoteSignList.SelectedIndex)
+
+        ' 2-blocking show the advanced form
+        Remote_sign_advanced_config.ShowDialog()
+
+        ' 3-copy the data back
+        If Remote_sign_advanced_config.DialogResult = DialogResult.OK Then
+            m_remoteSignList(CB_remoteSignList.SelectedIndex) = Remote_sign_advanced_config.Working_sign
+        End If
+
+
+    End Sub
 End Class
+

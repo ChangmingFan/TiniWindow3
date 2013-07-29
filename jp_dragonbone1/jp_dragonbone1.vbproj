@@ -129,6 +129,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="checkoutobject.vb" />
+    <Compile Include="Remote_sign_advanced_config.Designer.vb">
+      <DependentUpon>Remote_sign_advanced_config.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Remote_sign_advanced_config.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="version_info.vb" />
     <Compile Include="colorpatterns.Designer.vb">
       <DependentUpon>colorpatterns.vb</DependentUpon>
@@ -457,6 +463,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="RemoteSignsForm.resx">
       <DependentUpon>RemoteSignsForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Remote_sign_advanced_config.resx">
+      <DependentUpon>Remote_sign_advanced_config.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="show_trick_data.resx">
       <SubType>Designer</SubType>
