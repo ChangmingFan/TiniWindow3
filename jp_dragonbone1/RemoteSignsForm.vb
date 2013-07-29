@@ -12,10 +12,12 @@
     'information not between start and end tag are ignored and may be used as notes
     Public Structure remoteSign
         Shared default_ip As String = "184.168.86.30"
+        Shared default_directory As String = "dat"
         Dim signname As String
         Dim username As String
         Dim password As String
         Dim ip As String
+        Dim directory As String
         Dim datafilename As String
     End Structure
 

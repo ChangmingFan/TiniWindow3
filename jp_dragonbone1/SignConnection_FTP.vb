@@ -7,6 +7,7 @@ Public Class SignConnection_FTP
     Dim FTP_username As String
     Dim FTP_password As String
     Dim FTP_IP As String
+    Dim FTP_directory As String
 
 
     Public Overrides ReadOnly Property allSigns_working() As ArrayList
@@ -76,6 +77,12 @@ Public Class SignConnection_FTP
                     'FTP_URI = New Uri("ftp://" & FTP_IP)
                 End If
 
+                If sign.directory = "" Then
+                    FTP_directory = RemoteSignsForm.remoteSign.default_directory
+                Else
+                    FTP_directory = sign.directory
+                End If
+
             End If
         Next
         'Dim FPT_URI As Uri
@@ -91,7 +98,13 @@ Public Class SignConnection_FTP
     Dim bgw As System.ComponentModel.BackgroundWorker
     Private WithEvents myFtpUploadWebClient As New Net.WebClient
     Private Sub myFtpUploadWebClient_UploadProgress(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
-        MsgBox(e.Result)
+        'MsgBox(e.Result)
+        Try
+            Dim res As Byte() = e.Result
+        Catch ex As Exception
+            MsgBox("an error occurs sendign the file!")
+        End Try
+
         Dim breakointholder As Int16 = 5
 
     End Sub
@@ -175,7 +188,7 @@ Public Class SignConnection_FTP
             myFtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
 
             'MsgBox(3)
-            myFtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & selectedsign & ".data"), selectedsign & ".data")
+            myFtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"), selectedsign & ".data")
 
             'MsgBox(4)
 
