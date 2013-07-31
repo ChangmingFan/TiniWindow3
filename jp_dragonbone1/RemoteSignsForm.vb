@@ -375,7 +375,7 @@
         Me.Close()
     End Sub
 
-    Private Sub But_apply_Click(sender As System.Object, e As System.EventArgs) Handles But_apply.Click
+    Private Sub But_apply_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_apply.Click
         savefile(filename)
     End Sub
 
@@ -452,5 +452,7 @@
 
 
     End Sub
+
+
 End Class
 
