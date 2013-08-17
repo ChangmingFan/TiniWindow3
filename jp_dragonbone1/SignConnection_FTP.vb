@@ -146,9 +146,6 @@ Public Class SignConnection_FTP
 
 
 
-
-
-
             'create temporary file
             'MsgBox(1)
 
@@ -176,8 +173,6 @@ Public Class SignConnection_FTP
             'MsgBox(1)
 
 
-
-
             SW.Close()
 
             'MsgBox(2)
@@ -203,17 +198,17 @@ Public Class SignConnection_FTP
             End While
 
 
-            MsgBox(5)
+            'MsgBox(5)
             'MsgBox(5)
             'delete temprary file
             My.Computer.FileSystem.DeleteFile(selectedsign & ".data")
-            MsgBox(6)
+            'MsgBox(6)
             If tempfilcounter <> 0 Then
                 'reach here if we started out with a user file that happend to have the same name as our data file
 
                 My.Computer.FileSystem.RenameFile(selectedsign & "_back" & tempfilcounter & " .data", selectedsign & ".data")
             End If
-            MsgBox(7)
+            'MsgBox(7)
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try

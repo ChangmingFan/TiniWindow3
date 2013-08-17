@@ -3,6 +3,7 @@
 
     'version coments go here
 
+    '2013081413-CMF-JP: Remove debugging msgs. 
     '20130730-CMF: put applu but in invisible and add colors of OK/Cancel buttons.
     '20130729-jp-CMF: implement advanced form etc.
     '20130727-jpmodified to have files uploaded to default directory instead of root of FTP server
@@ -15,7 +16,7 @@
     Public Const TiniWindowVersionStandard As Int16 = 1 'first used with version 1.01.005 its abscence warns the update process of inconsistencies in other value
     Public Const TiniWindowMajorVersion As Int16 = 3
     Public Const TiniWindowMinorVersion As String = "01.001"
-    Public Const TiniWindoCompileDate As String = "20130730"
+    Public Const TiniWindoCompileDate As String = "20130815"
     Public Shared TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()
     Public Shared TiniWindowVersion_display_string As String = TiniWindowVersion + "." + TiniWindoCompileDate.ToString + " (Tini-Pi-Lite supported) " ' not used in update process
 
