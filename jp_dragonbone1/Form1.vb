@@ -517,47 +517,47 @@ Public Class Form1
 
     End Function
 
-    Private Function combotabpatterns_dataname_to_displayname(ByVal pattern As String) As String
+    'Private Function combotabpatterns_dataname_to_displayname(ByVal pattern As String) As String
 
-        If pattern = "still" Then
-            Return "Still"
-        ElseIf pattern = "still" Then
-            Return "Still"
+    '    If pattern = "still" Then
+    '        Return "Still"
+    '    ElseIf pattern = "still" Then
+    '        Return "Still"
 
-        ElseIf pattern = "scroll_left" Then
-            Return "< Flow"
-        ElseIf pattern = "scroll_right" Then
-            Return "Flow >"
-        ElseIf pattern = "split_out" Then
-            Return "Split"
-        ElseIf pattern = "join_in" Then
-            Return "Join"
-        ElseIf pattern = "zoom_in_and_out" Then
-            Return "In"
-        ElseIf pattern = "zoom_out_and_in" Then
-            Return "Out"
-        ElseIf pattern = "add_on" Then
-            Return "Adding"
-        ElseIf pattern = "subtract_off" Then
-            Return "Removing"
-        ElseIf pattern = "add_and_subtract" Then
-            Return "Add-Remv"
-        ElseIf pattern = "subtract_and_add" Then
-            Return "Remv-Add"
-
-
-        ElseIf pattern = "blink_slow" Then
-            Return "Flash Sl"
-        ElseIf pattern = "blink_fast" Then
-            Return "Flash Fa"
-
-        Else
-            MsgBox("bad value '" & pattern & "' sent to combotabpatterns_dataname_to_displayname()")
-
-        End If
+    '    ElseIf pattern = "scroll_left" Then
+    '        Return "< Flow"
+    '    ElseIf pattern = "scroll_right" Then
+    '        Return "Flow >"
+    '    ElseIf pattern = "split_out" Then
+    '        Return "Split"
+    '    ElseIf pattern = "join_in" Then
+    '        Return "Join"
+    '    ElseIf pattern = "zoom_in_and_out" Then
+    '        Return "In"
+    '    ElseIf pattern = "zoom_out_and_in" Then
+    '        Return "Out"
+    '    ElseIf pattern = "add_on" Then
+    '        Return "Adding"
+    '    ElseIf pattern = "subtract_off" Then
+    '        Return "Removing"
+    '    ElseIf pattern = "add_and_subtract" Then
+    '        Return "Add-Remv"
+    '    ElseIf pattern = "subtract_and_add" Then
+    '        Return "Remv-Add"
 
 
-    End Function
+    '    ElseIf pattern = "blink_slow" Then
+    '        Return "Flash Sl"
+    '    ElseIf pattern = "blink_fast" Then
+    '        Return "Flash Fa"
+
+    '    Else
+    '        MsgBox("bad value '" & pattern & "' sent to combotabpatterns_dataname_to_displayname()")
+
+    '    End If
+
+
+    'End Function
 
     Private Function combotabpatterns_displayname_to_dataname(ByVal pattern As String) As String
 
@@ -4441,7 +4441,7 @@ Public Class Form1
     Public myRemoteSignsForm As RemoteSignsForm = New RemoteSignsForm
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         Tab_Easy.Hide()
-        Tab_Combo.Hide()
+        'Tab_Combo.Hide()
 
 
         'testform.Show()
@@ -4587,8 +4587,11 @@ Public Class Form1
         If (settings(settingsindex.showwelcomeform)) Then
             mywelcome_form.show()
         End If
-        Me.Height = screenHeight
-        Me.Location = New System.Drawing.Point(screenWidth - Me.Width - 15, screenHeight - Me.Height)
+        If Me.Height > screenHeight Then
+            Me.Height = screenHeight
+        End If
+
+        Me.Location = New System.Drawing.Point(screenWidth - Me.Width - 15, 10)
 
         FileName = NOFILE
         'settings(settingsindex.askforname) = True
@@ -4685,13 +4688,13 @@ Public Class Form1
 
 
         simulator_form._initialize()
-        simulator_form.Show()
+        'simulator_form.Show()
 
 
 
         colorpatterns._initialize()
 
-        combotab_refresh()
+        'combotab_refresh()
 
 
         'MsgBox('NUDreps06.Value)
@@ -8084,7 +8087,7 @@ Public Class Form1
 
                 trickdata = New ArrayList 'not neccesray (and wrong) to initialize becaue first few EEprom values stored in file
 
-                If Me.currenttrickcodingversion = Me.TRICKCODINGVERSION_LINESONLY_PRE_20110310 Then
+                If Me.currenttrickcodingversion = Form1.TRICKCODINGVERSION_LINESONLY_PRE_20110310 Then
                     While (SR.Length > 0)
 
                         Dim value As Int16 = Asc(SR(0))
@@ -8100,7 +8103,7 @@ Public Class Form1
                     End While
 
 
-                ElseIf Me.currenttrickcodingversion = Me.TRICKCODINGVERSION_LINESONLY_CURRENT Then
+                ElseIf Me.currenttrickcodingversion = Form1.TRICKCODINGVERSION_LINESONLY_CURRENT Then
                     While (SR.Length > 0)
                         If (SR.EndsWith(Constants.vbCrLf)) Then
                             SR = SR.Substring(0, SR.Length - 2)
@@ -9918,11 +9921,12 @@ Public Class Form1
 
         currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT
 
-        If TabControl1.SelectedTab Is Tab_Combo Then
+        'If TabControl1.SelectedTab Is Tab_Combo Then
 
-            combotab_clear_data()
+        'combotab_clear_data()
 
-        ElseIf TabControl1.SelectedTab Is Me.Tab_Lines Then
+        'ElseIf TabControl1.SelectedTab Is Me.Tab_Lines Then
+        If TabControl1.SelectedTab Is Me.Tab_Lines Then
             'Dim linecountcopy As Integer = textdata.Count
 
             Dim loopcounte As Integer = 0
@@ -9952,7 +9956,7 @@ Public Class Form1
             setlinecount(1) 'make it so that there is one blanc line
 
             Me.refresh_freestyle_text()
-        
+
         Else
             MsgBox("missing functionality for selected tab !")
         End If
@@ -17409,62 +17413,62 @@ Public Class Form1
 
 
 
-            ElseIf TabControl1.SelectedTab Is Tab_Combo Then
+                'ElseIf TabControl1.SelectedTab Is Tab_Combo Then
 
 
 
                 'combo tab    
-                If currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT Then
-                    'unable to view this file in combo tab
+                'If currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT Then
+                '    'unable to view this file in combo tab
 
-                    TabControl1.SelectedTab = previoustab
-
-
-                    'Dim restorevalue2 = databeinginternallymanipulated
-                    'databeinginternallymanipulated = False 'prevent tripping wqatchdog timmer
+                '    TabControl1.SelectedTab = previoustab
 
 
-                    Dim restorevalue3 = databeinginternallymanipulated
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    Dim result = dialog_unable_to_display_combo_tab.ShowDialog()
-                    databeinginternallymanipulated = restorevalue3
-                    If result = Windows.Forms.DialogResult.OK Then
-
-                        'Pan_bluetabs.Parent = Tab_easy
-
-                        TabControl1.SelectedTab = Tab_Combo
-
-                        'recursive = False
-                        'some of the newfile functionality requires setting panels without recursive flag set
-
-                        'Pan_bluetabs.Parent = Tab_Combo
-                        If Not newfile() Then
-
-                            'recursive = True
-                            TabControl1.SelectedTab = previoustab
-                            'Pan_bluetabs.Parent = previoustab
-
-                        End If
-
-                        'recursive = True
-                    ElseIf result = Windows.Forms.DialogResult.Cancel Then
-                        'do nothing
-                        'ie previous tab showing
-                    ElseIf result = Windows.Forms.DialogResult.Yes Then
-
-                        'restore a previously stored version of the file and then show the easy tab
-                        dialog_unable_to_display_combo_tab.backupfile(dialog_unable_to_display_easy_tab.backupfileflags.restoreStoredState)
+                '    'Dim restorevalue2 = databeinginternallymanipulated
+                '    'databeinginternallymanipulated = False 'prevent tripping wqatchdog timmer
 
 
-                        TabControl1.SelectedTab = Tab_Combo
-                        'Pan_bluetabs.Parent = Tab_Combo
+                '    Dim restorevalue3 = databeinginternallymanipulated
+                '    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+                '    Dim result = dialog_unable_to_display_combo_tab.ShowDialog()
+                '    databeinginternallymanipulated = restorevalue3
+                '    'If result = Windows.Forms.DialogResult.OK Then
 
-                    End If
+                '    '    'Pan_bluetabs.Parent = Tab_easy
+
+                '    '    TabControl1.SelectedTab = Tab_Combo
+
+                '    '    'recursive = False
+                '    '    'some of the newfile functionality requires setting panels without recursive flag set
+
+                '    '    'Pan_bluetabs.Parent = Tab_Combo
+                '    '    If Not newfile() Then
+
+                '    '        'recursive = True
+                '    '        TabControl1.SelectedTab = previoustab
+                '    '        'Pan_bluetabs.Parent = previoustab
+
+                '    '    End If
+
+                '    '    'recursive = True
+                '    'ElseIf result = Windows.Forms.DialogResult.Cancel Then
+                '    '    'do nothing
+                '    '    'ie previous tab showing
+                '    'ElseIf result = Windows.Forms.DialogResult.Yes Then
+
+                '    '    'restore a previously stored version of the file and then show the easy tab
+                '    '    dialog_unable_to_display_combo_tab.backupfile(dialog_unable_to_display_easy_tab.backupfileflags.restoreStoredState)
 
 
-                Else
-                    'Pan_bluetabs.Parent = Tab_Combo
-                End If
+                '    '    TabControl1.SelectedTab = Tab_Combo
+                '    '    'Pan_bluetabs.Parent = Tab_Combo
+
+                '    'End If
+
+
+                'Else
+                '    'Pan_bluetabs.Parent = Tab_Combo
+                'End If
 
 
             ElseIf TabControl1.SelectedTab Is Tab_FreeStyle Then
@@ -18091,8 +18095,8 @@ Public Class Form1
 
         'jp 122612 suspects that 16 may have been hardcoded because of TiniWindow having problems with 17 or more cards)
         'If value > 16 Then
-        If value > Me.MAX_LINELENGTH Then
-            MsgBox("Error this version of TiniWindow supports a maximum of " + Me.MAX_LINELENGTH + " lite cards in demo")
+        If value > Form1.MAX_LINELENGTH Then
+            MsgBox("Error this version of TiniWindow supports a maximum of " + Form1.MAX_LINELENGTH + " lite cards in demo")
 
             'LiteCard0.Visible = True
         End If
@@ -18148,15 +18152,17 @@ Public Class Form1
 
             longestlinelength = get_longest_linelength()
 
-        ElseIf tabworkingin Is Tab_Combo Then
-            'longestlinelength is irrelivent
+            ''ElseIf tabworkingin Is Tab_Combo Then
+            ''    'longestlinelength is irrelivent
         Else
             MsgBox("error - programmer has added another tab and not accounted for it in set_linelength()")
         End If
 
 
 
-        If tabworkingin Is Tab_Combo Then
+        'If tabworkingin Is Tab_Combo Then
+        If False Then
+
 
             settings(settingsindex.linelength) = value
 
@@ -20136,20 +20142,20 @@ Public Class Form1
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
     '''''''''''''''''''''''''''''''''''combo tab functions''''''''''''''''''''''''''''''
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Public Sub combotab_refresh()
+    'Public Sub combotab_refresh()
 
-        initialize_legacysettings()
+    '    initialize_legacysettings()
 
 
-        combotab_position_elements()
-        combotab_initialize_keywordallignment()
+    '    combotab_position_elements()
+    '    combotab_initialize_keywordallignment()
 
-        combotab_refreshpatterns()
-        refresh_available_lines()
+    '    combotab_refreshpatterns()
+    '    refresh_available_lines()
 
-        combotab_refreshlinedata()
+    '    combotab_refreshlinedata()
 
-    End Sub
+    'End Sub
 
     Public Sub combotab_clear_data()
 
@@ -20890,165 +20896,165 @@ Public Class Form1
 
 
 
-    Public Sub combotab_refreshpatterns()
+    'Public Sub combotab_refreshpatterns()
 
 
-        Dim patternames As String() = System.Enum.GetNames(GetType(combotab_patterns))
-        Dim loopcounter As Int16 = 0
+    '    Dim patternames As String() = System.Enum.GetNames(GetType(combotab_patterns))
+    '    Dim loopcounter As Int16 = 0
 
-        While loopcounter < patternames.Length
-            Dim thispattername As String = patternames(loopcounter)
-            thispattername = Me.combotabpatterns_dataname_to_displayname(thispattername)
-            'thispattername = thispattername.Replace(" and ", " & ")
+    '    While loopcounter < patternames.Length
+    '        Dim thispattername As String = patternames(loopcounter)
+    '        thispattername = Me.combotabpatterns_dataname_to_displayname(thispattername)
+    '        'thispattername = thispattername.Replace(" and ", " & ")
 
-            'thispattername = jpstringsfunctions.capitolizewords(thispattername)
+    '        'thispattername = jpstringsfunctions.capitolizewords(thispattername)
 
-            CBpattern00.Items.Add(thispattername)
-            CBpattern01.Items.Add(thispattername)
-            CBpattern02.Items.Add(thispattername)
-            CBpattern03.Items.Add(thispattername)
-            CBpattern04.Items.Add(thispattername)
-            CBpattern05.Items.Add(thispattername)
-            CBpattern06.Items.Add(thispattername)
-            CBpattern07.Items.Add(thispattername)
-            CBpattern08.Items.Add(thispattername)
-            CBpattern09.Items.Add(thispattername)
-            'CBpattern10.Items.Add(thispattername)
-            'CBpattern11.Items.Add(thispattername)
-            'CBpattern12.Items.Add(thispattername)
-            'CBpattern13.Items.Add(thispattername)
-            'CBpattern14.Items.Add(thispattername)
-            'CBpattern15.Items.Add(thispattername)
-            'CBpattern16.Items.Add(thispattername)
-            'CBpattern17.Items.Add(thispattername)
-            'CBpattern18.Items.Add(thispattername)
-            'CBpattern19.Items.Add(thispattername)
-
-
-            loopcounter += 1
-        End While
-
-        CBpattern00.SelectedIndex = 0
-        CBpattern01.SelectedIndex = 0
-        CBpattern02.SelectedIndex = 0
-        CBpattern03.SelectedIndex = 0
-        CBpattern04.SelectedIndex = 0
-        CBpattern05.SelectedIndex = 0
-        CBpattern06.SelectedIndex = 0
-        CBpattern07.SelectedIndex = 0
-        CBpattern08.SelectedIndex = 0
-        CBpattern09.SelectedIndex = 0
-        'CBpattern10.SelectedIndex = 0
-        'CBpattern11.SelectedIndex = 0
-        'CBpattern12.SelectedIndex = 0
-        'CBpattern13.SelectedIndex = 0
-        'CBpattern14.SelectedIndex = 0
-        'CBpattern15.SelectedIndex = 0
-        'CBpattern16.SelectedIndex = 0
-        'CBpattern17.SelectedIndex = 0
-        'CBpattern18.SelectedIndex = 0
-        'CBpattern19.SelectedIndex = 0
+    '        CBpattern00.Items.Add(thispattername)
+    '        CBpattern01.Items.Add(thispattername)
+    '        CBpattern02.Items.Add(thispattername)
+    '        CBpattern03.Items.Add(thispattername)
+    '        CBpattern04.Items.Add(thispattername)
+    '        CBpattern05.Items.Add(thispattername)
+    '        CBpattern06.Items.Add(thispattername)
+    '        CBpattern07.Items.Add(thispattername)
+    '        CBpattern08.Items.Add(thispattername)
+    '        CBpattern09.Items.Add(thispattername)
+    '        'CBpattern10.Items.Add(thispattername)
+    '        'CBpattern11.Items.Add(thispattername)
+    '        'CBpattern12.Items.Add(thispattername)
+    '        'CBpattern13.Items.Add(thispattername)
+    '        'CBpattern14.Items.Add(thispattername)
+    '        'CBpattern15.Items.Add(thispattername)
+    '        'CBpattern16.Items.Add(thispattername)
+    '        'CBpattern17.Items.Add(thispattername)
+    '        'CBpattern18.Items.Add(thispattername)
+    '        'CBpattern19.Items.Add(thispattername)
 
 
+    '        loopcounter += 1
+    '    End While
 
-
-        Return
-
-        'below is old code
-
-        'commented out patterns have not yet been implimented
-
-
-        combo_patterns.Clear()
-        'combo_patterns.Add("(none)")
-        combo_patterns.Add("Still")
-        combo_patterns.Add("Scroll Left")
-        combo_patterns.Add("Scroll Right")
-        'combo_patterns.Add("Join In")
-        combo_patterns.Add("Split Out")
-        'combo_patterns.Add("Zoom In and Out")
-        'combo_patterns.Add("Zoom Out and In")
-        combo_patterns.Add("Add On")
-        combo_patterns.Add("Subtract Off")
-        combo_patterns.Add("Add and Subtract")
-        'combo_patterns.Add("Subtract and Add")
-        'combo_patterns.Add("Custom")
-
-
-        'For Each id As Int32 In people_ids_temp
-
-        CBpattern00.Items.Clear()
-        CBpattern01.Items.Clear()
-        CBpattern02.Items.Clear()
-        CBpattern03.Items.Clear()
-        CBpattern04.Items.Clear()
-        CBpattern05.Items.Clear()
-        CBpattern06.Items.Clear()
-        CBpattern07.Items.Clear()
-        CBpattern08.Items.Clear()
-        CBpattern09.Items.Clear()
-        'CBpattern10.Items.Clear()
-        'CBpattern11.Items.Clear()
-        'CBpattern12.Items.Clear()
-        'CBpattern13.Items.Clear()
-        'CBpattern14.Items.Clear()
-        'CBpattern15.Items.Clear()
-        'CBpattern16.Items.Clear()
-        'CBpattern17.Items.Clear()
-        'CBpattern18.Items.Clear()
-        'CBpattern19.Items.Clear()
-
-
-        For Each pattern As String In combo_patterns
-
-            CBpattern00.Items.Add(pattern)
-            CBpattern01.Items.Add(pattern)
-            CBpattern02.Items.Add(pattern)
-            CBpattern03.Items.Add(pattern)
-            CBpattern04.Items.Add(pattern)
-            CBpattern05.Items.Add(pattern)
-            CBpattern06.Items.Add(pattern)
-            CBpattern07.Items.Add(pattern)
-            CBpattern08.Items.Add(pattern)
-            CBpattern09.Items.Add(pattern)
-            'CBpattern10.Items.Add(pattern)
-            'CBpattern11.Items.Add(pattern)
-            'CBpattern12.Items.Add(pattern)
-            'CBpattern13.Items.Add(pattern)
-            'CBpattern14.Items.Add(pattern)
-            'CBpattern15.Items.Add(pattern)
-            'CBpattern16.Items.Add(pattern)
-            'CBpattern17.Items.Add(pattern)
-            'CBpattern18.Items.Add(pattern)
-            'CBpattern19.Items.Add(pattern)
+    '    CBpattern00.SelectedIndex = 0
+    '    CBpattern01.SelectedIndex = 0
+    '    CBpattern02.SelectedIndex = 0
+    '    CBpattern03.SelectedIndex = 0
+    '    CBpattern04.SelectedIndex = 0
+    '    CBpattern05.SelectedIndex = 0
+    '    CBpattern06.SelectedIndex = 0
+    '    CBpattern07.SelectedIndex = 0
+    '    CBpattern08.SelectedIndex = 0
+    '    CBpattern09.SelectedIndex = 0
+    '    'CBpattern10.SelectedIndex = 0
+    '    'CBpattern11.SelectedIndex = 0
+    '    'CBpattern12.SelectedIndex = 0
+    '    'CBpattern13.SelectedIndex = 0
+    '    'CBpattern14.SelectedIndex = 0
+    '    'CBpattern15.SelectedIndex = 0
+    '    'CBpattern16.SelectedIndex = 0
+    '    'CBpattern17.SelectedIndex = 0
+    '    'CBpattern18.SelectedIndex = 0
+    '    'CBpattern19.SelectedIndex = 0
 
 
 
-        Next
 
-        CBpattern00.SelectedIndex = 0
-        CBpattern01.SelectedIndex = 0
-        CBpattern02.SelectedIndex = 0
-        CBpattern03.SelectedIndex = 0
-        CBpattern04.SelectedIndex = 0
-        CBpattern05.SelectedIndex = 0
-        CBpattern06.SelectedIndex = 0
-        CBpattern07.SelectedIndex = 0
-        CBpattern08.SelectedIndex = 0
-        CBpattern09.SelectedIndex = 0
-        'CBpattern10.SelectedIndex = 0
-        'CBpattern11.SelectedIndex = 0
-        'CBpattern12.SelectedIndex = 0
-        'CBpattern13.SelectedIndex = 0
-        'CBpattern14.SelectedIndex = 0
-        'CBpattern15.SelectedIndex = 0
-        'CBpattern16.SelectedIndex = 0
-        'CBpattern17.SelectedIndex = 0
-        'CBpattern18.SelectedIndex = 0
-        'CBpattern19.SelectedIndex = 0
+    '    Return
+
+    '    'below is old code
+
+    '    'commented out patterns have not yet been implimented
 
 
-    End Sub
+    '    combo_patterns.Clear()
+    '    'combo_patterns.Add("(none)")
+    '    combo_patterns.Add("Still")
+    '    combo_patterns.Add("Scroll Left")
+    '    combo_patterns.Add("Scroll Right")
+    '    'combo_patterns.Add("Join In")
+    '    combo_patterns.Add("Split Out")
+    '    'combo_patterns.Add("Zoom In and Out")
+    '    'combo_patterns.Add("Zoom Out and In")
+    '    combo_patterns.Add("Add On")
+    '    combo_patterns.Add("Subtract Off")
+    '    combo_patterns.Add("Add and Subtract")
+    '    'combo_patterns.Add("Subtract and Add")
+    '    'combo_patterns.Add("Custom")
+
+
+    '    'For Each id As Int32 In people_ids_temp
+
+    '    CBpattern00.Items.Clear()
+    '    CBpattern01.Items.Clear()
+    '    CBpattern02.Items.Clear()
+    '    CBpattern03.Items.Clear()
+    '    CBpattern04.Items.Clear()
+    '    CBpattern05.Items.Clear()
+    '    CBpattern06.Items.Clear()
+    '    CBpattern07.Items.Clear()
+    '    CBpattern08.Items.Clear()
+    '    CBpattern09.Items.Clear()
+    '    'CBpattern10.Items.Clear()
+    '    'CBpattern11.Items.Clear()
+    '    'CBpattern12.Items.Clear()
+    '    'CBpattern13.Items.Clear()
+    '    'CBpattern14.Items.Clear()
+    '    'CBpattern15.Items.Clear()
+    '    'CBpattern16.Items.Clear()
+    '    'CBpattern17.Items.Clear()
+    '    'CBpattern18.Items.Clear()
+    '    'CBpattern19.Items.Clear()
+
+
+    '    For Each pattern As String In combo_patterns
+
+    '        CBpattern00.Items.Add(pattern)
+    '        CBpattern01.Items.Add(pattern)
+    '        CBpattern02.Items.Add(pattern)
+    '        CBpattern03.Items.Add(pattern)
+    '        CBpattern04.Items.Add(pattern)
+    '        CBpattern05.Items.Add(pattern)
+    '        CBpattern06.Items.Add(pattern)
+    '        CBpattern07.Items.Add(pattern)
+    '        CBpattern08.Items.Add(pattern)
+    '        CBpattern09.Items.Add(pattern)
+    '        'CBpattern10.Items.Add(pattern)
+    '        'CBpattern11.Items.Add(pattern)
+    '        'CBpattern12.Items.Add(pattern)
+    '        'CBpattern13.Items.Add(pattern)
+    '        'CBpattern14.Items.Add(pattern)
+    '        'CBpattern15.Items.Add(pattern)
+    '        'CBpattern16.Items.Add(pattern)
+    '        'CBpattern17.Items.Add(pattern)
+    '        'CBpattern18.Items.Add(pattern)
+    '        'CBpattern19.Items.Add(pattern)
+
+
+
+    '    Next
+
+    '    CBpattern00.SelectedIndex = 0
+    '    CBpattern01.SelectedIndex = 0
+    '    CBpattern02.SelectedIndex = 0
+    '    CBpattern03.SelectedIndex = 0
+    '    CBpattern04.SelectedIndex = 0
+    '    CBpattern05.SelectedIndex = 0
+    '    CBpattern06.SelectedIndex = 0
+    '    CBpattern07.SelectedIndex = 0
+    '    CBpattern08.SelectedIndex = 0
+    '    CBpattern09.SelectedIndex = 0
+    '    'CBpattern10.SelectedIndex = 0
+    '    'CBpattern11.SelectedIndex = 0
+    '    'CBpattern12.SelectedIndex = 0
+    '    'CBpattern13.SelectedIndex = 0
+    '    'CBpattern14.SelectedIndex = 0
+    '    'CBpattern15.SelectedIndex = 0
+    '    'CBpattern16.SelectedIndex = 0
+    '    'CBpattern17.SelectedIndex = 0
+    '    'CBpattern18.SelectedIndex = 0
+    '    'CBpattern19.SelectedIndex = 0
+
+
+    'End Sub
 
 
     Public Sub refresh_available_lines()
@@ -28791,7 +28797,7 @@ Public Class Form1
 
 
             'if there are still too many lines after removing all blanc lines bail out
-            If (newtextdata.Count > Me.MAXLINES) Then
+            If (newtextdata.Count > Form1.MAXLINES) Then
                 'undo the user's typing
 
                 TxtFreeStyle.Text = previous_text
@@ -28958,7 +28964,7 @@ Public Class Form1
             Return
         ElseIf newconnectiontype = configure_internet.connectiontype.Use_TiniLite_Server Then
 
-            DirectCast(Me.mysignconnections(Me.signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server).addServer(newip, newport, newcompany, newusername, newpassword)
+            DirectCast(Me.mysignconnections(Form1.signconnectionindex.TCPsocket_via_server), SignConnection_Internet_Via_Server).addServer(newip, newport, newcompany, newusername, newpassword)
             'DirectCast(Me.mysignconnections(Me.signconnectionindex.internet), SignConnection_OneSign_internet).logon()
 
 
@@ -29010,4 +29016,6 @@ Public Class Form1
         myRemoteSignsForm.ShowDialog()
 
     End Sub
+
+    
 End Class

@@ -2,11 +2,13 @@
 Public Class SignConnection_FTP
     Inherits SignConnection_OneSign
 
-
-
     Dim FTP_username As String
     Dim FTP_password As String
-    Dim FTP_IP As String
+    'Dim FTP_IP As String '082413 change unto an array
+    Dim FTP_IP_list As ArrayList = New ArrayList
+
+
+
     Dim FTP_directory As String
 
 
@@ -46,10 +48,6 @@ Public Class SignConnection_FTP
 
     Protected Overrides Sub Connect_backgroundWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
 
-
-
-
-
         Dim process As String = "Connecting to " & selectedsign & Constants.vbCr
         Dim bgw As System.ComponentModel.BackgroundWorker = sender
 
@@ -57,37 +55,20 @@ Public Class SignConnection_FTP
         'this is one (sloppy) way to get around thread issues
         Dim temp_remote_signform As RemoteSignsForm = New RemoteSignsForm
         temp_remote_signform.init()
-        ''
-
         For Each sign As RemoteSignsForm.remoteSign In temp_remote_signform.remoteSignList
 
             If (sign.signname = selectedsign) Then
                 FTP_username = sign.username
                 FTP_password = sign.password
-
-                If sign.ip = "" Then
-
-                    FTP_IP = RemoteSignsForm.remoteSign.default_ip
-                    'FTP_URI = New Uri("ftp://" & RemoteSignsForm.remoteSign.default_ip)
-                Else
-                    FTP_IP = sign.ip
-
-                    'FTP_URI = New Uri("ftp://" & sign.ip)
-
-                    'FTP_URI = New Uri("ftp://" & FTP_IP)
-                End If
-
-                If sign.directory = "" Then
-                    FTP_directory = RemoteSignsForm.remoteSign.default_directory
-                Else
-                    FTP_directory = sign.directory
-                End If
-
+                FTP_directory = sign.directory
             End If
-        Next
-        'Dim FPT_URI As Uri
-        ''
 
+            FTP_IP_list.Clear()
+            For Each IP As String In sign.IP_list
+                FTP_IP_list.Add(IP)
+            Next
+
+        Next
         Me.connected = True
 
         bgw.ReportProgress(100, process & "Success! connected to sign " & selectedsign)
@@ -97,6 +78,7 @@ Public Class SignConnection_FTP
     End Sub
     Dim bgw As System.ComponentModel.BackgroundWorker
     Private WithEvents myFtpUploadWebClient As New Net.WebClient
+
     Private Sub myFtpUploadWebClient_UploadProgress(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
         'MsgBox(e.Result)
         Try
@@ -108,7 +90,7 @@ Public Class SignConnection_FTP
         Dim breakointholder As Int16 = 5
 
     End Sub
-    Private Sub myFtpUploadWebClient_UploadProgressChanged(ByVal sender As Object, ByVal e As System.Net.UploadProgressChangedEventArgs) Handles myFtpUploadWebClient.UploadProgressChanged
+    Private Sub FtpUploadWebClient_UploadProgressChanged(ByVal sender As Object, ByVal e As System.Net.UploadProgressChangedEventArgs)
         Dim process As String = "Sending data to sign" & Constants.vbCr
 
         'if you'll want to calculate some ratio between what has been uploaded and what must be
@@ -139,12 +121,19 @@ Public Class SignConnection_FTP
     Protected Overrides Sub sendData_backgroundWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
         'Dim bgw As System.ComponentModel.BackgroundWorker = sender
 
+        'Private WithEvents myFtpUploadWebClient As New Net.WebClient
+        Dim myFtpUploadWebClients As ArrayList = New ArrayList
+
+
+
         bgw = sender
-
         'MsgBox("bgw ok")
+
+        Dim process As String = "Sending data to sign: '" & selectedsign & "'" & Constants.vbCr
+        bgw.ReportProgress(0, process & "uploading files - please wait...")
+
+
         Try
-
-
 
             'create temporary file
             'MsgBox(1)
@@ -176,27 +165,48 @@ Public Class SignConnection_FTP
             SW.Close()
 
             'MsgBox(2)
-
-
-
             'upload file
-            myFtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
+            'myFtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
 
             'MsgBox(3)
-            myFtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"), selectedsign & ".data")
+            For Each FTP_IP As String In FTP_IP_list
+                Dim FtpUploadWebClient As New Net.WebClient
+                FtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
+
+                AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
+                FtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"), selectedsign & ".data")
+                myFtpUploadWebClients.Add(FtpUploadWebClient)
+            Next
 
             'MsgBox(4)
 
+            Dim stilluploading As Boolean = True
+            While stilluploading
+                stilluploading = False
+
+                For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
+                    If bgw.CancellationPending Then
+                        Exit While
+                    End If
+
+                    If FtpUploadWebClient.IsBusy Then
+                        stilluploading = True
+                        Continue While
+                    End If
 
 
-            While myFtpUploadWebClient.IsBusy
-                If bgw.CancellationPending Then
-                    myFtpUploadWebClient.CancelAsync()
-                    e.Cancel = True
-                    Return
-                End If
+                Next
+
+
             End While
 
+            If bgw.CancellationPending Then
+                For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
+                    FtpUploadWebClient.CancelAsync()
+                Next
+                e.Cancel = True
+                Return
+            End If
 
             'MsgBox(5)
             'MsgBox(5)
@@ -223,7 +233,7 @@ Public Class SignConnection_FTP
 
 
 
-        Dim process As String = "Sending data to sign" & Constants.vbCr
+        'Dim process As String = "Sending data to sign" & Constants.vbCr
         'Dim bgw As System.ComponentModel.BackgroundWorker = sender
         Dim maxLinesPerCommand As Int16 = (255 - 14) / (Me.linelength + 4)
         Dim commandscount = Math.Round(linecount / maxLinesPerCommand, 0, MidpointRounding.AwayFromZero)

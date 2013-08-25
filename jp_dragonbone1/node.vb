@@ -2,9 +2,11 @@ Public Class node
     Inherits Panel
 
 
-    Public Event click(ByVal sender) 'shadow parent event because clicking on child controls does not raise
 
-    Private Event mouseclick(ByVal sender) 'disable using parent event
+    '08/24/13 added keyword shadows to both to remove warnings
+    Public Shadows Event click(ByVal sender) 'shadow parent event because clicking on child controls does not raise
+
+    Private Shadows Event mouseclick(ByVal sender) 'disable using parent event
 
 
     Public Enum nodestate

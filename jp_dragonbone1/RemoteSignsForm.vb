@@ -11,8 +11,49 @@
 
     'information not between start and end tag are ignored and may be used as notes
     Public Structure remoteSign
-        Shared default_ip As String = "184.168.86.30"
+        '082413 Instead of singleIP, we now create an array list for IPs
+        Shared default_IP_list As ArrayList
+        Shared Sub init()
+            'next step is to check if "local ip list" file exist and if so use instead of these hardcoded values  
+            If (My.Computer.FileSystem.FileExists("local_FTP_ip.lst") Or My.Computer.FileSystem.FileExists("global_FTP_ip.lst")) Then
+                Dim sr As IO.StreamReader ' = New IO.StreamReader("global_FTP_ip.lst")
+
+                If (My.Computer.FileSystem.FileExists("local_FTP_ip.lst")) Then
+                    sr = New IO.StreamReader("local_FTP_ip.lst")
+                ElseIf (My.Computer.FileSystem.FileExists("global_FTP_ip.lst")) Then
+                    sr = New IO.StreamReader("global_FTP_ip.lst")
+                Else
+                    MsgBox("error in remotesign--init")
+                End If
+
+                default_IP_list = New ArrayList
+                Dim line As String = ""
+
+                While Not sr.EndOfStream
+                    line = sr.ReadLine
+                    If line.Trim <> "" Then
+                        default_IP_list.Add(line)
+                    End If
+                End While
+
+                sr.Close()
+            Else
+                'defualt hardcoded values
+                default_IP_list = New ArrayList
+                default_IP_list.Add("184.168.86.30")
+                default_IP_list.Add("97.74.144.142")
+            End If
+
+
+
+        End Sub
+
+
+
+        'Shared default_ip As String = "184.168.86.30"
         Shared default_directory As String = "dat"
+
+        Dim IP_list As ArrayList
         Dim signname As String
         Dim username As String
         Dim password As String
@@ -24,14 +65,52 @@
     Dim m_remoteSignList As ArrayList = New ArrayList
     Dim formloaded As Boolean = False
 
+
+
+
+
+
+
+
     'function delegates used so properties can be defined to marshal in a multi-threaded invironment
+
+    'functioanlity for making remote sign list available to other parts of program
     Delegate Function getremoteSignDelegate() As remoteSign()
     Dim generate_remoteSignList_delegate As getremoteSignDelegate '= AddressOf generate_remoteSignList
     Private Function generate_remoteSignList() As remoteSign()
         Dim returnvalue(m_remoteSignList.Count - 1) As remoteSign
         Dim i As Integer = 0
         For Each sign As remoteSign In m_remoteSignList
-            returnvalue(i) = sign
+
+            'make sure we are using a copy and not a reference
+            Dim signcopy As remoteSign = New remoteSign
+            signcopy.signname = sign.signname
+            signcopy.username = sign.username
+            signcopy.password = sign.password
+
+            If sign.directory Is Nothing Then
+                signcopy.directory = remoteSign.default_directory
+            Else
+                signcopy.directory = sign.directory
+            End If
+            If signcopy.IP_list Is Nothing Then
+                signcopy.IP_list = New ArrayList
+                For Each ip As String In remoteSign.default_IP_list
+                    signcopy.IP_list.Add(ip)
+                Next
+            Else
+                signcopy.IP_list = New ArrayList
+                For Each ip As String In sign.IP_list
+                    signcopy.IP_list.Add(ip)
+                Next
+            End If
+            If sign.datafilename Is Nothing Then
+                signcopy.datafilename = sign.signname & ".data"
+            Else
+                signcopy.datafilename = sign.datafilename
+            End If
+
+            returnvalue(i) = signcopy
             i += 1
         Next
 
@@ -45,6 +124,9 @@
             Return generate_remoteSignList_delegate.Invoke
         End Get
     End Property
+
+    '''
+
 
     Private Sub savefile(fname)
         Dim SW As IO.StreamWriter = IO.File.CreateText(fname)
@@ -178,8 +260,8 @@
 
         If Not initialized Then
 
-
             initialized = True
+            remoteSign.init()
             generate_remoteSignList_delegate = AddressOf generate_remoteSignList
             If (IO.File.Exists((filename))) Then
                 loadfile(filename)
