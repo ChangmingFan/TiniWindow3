@@ -64,7 +64,7 @@ Public Class SignConnection_FTP
             End If
 
             FTP_IP_list.Clear()
-            For Each IP As String In sign.IP_list
+            For Each IP As String In sign.arrIP_list
                 FTP_IP_list.Add(IP)
             Next
 
@@ -105,7 +105,7 @@ Public Class SignConnection_FTP
 
         'for reporting progress percentage, you have that already inside UploadProgressChangedEventArgs:
 
-        bgw.ReportProgress(e.ProgressPercentage, process & "uploading file to server")
+        'bgw.ReportProgress(e.ProgressPercentage, process & "Uploading file to server, please wait......")
 
     End Sub
 
@@ -129,8 +129,8 @@ Public Class SignConnection_FTP
         bgw = sender
         'MsgBox("bgw ok")
 
-        Dim process As String = "Sending data to sign: '" & selectedsign & "'" & Constants.vbCr
-        bgw.ReportProgress(0, process & "uploading files - please wait...")
+        Dim process As String = "Sending data to sign---------  " & selectedsign & "" & Constants.vbCr
+        bgw.ReportProgress(0, process & "Uploading files       Please wait.............")
 
 
         Try
@@ -222,7 +222,8 @@ Public Class SignConnection_FTP
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-
+        bgw.ReportProgress(99, process & "Finished sending data to  to " & selectedsign)
+        bgw.ReportProgress(100, process & "Finished sending data to  to " & selectedsign)
 
         Return
 

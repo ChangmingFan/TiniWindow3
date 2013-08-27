@@ -15,12 +15,12 @@
 
     Private Sub Remote_sign_advanced_config_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.VisibleChanged
         If Me.Visible Then
-            If Working_sign.ip = "" Then
+            If Working_sign.arrIP_list Is Nothing Then
                 'check default box
                 Chk_IP.Checked = True
             Else
                 'place value in textbox
-                Txt_IP.Text = Working_sign.ip
+                Txt_IP.Text = Working_sign.arrIP_list
             End If
 
 
@@ -47,7 +47,7 @@
     Private Sub Chk_IP_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Chk_IP.CheckedChanged
         If Chk_IP.Checked = True Then
             ' erase data from the ram
-            Working_sign.ip = ""
+            Working_sign.arrIP_list = Nothing
             ' disable the text box
             Txt_IP.Enabled = False
         Else

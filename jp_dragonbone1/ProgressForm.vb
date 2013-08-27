@@ -70,7 +70,7 @@ Public Class ProgressForm
 
         _success = True
         If autocloseatcompletions Then
-
+            Threading.Thread.Sleep(3000)
             'reset()
             Me.Close()
         Else
@@ -163,4 +163,6 @@ Public Class ProgressForm
     Private Sub But_retry_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_retry.VisibleChanged
         Dim breakpointholder = But_retry.Visible
     End Sub
+
+   
 End Class

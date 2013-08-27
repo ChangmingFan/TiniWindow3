@@ -419,6 +419,10 @@ Public Class SignConnection_Base
         myProgressForm.ProgressBar.Value = e.ProgressPercentage
         myProgressForm.LblProgress.Text = progress
 
+        If e.ProgressPercentage = 100 Then
+            Dim breakpointholder As String = "fdsgfs"
+        End If
+
     End Sub
 
     Protected Overridable Sub common_backgroundwork_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs)

@@ -3,15 +3,12 @@
     Dim filename As String = "remoteSignlist.rsl"
     Dim initialized As Boolean = False
 
-    'Dim arrIP_list(5) As String
-
-
-
     '082513 CMF
     'Format of remotrSignlist.rsl :
     '[start SIGNAME]
     'username:USERNAME
-    'ips:IP0I|IP1|IP2|IP3|IP4|IP5   'Total 5 IPs in format xx:xx:xx:xx
+    'password:PASSWORD
+    'ips:IP0|IP1|IP2|IP3|IP4   'Total 5 IPs in format xx.xx.xx.xx
     '[end SIGNAME]
 
     'Jp's old format
@@ -23,65 +20,57 @@
 
     'information not between start and end tag are ignored and may be used as notes
     Public Structure remoteSign
-        '082413 Instead of singleIP, we now create an array list for IPs
+
+        
+        '082713 Instead of singleIP, we now create an array list for IPs
         Shared default_IP_list As ArrayList
+        Shared default_directory As String = "dat"
+        'The default IP_list will be defined in this init fuction before the end of structure
+
+        Dim arrIP_list() As String  'arrIP_list is an array
+        Dim signname As String
+        Dim username As String
+        Dim password As String
+        Dim directory As String
+        Dim datafilename As String
         Shared Sub init()
+            'This subrotine aaonly init for Loadinng the Default IPs, not including user input IPs
             'next step is to check if "local ip list" file exist and if so use instead of these hardcoded values  
             If (My.Computer.FileSystem.FileExists("local_FTP_ip.lst") Or My.Computer.FileSystem.FileExists("global_FTP_ip.lst")) Then
-                Dim sr As IO.StreamReader ' = New IO.StreamReader("global_FTP_ip.lst")
+                Dim SR As IO.StreamReader       ' = New IO.StreamReader("global_FTP_ip.lst")
 
                 If (My.Computer.FileSystem.FileExists("local_FTP_ip.lst")) Then
-                    sr = New IO.StreamReader("local_FTP_ip.lst")
+                    SR = New IO.StreamReader("local_FTP_ip.lst")
                 ElseIf (My.Computer.FileSystem.FileExists("global_FTP_ip.lst")) Then
-                    sr = New IO.StreamReader("global_FTP_ip.lst")
+                    SR = New IO.StreamReader("global_FTP_ip.lst")
                 Else
-                    MsgBox("error in remotesign--init")
+                    MsgBox("Error in remotesign--init !")
                 End If
 
                 default_IP_list = New ArrayList
                 Dim line As String = ""
 
-                While Not sr.EndOfStream
-                    line = sr.ReadLine
+                While Not SR.EndOfStream
+                    line = SR.ReadLine
                     If line.Trim <> "" Then
                         default_IP_list.Add(line)
                     End If
                 End While
 
-                sr.Close()
+                SR.Close()
             Else
                 'defualt hardcoded values
                 default_IP_list = New ArrayList
-                default_IP_list.Add("184.168.86.30")
-                default_IP_list.Add("97.74.144.142")
+                default_IP_list.Add("184.168.86.30")    'This is www.TiniLite.net
+                default_IP_list.Add("97.74.144.142")     'This is www.TiniLite.org
             End If
-
-
 
         End Sub
 
-
-
-        'Shared default_ip As String = "184.168.86.30"
-        Shared default_directory As String = "dat"
-
-        Dim IP_list As ArrayList
-        Dim signname As String
-        Dim username As String
-        Dim password As String
-        Dim ip As String
-        Dim directory As String
-        Dim datafilename As String
     End Structure
 
     Dim m_remoteSignList As ArrayList = New ArrayList
     Dim formloaded As Boolean = False
-
-
-
-
-
-
 
 
     'function delegates used so properties can be defined to marshal in a multi-threaded invironment
@@ -105,15 +94,21 @@
             Else
                 signcopy.directory = sign.directory
             End If
-            If signcopy.IP_list Is Nothing Then
-                signcopy.IP_list = New ArrayList
+            If signcopy.arrIP_list Is Nothing Then
+                Dim temp_arr_list(remoteSign.default_IP_list.Count) As String
+                signcopy.arrIP_list = temp_arr_list
+                Dim j As Int16 = 0
                 For Each ip As String In remoteSign.default_IP_list
-                    signcopy.IP_list.Add(ip)
+                    signcopy.arrIP_list(j) = ip
+                    j += 1
                 Next
             Else
-                signcopy.IP_list = New ArrayList
-                For Each ip As String In sign.IP_list
-                    signcopy.IP_list.Add(ip)
+                Dim temp_arr_list(sign.arrIP_list.Length) As String
+                signcopy.arrIP_list = temp_arr_list
+
+                For Each ip As String In sign.arrIP_list
+                    Dim j As Int16 = 0
+                    signcopy.arrIP_list(j) = ip
                 Next
             End If
             If sign.datafilename Is Nothing Then
@@ -137,10 +132,7 @@
         End Get
     End Property
 
-    '''
-
-
-    Private Sub savefile(fname)
+    Private Sub rsl_savefile(ByVal fname)
         Dim SW As IO.StreamWriter = IO.File.CreateText(fname)
         For Each this_sign As remoteSign In m_remoteSignList
             SW.Write("[start " & this_sign.signname & "]" & Constants.vbCrLf)
@@ -150,8 +142,8 @@
             If this_sign.password <> "" Then
                 SW.Write("password:" & this_sign.password & Constants.vbCrLf)
             End If
-            If this_sign.ip <> "" Then
-                SW.Write("ip:" & this_sign.ip & Constants.vbCrLf)
+            If this_sign.arrIP_list Is Nothing Then
+                SW.Write("ips:" & Join(this_sign.arrIP_list, "|") & Constants.vbCrLf)
             End If
             If this_sign.datafilename <> "" Then
                 SW.Write("datafilename:" & this_sign.datafilename & Constants.vbCrLf)
@@ -162,7 +154,10 @@
         SW.Close()
     End Sub
 
-    Private Sub loadfile(ByVal fname As String)
+    Private Sub rsl_loadfile(ByVal fname As String)
+        'rsl = remote sign list file
+        '        Dim iplist_temp As ArrayList
+
         databeinginternallymanipulated = True
         If (IO.File.Exists(fname)) Then
             m_remoteSignList.Clear()
@@ -206,9 +201,9 @@
                     this_signsdata = filetext.Substring(0, endtagindex)
 
                     'remove this signs data from the sign buffer 
+                    ' vbLf is line feed character
                     filetext = filetext.Substring(endtagindex)
                     filetext = filetext.Substring(filetext.IndexOf(Constants.vbLf))
-
 
                     Dim splitsigndata As String() = this_signsdata.Split(Constants.vbLf)
                     For Each this_data_item As String In splitsigndata
@@ -223,8 +218,9 @@
                         If (this_data_item_name.ToLower = "username") Then
                             this_remoteSign.username = this_data_item_value
 
-                        ElseIf (this_data_item_name.ToLower = "ip") Then
-                            this_remoteSign.ip = this_data_item_value
+                        ElseIf (this_data_item_name.ToLower = "ips") Then
+                            this_remoteSign.arrIP_list = this_data_item_value.Split("|")
+
 
                         ElseIf (this_data_item_name.ToLower = "password") Then
                             this_remoteSign.password = this_data_item_value
@@ -233,10 +229,7 @@
                         ElseIf (this_data_item_name.ToLower = "datafilename") Then
                             this_remoteSign.datafilename = this_data_item_value
 
-
                         End If
-
-
                     Next 'datafield in this sign
 
                     m_remoteSignList.Add(this_remoteSign)
@@ -276,7 +269,7 @@
             remoteSign.init()
             generate_remoteSignList_delegate = AddressOf generate_remoteSignList
             If (IO.File.Exists((filename))) Then
-                loadfile(filename)
+                rsl_loadfile(filename)
             End If
             'Form1.refreshSignMenue()
 
@@ -284,7 +277,8 @@
     End Sub
 
 
-    Private Sub CB_promptforpassword_CheckedChanged(sender As System.Object, e As System.EventArgs) Handles CB_promptforpassword.CheckedChanged
+    Private Sub CB_promptforpassword_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CB_promptforpassword.CheckedChanged
+        'CB = Check Box
         If Not formloaded Then
             Return
         End If
@@ -307,7 +301,7 @@
 
     End Sub
 
-    Private Sub But_newsign_Click(sender As System.Object, e As System.EventArgs) Handles But_newsign.Click
+    Private Sub But_newsign_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_newsign.Click
         Try
             Dim this_remoteSign As remoteSign = New remoteSign
             this_remoteSign.signname = "unnamed_sign"
@@ -321,8 +315,8 @@
 
     End Sub
 
-    Private Sub TB_signname_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_signname.TextChanged
-
+    Private Sub TB_signname_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TB_signname.TextChanged
+        'TB = Text Box
         Static Dim previous_text As String = TB_signname.Text
         Static Dim previous_selection_start As Int16 = TB_signname.SelectionStart
         Static Dim previous_selection_length As Int16 = TB_signname.SelectionLength
@@ -371,7 +365,7 @@
     End Sub
 
 
-    Private Sub TB_username_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_username.TextChanged
+    Private Sub TB_username_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TB_username.TextChanged
         Static Dim previous_text As String = TB_username.Text
         Static Dim previous_selection_start As Int16 = TB_username.SelectionStart
         Static Dim previous_selection_length As Int16 = TB_username.SelectionLength
@@ -420,7 +414,7 @@
 
     End Sub
 
-    Private Sub TB_password_TextChanged(sender As System.Object, e As System.EventArgs) Handles TB_password.TextChanged
+    Private Sub TB_password_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TB_password.TextChanged
         If databeinginternallymanipulated Then
             Return
         End If
@@ -431,7 +425,7 @@
 
     End Sub
 
-    Private Sub CB_remoteSignList_SelectedIndexChanged(sender As System.Object, e As System.EventArgs) Handles CB_remoteSignList.SelectedIndexChanged
+    Private Sub CB_remoteSignList_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CB_remoteSignList.SelectedIndexChanged
         If CB_remoteSignList.SelectedIndex = -1 Then
             TB_signname.Text = ""
             TB_username.Text = ""
@@ -463,25 +457,25 @@
 
     End Sub
 
-    Private Sub But_OK_Click(sender As System.Object, e As System.EventArgs) Handles But_OK.Click
-        savefile(filename)
+    Private Sub But_OK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_OK.Click
+        rsl_savefile(filename)
 
         Me.Close()
     End Sub
 
     Private Sub But_apply_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_apply.Click
-        savefile(filename)
+        rsl_savefile(filename)
     End Sub
 
-    Private Sub But_cancel_Click(sender As System.Object, e As System.EventArgs) Handles But_cancel.Click
+    Private Sub But_cancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles But_cancel.Click
         Me.Close()
     End Sub
 
-    Private Sub RemoteSignsForm_VisibleChanged(sender As System.Object, e As System.EventArgs) Handles MyBase.VisibleChanged
+    Private Sub RemoteSignsForm_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.VisibleChanged
 
         If Me.Visible Then
             If (IO.File.Exists((filename))) Then
-                loadfile(filename)
+                rsl_loadfile(filename)
             End If
             formloaded = True
 
@@ -497,7 +491,7 @@
 
 
     Private Sub CB_remotesignlist_refresh()
-
+        'CB = Check Box
         databeinginternallymanipulated = True
 
 
