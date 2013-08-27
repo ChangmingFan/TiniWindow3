@@ -183,14 +183,14 @@ Public Class Form1
 
     Const TRICKCODINGVERSION_LINESONLY_CURRENT = 2.2
 
-    Const TRICKCODINGVERSION_COMBOKEYWORDS_1_08_01 = 3.1 'this was used on version 1.09.01 support can likely be removed because only distributed version was to pitabite
-    Const TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 = 3.2
-    Const TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT = 3.3
+    'Const TRICKCODINGVERSION_COMBOKEYWORDS_1_08_01 = 3.1 'this was used on version 1.09.01 support can likely be removed because only distributed version was to pitabite
+    'Const TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 = 3.2
+    'Const TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT = 3.3
 
     'version 1.1 and 1.2 pertain to EEprom memory scheam 255 limited to 10 line of 20 chars
     'version 2.1 pertains to EEprom scheem 0
 
-    Public currenttrickcodingversion As Decimal = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT
+   Public currenttrickcodingversion As Decimal = TRICKCODINGVERSION_LINESONLY_CURRENT
     '-1 -> unrecognised coding version, preserve data to write back to file 0->no tricks 1->the current version. in the future 2,3 or other number will be current and 1 will be older
     Dim unrecognisedtrickdata As String
     Dim tricktypenames() As String = {"One Line", "Multiple Lines"}
@@ -201,7 +201,7 @@ Public Class Form1
     Dim trickcodingleftlables As ArrayList = New ArrayList 'of labels 
     Dim trickcodingrightlables As ArrayList = New ArrayList 'of labels 
 
-    Dim trickcodingcontrolls As ArrayList = New ArrayList 'of combobox or text box
+   Dim trickcodingcontrolls As ArrayList = New ArrayList 'of combobox or text box
     Dim trickcodingdecimals As ArrayList = New ArrayList 'decimal display of the controll
 
     Enum tricks_2nd_demention_index
@@ -430,10 +430,10 @@ Public Class Form1
 
             If value And formloaded Then
                 promptbeforedisablingstandadtab = True
-                If Me.currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-                    'if the data is changed while it is possile to view in lines tab, save current data
-                    dialog_unable_to_display_combo_tab.backupfile(dialog_unable_to_display_combo_tab.backupfileflags.saveCurrentState)
-                End If
+                'If Me.currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+                '    'if the data is changed while it is possile to view in lines tab, save current data
+                '    dialog_unable_to_display_combo_tab.backupfile(dialog_unable_to_display_combo_tab.backupfileflags.saveCurrentState)
+                'End If
             End If
 
 
@@ -472,50 +472,50 @@ Public Class Form1
 
 
     Public promptbeforedisablingstandadtab As Boolean = False
-    Enum combotab_patterns
+    'Enum combotab_patterns
 
-        '''''notes pertaining to version 1.09.002 
-        'these names are used internally and in files 
-        'the order of these are listed in may be changed in order to change the order patterns are diaplayed in combo box
-        'the names typed below may NOT be changed with out breaking multiple thing.
-        'to change what displays in the combo box modify the functions 
-        'combotabpatterns_displayname_to_dataname and combotabpatterns_dataname_to_displayname
-        'both functions must be modified simultaniously to avoid breaking things
-
-
+    '    '''''notes pertaining to version 1.09.002 
+    '    'these names are used internally and in files 
+    '    'the order of these are listed in may be changed in order to change the order patterns are diaplayed in combo box
+    '    'the names typed below may NOT be changed with out breaking multiple thing.
+    '    'to change what displays in the combo box modify the functions 
+    '    'combotabpatterns_displayname_to_dataname and combotabpatterns_dataname_to_displayname
+    '    'both functions must be modified simultaniously to avoid breaking things
 
 
-        ''''''old notes (out of date)
-        'convention is that for enum index, all letter must be lowercase and spaces replaced with underscore
-
-        'if conversion not followed, conversions between file, combobox contents, etc may break
-
-        'conversion displaying in combobox makes first letter of each word capitol
 
 
-        still
-        scroll_left
-        scroll_right
-        split_out
-        join_in
-        zoom_in_and_out
-        zoom_out_and_in
-        add_on
-        subtract_off
-        add_and_subtract
-        subtract_and_add
-        blink_slow
-        blink_fast
+    '    ''''''old notes (out of date)
+    '    'convention is that for enum index, all letter must be lowercase and spaces replaced with underscore
 
-    End Enum
+    '    'if conversion not followed, conversions between file, combobox contents, etc may break
 
-    Private Function combotabpatterns_dataname_to_legaydisplayname(ByVal pattern As String) As String
-        'this function was added to avoid changing multiple other functions
-        'eventually clean up will have to be done
-        Return pattern.Replace("_", " ")
+    '    'conversion displaying in combobox makes first letter of each word capitol
 
 
-    End Function
+    '    still
+    '    scroll_left
+    '    scroll_right
+    '    split_out
+    '    join_in
+    '    zoom_in_and_out
+    '    zoom_out_and_in
+    '    add_on
+    '    subtract_off
+    '    add_and_subtract
+    '    subtract_and_add
+    '    blink_slow
+    '    blink_fast
+
+    'End Enum
+
+    'Private Function combotabpatterns_dataname_to_legaydisplayname(ByVal pattern As String) As String
+    '    'this function was added to avoid changing multiple other functions
+    '    'eventually clean up will have to be done
+    '    Return pattern.Replace("_", " ")
+
+
+    'End Function
 
     'Private Function combotabpatterns_dataname_to_displayname(ByVal pattern As String) As String
 
@@ -559,64 +559,64 @@ Public Class Form1
 
     'End Function
 
-    Private Function combotabpatterns_displayname_to_dataname(ByVal pattern As String) As String
+    'Private Function combotabpatterns_displayname_to_dataname(ByVal pattern As String) As String
 
-        'so far this function is not called because we can get these values from the index of the dropdown menu
-        If pattern = "Still" Then
-            Return "still"
+    '    'so far this function is not called because we can get these values from the index of the dropdown menu
+    '    If pattern = "Still" Then
+    '        Return "still"
 
-        ElseIf pattern = "Flow ->" Then
-            Return "scroll_left"
-        ElseIf pattern = "<- Flow" Then
-            Return "scroll_right"
-        ElseIf pattern = "Split" Then
-            Return "split_out"
-        ElseIf pattern = "Join" Then
-            Return "join_in"
-        ElseIf pattern = "In & Out" Then
-            Return "zoom_in_and_out"
-        ElseIf pattern = "Out + In" Then
-            Return "zoom_out_and_in"
-        ElseIf pattern = "Adding" Then
-            Return "add_on"
-        ElseIf pattern = "Removing" Then
-            Return "subtract_off"
-        ElseIf pattern = "Add & Rem" Then
-            Return "add_and_subtract"
-        ElseIf pattern = "Rem & Add" Then
-            Return "subtract_and_add"
-
-
-        ElseIf pattern = "Flash S" Then
-            Return "blink_slow"
-        ElseIf pattern = "Flash F" Then
-            Return "subtract_and_add"
-        Else
-            MsgBox("bad value '" & pattern & "' sent to combotabpatterns_displayname_to_dataname()")
-
-        End If
+    '    ElseIf pattern = "Flow ->" Then
+    '        Return "scroll_left"
+    '    ElseIf pattern = "<- Flow" Then
+    '        Return "scroll_right"
+    '    ElseIf pattern = "Split" Then
+    '        Return "split_out"
+    '    ElseIf pattern = "Join" Then
+    '        Return "join_in"
+    '    ElseIf pattern = "In & Out" Then
+    '        Return "zoom_in_and_out"
+    '    ElseIf pattern = "Out + In" Then
+    '        Return "zoom_out_and_in"
+    '    ElseIf pattern = "Adding" Then
+    '        Return "add_on"
+    '    ElseIf pattern = "Removing" Then
+    '        Return "subtract_off"
+    '    ElseIf pattern = "Add & Rem" Then
+    '        Return "add_and_subtract"
+    '    ElseIf pattern = "Rem & Add" Then
+    '        Return "subtract_and_add"
 
 
-    End Function
+    '    ElseIf pattern = "Flash S" Then
+    '        Return "blink_slow"
+    '    ElseIf pattern = "Flash F" Then
+    '        Return "subtract_and_add"
+    '    Else
+    '        MsgBox("bad value '" & pattern & "' sent to combotabpatterns_displayname_to_dataname()")
 
-    Enum combotab_patterns_legacy
-        'convention is that for enum index, all letter must be lowercase and spaces replaced with underscore
+    '    End If
 
-        'if conversion not followed, conversions between file, combobox contents, etc may break
 
-        'conversion displaying in combobox makes first letter of each word capitol
-        still_108001
-        scroll_left_108001
-        scroll_right_108001
-        split_out_108001
-        add_on_108001
-        subtract_off_108001
-        add_and_subtract_108001
-        'Join_In
-        'Zoom_In_and_Out
-        'Zoom_Out_and_In
-        'Subtract_and_Add
-    End Enum
+    'End Function
+
+    'Enum combotab_patterns_legacy
+    '    'convention is that for enum index, all letter must be lowercase and spaces replaced with underscore
+
+    '    'if conversion not followed, conversions between file, combobox contents, etc may break
+
+    '    'conversion displaying in combobox makes first letter of each word capitol
+    '    still_108001
+    '    scroll_left_108001
+    '    scroll_right_108001
+    '    split_out_108001
+    '    add_on_108001
+    '    subtract_off_108001
+    '    add_and_subtract_108001
+    '    'Join_In
+    '    'Zoom_In_and_Out
+    '    'Zoom_Out_and_In
+    '    'Subtract_and_Add
+    'End Enum
     Enum legacysettingsindex
         showreps
 
@@ -633,7 +633,7 @@ Public Class Form1
 
 
 
-    Dim combo_patterns As ArrayList = New ArrayList
+    'Dim combo_patterns As ArrayList = New ArrayList
 
 
 
@@ -693,7 +693,7 @@ Public Class Form1
         'End Enum
 
 
-        initialize_legacysettings()
+      'initialize_legacysettings()
         'makes the arraylist have the correct number of elements and sets them all to default value
 
 
@@ -4486,7 +4486,7 @@ Public Class Form1
         NUD_lines_cardcount.Maximum = MAX_LINELENGTH
         NUD_cardcount_easytab.Maximum = MAX_LINELENGTH
         NUD_cardcount_freestyletab.Maximum = MAX_LINELENGTH
-        Me.NUD_combo_cardcount.Maximum = MAX_LINELENGTH
+        'Me.NUD_combo_cardcount.Maximum = MAX_LINELENGTH
 
 
 
@@ -4664,8 +4664,8 @@ Public Class Form1
         PDFview_usermanuel_small.LoadFile(USERMANUELFILE)
 
         'showmainhelp()
-        loadvideos()
-        loadpictures()
+        'loadvideos()
+        'loadpictures()
         initialize_textdata()
 
         If Not tricks_set_default() Then
@@ -4764,15 +4764,9 @@ Public Class Form1
         Dim patterntype As Int16 = 0
         Dim dummystirng As String = ""
 
-        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-            'working with combo tab
-            'the lable being set was designed to display patterns pertaining to easy tab
-            Lbl_pattern_type.Text = ""
+        
 
-            Return
-
-
-        ElseIf determine_easy_pattern_type_from_text(dummystirng, patterntype) Then
+        If determine_easy_pattern_type_from_text(dummystirng, patterntype) Then
 
             If selected_easy_pattern_type = easy_pattern_types.add_on And RB_pat_AddOn.Enabled Then
                 Lbl_pattern_type.Text = "Add On"
@@ -4844,55 +4838,55 @@ Public Class Form1
 
             recursive = True
 
-            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
-                If promptbeforedisablingstandadtab Then
+            'If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
+            '    If promptbeforedisablingstandadtab Then
 
 
-                    Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
+            '        Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
 
-                    message += "Are you sure you want to proceed"
+            '        message += "Are you sure you want to proceed"
 
-                    Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
+            '        Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
 
-                    If result = Windows.Forms.DialogResult.Cancel Then
+            '        If result = Windows.Forms.DialogResult.Cancel Then
 
-                        sender.text = previous_strings(Convert.ToInt32(sender.tag))
+            '            sender.text = previous_strings(Convert.ToInt32(sender.tag))
 
-                        recursive = False
-                        Return
-                    Else
+            '            recursive = False
+            '            Return
+            '        Else
 
-                        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-                            'they are using the old file format. assume they wish to continue
+            '            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+            '                'they are using the old file format. assume they wish to continue
 
-                            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+            '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
 
-                        ElseIf currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
+            '            ElseIf currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
 
-                            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+            '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
 
-                        End If
-
-
-                    End If
-                Else
+            '            End If
 
 
-                    'make the change with no prompts
-                    If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+            '        End If
+            '    Else
 
-                        'they are using the old file format. assume they wish to continue
 
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+            '        'make the change with no prompts
+            '        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
 
-                    ElseIf currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
+            '            'they are using the old file format. assume they wish to continue
 
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+            '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
 
-                    End If
+            '        ElseIf currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
 
-                End If
-            End If
+            '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+
+            '        End If
+
+            '    End If
+            'End If
 
 
             deviceandmemorymatch = False
@@ -5118,16 +5112,16 @@ Public Class Form1
             Timer_demo.Stop()
 
 
-            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310 Then
-                'they are using the old file format. assume they wish to continue
+            'If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310 Then
+            '    'they are using the old file format. assume they wish to continue
 
-                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310 'the sign can not store keywords 
+            '    currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310 'the sign can not store keywords 
 
-            Else
+            'Else
 
-                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
 
-            End If
+            'End If
 
 
 
@@ -5286,388 +5280,9 @@ Public Class Form1
         End While
         'mmmmm()
 
-        If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT) Then
-            outputstring += "[trick coding version " + currenttrickcodingversion.ToString + "]" + Constants.vbCrLf
+        
 
-            outputstring += "[TiniWindow Version " & TiniWindowVersion & "." & TiniWindoCompileDate & "]" & Constants.vbCrLf 'in the future will help determine if patters are current or legacy
-            outputstring += "[start trick data]" & trickdata.Count.ToString & Constants.vbCrLf
-            loopcounter = 0
-
-            '    Dim debug1 As String = ""
-            '   Dim debug2 As String = ""
-
-            While (loopcounter < trickdata.Count)
-                'this single byte value is stored in file as 2 hex digits
-
-                '      debug1 &= Chr(trickdata(loopcounter))
-
-                Dim valinhex As String = Hex(trickdata(loopcounter))
-                If valinhex.Length = 1 Then
-                    valinhex = "0" & valinhex 'pad to 2 digits
-                End If
-
-                '     debug2 &= valinhex
-                outputstring += valinhex
-                loopcounter += 1
-            End While
-
-            'MsgBox("[" & debug1 & "]" & Constants.vbCrLf & "[" & debug2 & "]")
-
-            outputstring += Constants.vbCrLf
-            outputstring += "[end trick data]" + Constants.vbCrLf
-            outputstring += "[start keyword data]" + Constants.vbCrLf
-
-            outputstring += keywordallignment(0) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(0) & Constants.vbCrLf
-
-            outputstring += TBkw00.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc00.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc00.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc00.Text + Constants.vbCrLf
-
-
-
-            outputstring += keywordallignment(1) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(1) & Constants.vbCrLf
-            outputstring += TBkw01.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc01.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc01.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc01.Text + Constants.vbCrLf
-
-
-            outputstring += keywordallignment(2) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(2) & Constants.vbCrLf
-            outputstring += TBkw02.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc02.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc02.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc02.Text + Constants.vbCrLf
-
-            outputstring += keywordallignment(3) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(3) & Constants.vbCrLf
-            outputstring += TBkw03.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc03.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc03.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc03.Text + Constants.vbCrLf
-
-
-            outputstring += keywordallignment(4) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(4) & Constants.vbCrLf
-            outputstring += TBkw04.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc04.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc04.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc04.Text + Constants.vbCrLf
-
-
-
-            outputstring += keywordallignment(5) & Constants.vbCrLf
-
-            outputstring += keywordexceedlinelength(5) & Constants.vbCrLf
-
-
-            outputstring += TBkw05.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc05.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc05.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc05.Text + Constants.vbCrLf
-
-
-
-            outputstring += keywordallignment(6) & Constants.vbCrLf
-
-            outputstring += keywordexceedlinelength(6) & Constants.vbCrLf
-
-
-            outputstring += TBkw06.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc06.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc06.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc06.Text + Constants.vbCrLf
-
-
-
-
-
-            outputstring += keywordallignment(7) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(7) & Constants.vbCrLf
-            outputstring += TBkw07.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc07.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc07.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc07.Text + Constants.vbCrLf
-
-
-            outputstring += keywordallignment(8) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(8) & Constants.vbCrLf
-            outputstring += TBkw08.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc08.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc08.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc08.Text + Constants.vbCrLf
-
-
-
-
-            outputstring += keywordallignment(9) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(9) & Constants.vbCrLf
-            outputstring += TBkw09.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc09.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc09.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc09.Text + Constants.vbCrLf
-
-
-            outputstring += "[end keyword data]"
-
-
-        ElseIf (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310) Then
-            outputstring += "[trick coding version " + currenttrickcodingversion.ToString + "]" + Constants.vbCrLf
-
-            outputstring += "[TiniWindow Version " & TiniWindowVersion & "." & TiniWindoCompileDate & "]" & Constants.vbCrLf 'in the future will help determine if patters are current or legacy
-            outputstring += "[start trick data]" & trickdata.Count.ToString & Constants.vbCrLf
-            loopcounter = 0
-            While (loopcounter < trickdata.Count)
-                outputstring += Chr(trickdata(loopcounter))
-                loopcounter += 1
-            End While
-
-            outputstring += Constants.vbCrLf
-            outputstring += "[end trick data]" + Constants.vbCrLf
-            outputstring += "[start keyword data]" + Constants.vbCrLf
-
-            outputstring += keywordallignment(0) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(0) & Constants.vbCrLf
-
-            outputstring += TBkw00.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc00.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc00.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc00.Text + Constants.vbCrLf
-
-
-
-            outputstring += keywordallignment(1) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(1) & Constants.vbCrLf
-            outputstring += TBkw01.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc01.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc01.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc01.Text + Constants.vbCrLf
-
-
-            outputstring += keywordallignment(2) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(2) & Constants.vbCrLf
-            outputstring += TBkw02.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc02.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc02.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc02.Text + Constants.vbCrLf
-
-            outputstring += keywordallignment(3) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(3) & Constants.vbCrLf
-            outputstring += TBkw03.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc03.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc03.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc03.Text + Constants.vbCrLf
-
-
-            outputstring += keywordallignment(4) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(4) & Constants.vbCrLf
-            outputstring += TBkw04.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc04.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc04.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc04.Text + Constants.vbCrLf
-
-
-
-            outputstring += keywordallignment(5) & Constants.vbCrLf
-
-            outputstring += keywordexceedlinelength(5) & Constants.vbCrLf
-
-
-            outputstring += TBkw05.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc05.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc05.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc05.Text + Constants.vbCrLf
-
-
-
-            outputstring += keywordallignment(6) & Constants.vbCrLf
-
-            outputstring += keywordexceedlinelength(6) & Constants.vbCrLf
-
-
-            outputstring += TBkw06.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc06.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc06.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc06.Text + Constants.vbCrLf
-
-
-
-
-
-            outputstring += keywordallignment(7) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(7) & Constants.vbCrLf
-            outputstring += TBkw07.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc07.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc07.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc07.Text + Constants.vbCrLf
-
-
-            outputstring += keywordallignment(8) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(8) & Constants.vbCrLf
-            outputstring += TBkw08.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc08.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc08.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc08.Text + Constants.vbCrLf
-
-
-
-
-            outputstring += keywordallignment(9) & Constants.vbCrLf
-            outputstring += keywordexceedlinelength(9) & Constants.vbCrLf
-            outputstring += TBkw09.Text + Constants.vbCrLf
-            outputstring += combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex) + Constants.vbCrLf
-            outputstring += NUDfc09.Maximum.ToString + Constants.vbCrLf
-            outputstring += NUDfc09.Minimum.ToString + Constants.vbCrLf
-            outputstring += NUDfc09.Text + Constants.vbCrLf
-
-
-            outputstring += "[end keyword data]"
-
-
-
-        ElseIf (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_1_08_01) Then
-            'outputstring += "[trick coding version " + TRICKCODINGVERSION_COMBOKEYWORDS_1_08_01.ToString + "]" + Constants.vbCrLf
-            'outputstring += "[start trick data]" & trickdata.Count.ToString & Constants.vbCrLf
-            'loopcounter = 0
-            'While (loopcounter < trickdata.Count)
-            '    outputstring += Chr(trickdata(loopcounter))
-            '    loopcounter += 1
-            'End While
-
-            'outputstring += Constants.vbCrLf
-            'outputstring += "[end trick data]" + Constants.vbCrLf
-            'outputstring += "[start keyword data]" + Constants.vbCrLf
-
-            'outputstring += TBkw00.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc00.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc00.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc00.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps00.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps00.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps00.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw01.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc01.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc01.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc01.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps01.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps01.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps01.Text + Constants.vbCrLf
-
-
-
-            'outputstring += TBkw02.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc02.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc02.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc02.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps02.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps02.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps02.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw03.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc03.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc03.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc03.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps03.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps03.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps03.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw04.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc04.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc04.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc04.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps04.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps04.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps04.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw05.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc05.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc05.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc05.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps05.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps05.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps05.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw06.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc06.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc06.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc06.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps06.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps06.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps06.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw07.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc07.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc07.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc07.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps07.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps07.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps07.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw08.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc08.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc08.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc08.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps08.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps08.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps08.Text + Constants.vbCrLf
-
-
-            'outputstring += TBkw09.Text + Constants.vbCrLf
-            'outputstring += combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex) + Constants.vbCrLf
-            'outputstring += NUDfc09.Maximum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc09.Minimum.ToString + Constants.vbCrLf
-            'outputstring += NUDfc09.Text + Constants.vbCrLf
-            'outputstring += 'NUDreps09.Maximum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps09.Minimum.ToString + Constants.vbCrLf
-            'outputstring += 'NUDreps09.Text + Constants.vbCrLf
-
-
-
-
-
-
-            'outputstring += "[end keyword data]"
-
-        ElseIf (currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT) Then
+        If (currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT) Then
             outputstring += "[trick coding version " + TRICKCODINGVERSION_LINESONLY_CURRENT.ToString + "]" + Constants.vbCrLf
 
             loopcounter = 0
@@ -5920,2548 +5535,1364 @@ Public Class Form1
             'outputstring += keywordallignment(0).ToString
             'outputstring += keywordexceedlinelength(0).ToString
 
-            If (linein = "[trick coding version 3.2]" Or linein = "[trick coding version 3.3]") Then
+            'If (linein = "[trick coding version 3.2]" Or linein = "[trick coding version 3.3]") Then
 
-                If (linein = "[trick coding version 3.2]") Then
+            '    If (linein = "[trick coding version 3.2]") Then
 
-                    settrickcodingversion(3.2)
-                ElseIf (linein = "[trick coding version 3.3]") Then
-                    settrickcodingversion(3.3)
+            '        settrickcodingversion(3.2)
+            '    ElseIf (linein = "[trick coding version 3.3]") Then
+            '        settrickcodingversion(3.3)
 
-                End If
+            '    End If
 
 
 
 
-                readline(SR, linein)
+            '    readline(SR, linein)
 
-                If linein.StartsWith("[TiniWindow Version") Then
-                    'for now let it work even if this line is missing
-                    'in future line missing may result in corrupt file error
-                    readline(SR, linein)
-                End If
+            '    If linein.StartsWith("[TiniWindow Version") Then
+            '        'for now let it work even if this line is missing
+            '        'in future line missing may result in corrupt file error
+            '        readline(SR, linein)
+            '    End If
 
 
-                If (Not linein.StartsWith("[start trick data]")) Then
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    databeinginternallymanipulated = False
-                    Return False
-                End If
+            '    If (Not linein.StartsWith("[start trick data]")) Then
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("unable to open file! it is corrupt!")
+            '        databeinginternallymanipulated = True
+            '        cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '        databeinginternallymanipulated = False
+            '        Return False
+            '    End If
 
-                trickdata = New ArrayList 'not neccesray (and wrong) to initialize becaue first few EEprom values stored in file
-                Dim trickbytes As Int16
-                Try
-                    trickbytes = Convert.ToInt16(linein.Substring("[start trick data]".Length))
-                Catch ex As Exception
+            '    trickdata = New ArrayList 'not neccesray (and wrong) to initialize becaue first few EEprom values stored in file
+            '    Dim trickbytes As Int16
+            '    Try
+            '        trickbytes = Convert.ToInt16(linein.Substring("[start trick data]".Length))
+            '    Catch ex As Exception
 
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    databeinginternallymanipulated = False
-                    Return False
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("unable to open file! it is corrupt!")
+            '        databeinginternallymanipulated = True
+            '        cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '        databeinginternallymanipulated = False
+            '        Return False
 
-                End Try
+            '    End Try
 
-                Dim bytecounter As Int16 = 0
+            '    Dim bytecounter As Int16 = 0
 
-                If (currenttrickcodingversion = 3.2) Then
+            '    If (currenttrickcodingversion = 3.2) Then
 
 
-                    While bytecounter < trickbytes And SR.Length > 0
+            '        While bytecounter < trickbytes And SR.Length > 0
 
-                        trickdata.Add(Asc(SR(0)))
-                        If SR.Length <= 1 Then
-                            SR = ""
+            '            trickdata.Add(Asc(SR(0)))
+            '            If SR.Length <= 1 Then
+            '                SR = ""
 
-                        Else
-                            SR = SR.Substring(1)
-                        End If
+            '            Else
+            '                SR = SR.Substring(1)
+            '            End If
 
 
 
-                        bytecounter += 1
+            '            bytecounter += 1
 
-                    End While
+            '        End While
 
-                ElseIf (currenttrickcodingversion = 3.3) Then
+            '    ElseIf (currenttrickcodingversion = 3.3) Then
 
-                    If trickbytes Mod 2 = 1 Then
-                        'odd number of bytes signifying an error
+            '        If trickbytes Mod 2 = 1 Then
+            '            'odd number of bytes signifying an error
 
-                    End If
-                    While bytecounter < 2 * trickbytes And SR.Length > 0
+            '        End If
+            '        While bytecounter < 2 * trickbytes And SR.Length > 0
 
-                        Dim val_as_string As String = (SR(0)) & (SR(1)) 'read 2 chars
-                        If SR <= 2 Then
-                            SR = ""
-                        Else
-                            SR = SR.Substring(2)
-                        End If
+            '            Dim val_as_string As String = (SR(0)) & (SR(1)) 'read 2 chars
+            '            If SR <= 2 Then
+            '                SR = ""
+            '            Else
+            '                SR = SR.Substring(2)
+            '            End If
 
 
-                        trickdata.Add(Convert.ToInt16(val_as_string, 16))
+            '            trickdata.Add(Convert.ToInt16(val_as_string, 16))
 
-                        bytecounter += 2
+            '            bytecounter += 2
 
-                    End While
+            '        End While
 
-                Else
-                    MsgBox("bug!")
-                End If
+            '    Else
+            '        MsgBox("bug!")
+            '    End If
 
 
 
-                '''''''
+            '    '''''''
 
-                If (currenttrickcodingversion = 3.2) Then
+            '    If (currenttrickcodingversion = 3.2) Then
 
-                    'the file is old format -  prompt to update
+            '        'the file is old format -  prompt to update
 
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    openoldfiledialog.ShowDialog()
-                    databeinginternallymanipulated = True
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        openoldfiledialog.ShowDialog()
+            '        databeinginternallymanipulated = True
 
-                    If openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Yes Then
-                        'update
-                        settrickcodingversion(3.3)
-                        change = True
+            '        If openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Yes Then
+            '            'update
+            '            settrickcodingversion(3.3)
+            '            change = True
 
-                    ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.No Then
-                        'don't update
+            '        ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.No Then
+            '            'don't update
 
-                    ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Cancel Then
+            '        ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Cancel Then
 
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        refresh_demo()
-                        databeinginternallymanipulated = False
-                        Return False
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            refresh_demo()
+            '            databeinginternallymanipulated = False
+            '            Return False
 
-                    Else
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("error opening file" + Constants.vbCrLf + "please report this bug")
-                        databeinginternallymanipulated = True
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        refresh_demo()
-                        databeinginternallymanipulated = False
-                        Return False
+            '        Else
+            '            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '            MsgBox("error opening file" + Constants.vbCrLf + "please report this bug")
+            '            databeinginternallymanipulated = True
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            refresh_demo()
+            '            databeinginternallymanipulated = False
+            '            Return False
 
 
-                    End If
+            '        End If
 
 
-                End If
+            '    End If
 
 
 
 
-                'Dim tempch As Char = SR.Read
+            '    'Dim tempch As Char = SR.Read
 
-                If (SR(0) <> Constants.vbCr And (SR(1)) <> Constants.vbLf) Then
-                    'there should be a crlf imediatelly after trick data
+            '    If (SR(0) <> Constants.vbCr And (SR(1)) <> Constants.vbLf) Then
+            '        'there should be a crlf imediatelly after trick data
 
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    databeinginternallymanipulated = False
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("unable to open file! it is corrupt!")
+            '        databeinginternallymanipulated = True
+            '        cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '        databeinginternallymanipulated = False
 
-                    Return False
+            '        Return False
 
 
-                End If
-                If SR.Length <= 2 Then
-                    SR = ""
-                Else
-                    SR = SR.Substring(2)
-                End If
+            '    End If
+            '    If SR.Length <= 2 Then
+            '        SR = ""
+            '    Else
+            '        SR = SR.Substring(2)
+            '    End If
 
-                readline(SR, linein)
+            '    readline(SR, linein)
 
-                If (linein <> "[end trick data]") Then
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    databeinginternallymanipulated = False
-                    Return False
-                End If
+            '    If (linein <> "[end trick data]") Then
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("unable to open file! it is corrupt!")
+            '        databeinginternallymanipulated = True
+            '        cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '        databeinginternallymanipulated = False
+            '        Return False
+            '    End If
 
-                readline(SR, linein)
+            '    readline(SR, linein)
 
-                If (linein <> "[start keyword data]") Then
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    databeinginternallymanipulated = False
-                    Return False
-                End If
+            '    If (linein <> "[start keyword data]") Then
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("unable to open file! it is corrupt!")
+            '        databeinginternallymanipulated = True
+            '        cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '        databeinginternallymanipulated = False
+            '        Return False
+            '    End If
 
-                Dim keywordlinecounter As Int16 = 0
-                Dim kewywordcontrollcounter As Int16 = 0
+            '    Dim keywordlinecounter As Int16 = 0
+            '    Dim kewywordcontrollcounter As Int16 = 0
 
 
-                While (readline(SR, linein) And linein <> "[end keyword data]")
+            '    While (readline(SR, linein) And linein <> "[end keyword data]")
 
-                    'this routine will not complain if the file ends with out "[end keywords]" tag as long as data is otherwise complete
+            '        'this routine will not complain if the file ends with out "[end keywords]" tag as long as data is otherwise complete
 
 
-                    If kewywordcontrollcounter = 0 Then
+            '        If kewywordcontrollcounter = 0 Then
 
-                        'these 2 controll counter do not require a seperate condition for each keywordlinecounter 
-                        keywordallignment(keywordlinecounter) = Convert.ToInt16(linein)
-                        kewywordcontrollcounter += 1
-                        Continue While
-                    ElseIf kewywordcontrollcounter = 1 Then
+            '            'these 2 controll counter do not require a seperate condition for each keywordlinecounter 
+            '            keywordallignment(keywordlinecounter) = Convert.ToInt16(linein)
+            '            kewywordcontrollcounter += 1
+            '            Continue While
+            '        ElseIf kewywordcontrollcounter = 1 Then
 
-                        keywordexceedlinelength(keywordlinecounter) = Convert.ToBoolean(linein)
-                        kewywordcontrollcounter += 1
-                        Continue While
-                    End If
+            '            keywordexceedlinelength(keywordlinecounter) = Convert.ToBoolean(linein)
+            '            kewywordcontrollcounter += 1
+            '            Continue While
+            '        End If
 
 
 
-                    If keywordlinecounter = 0 Then
+            '        If keywordlinecounter = 0 Then
 
 
-                        If kewywordcontrollcounter = 2 Then
+            '            If kewywordcontrollcounter = 2 Then
 
-                            'keyword
-                            TBkw00.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern00.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
+            '                'keyword
+            '                TBkw00.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern00.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
 
-                            NUDfc00.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc00.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '                NUDfc00.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc00.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc00.Value = Convert.ToInt16(linein)
-                            ''NUDreps00.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        Else
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc00.Value = Convert.ToInt16(linein)
+            '                ''NUDreps00.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            Else
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
 
-                        End If
+            '            End If
 
-                    ElseIf keywordlinecounter = 1 Then
+            '        ElseIf keywordlinecounter = 1 Then
 
 
 
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw01.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern01.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw01.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern01.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
 
-                            NUDfc01.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc01.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '                NUDfc01.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc01.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc01.Value = Convert.ToInt16(linein)
-                            ''NUDreps01.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        Else
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc01.Value = Convert.ToInt16(linein)
+            '                ''NUDreps01.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            Else
 
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
 
-                        End If
+            '            End If
 
 
-                    ElseIf keywordlinecounter = 2 Then
+            '        ElseIf keywordlinecounter = 2 Then
 
 
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw02.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern02.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw02.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern02.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
 
-                            NUDfc02.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc02.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '                NUDfc02.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc02.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc02.Value = Convert.ToInt16(linein)
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc02.Value = Convert.ToInt16(linein)
 
-                            ''NUDreps02.Value = 1
-                            kewywordcontrollcounter = 0
+            '                ''NUDreps02.Value = 1
+            '                kewywordcontrollcounter = 0
 
 
-                            keywordlinecounter += 1
+            '                keywordlinecounter += 1
 
-                        Else
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-
-                    ElseIf keywordlinecounter = 3 Then
+            '            Else
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+
+            '        ElseIf keywordlinecounter = 3 Then
 
 
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw03.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern03.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw03.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern03.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
 
-                            NUDfc03.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc03.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc03.Value = Convert.ToInt16(linein)
-                            ''NUDreps03.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        Else
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-
-                        End If
-
-                    ElseIf keywordlinecounter = 4 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw04.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern04.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
+            '                NUDfc03.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc03.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc03.Value = Convert.ToInt16(linein)
+            '                ''NUDreps03.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            Else
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+
+            '            End If
+
+            '        ElseIf keywordlinecounter = 4 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw04.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern04.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
 
-                            NUDfc04.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc04.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc04.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                            ''NUDreps04.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        Else
-
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-
-                    ElseIf keywordlinecounter = 5 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw05.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern05.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc05.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc05.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc05.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                            ''NUDreps05.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        Else
-
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-
-                    ElseIf keywordlinecounter = 6 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw06.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern06.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc06.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc06.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc06.Value = Convert.ToInt16(linein)
-
-                            'NUDreps06.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        Else
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-
-
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-
-                    ElseIf keywordlinecounter = 7 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw07.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern07.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc07.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc07.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc07.Value = Convert.ToInt16(linein)
-                            ''NUDreps07.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        Else
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-
-                    ElseIf keywordlinecounter = 8 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw08.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern08.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc08.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc08.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc08.Value = Convert.ToInt16(linein)
-                            ''NUDreps08.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        Else
-
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-
-                    ElseIf keywordlinecounter = 9 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw09.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern09.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc09.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc09.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc09.Value = Convert.ToInt16(linein)
-                            ''NUDreps09.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-
-                        Else
-
-                            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                            MsgBox("error")
-                            databeinginternallymanipulated = True
-                        End If
-                        'endif
-                    Else
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("unable to open this file because it contains more keywords then this version of TiniWindow supports")
-                        databeinginternallymanipulated = True
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        databeinginternallymanipulated = False
-                        Return False
-                    End If
-
-
-                End While
-
-                If kewywordcontrollcounter <> 0 Then
-                    'part of a line was read but not all the controll variables were read
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open this file because it is corupt")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    databeinginternallymanipulated = False
-                    Return False
-
-                End If
-
-                While keywordlinecounter < 10
-                    'fill in lines missing from file using default pattern which is emptylinem still, 1line 0 reps
-
-
-                    'these conditions are a hack to avoid changing each condition below  
-                    If kewywordcontrollcounter = 2 Then
-                        'keyword
-                        linein = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
-
-                    ElseIf kewywordcontrollcounter = 3 Then
-                        'pattern
-                        linein = "still"
-                    ElseIf kewywordcontrollcounter = 4 Then
-                        'lines max
-
-                        linein = "5"
-                    ElseIf kewywordcontrollcounter = 5 Then
-                        'lines min
-                        linein = "0"
-
-                    ElseIf kewywordcontrollcounter = 6 Then
-                        'lines  value
-                        linein = "1"
-
-                    End If
-
-
-                    If kewywordcontrollcounter = 0 Then
-                        keywordallignment(keywordlinecounter) = Convert.ToInt16(linein)
-                    ElseIf kewywordcontrollcounter = 1 Then
-
-                        keywordexceedlinelength(keywordlinecounter) = Convert.ToBoolean(linein)
-
-                    End If
-                    If keywordlinecounter = 0 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-
-                            'keyword
-                            TBkw00.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern00.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc00.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc00.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc00.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        Else
-
-                            ''NUDreps00.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-                    ElseIf keywordlinecounter = 1 Then
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw01.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern01.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc01.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc01.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc01.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        Else
-
-                            ''NUDreps01.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-
-                    ElseIf keywordlinecounter = 2 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw02.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern02.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc02.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc02.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc02.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        Else
-
-                            ''NUDreps02.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-                    ElseIf keywordlinecounter = 3 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw03.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern03.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc03.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc03.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc03.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        Else
-
-                            ''NUDreps03.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 4 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw04.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern04.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc04.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc04.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc04.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        Else
-
-                            ''NUDreps04.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-                    ElseIf keywordlinecounter = 5 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw05.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern05.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc05.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc05.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc05.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        Else
-
-                            ''NUDreps05.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 6 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw06.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern06.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc06.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc06.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc06.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        Else
-
-                            ''NUDreps06.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-                    ElseIf keywordlinecounter = 7 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw07.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern07.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc07.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc07.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc07.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        Else
-
-                            'NUDreps07.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-                    ElseIf keywordlinecounter = 8 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw08.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern08.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc08.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc08.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc08.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        Else
-
-                            'NUDreps08.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-                        End If
-
-                    ElseIf keywordlinecounter = 9 Then
-
-
-                        If kewywordcontrollcounter = 2 Then
-                            'keyword
-                            TBkw09.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'pattern
-                            CBpattern09.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines max
-
-                            NUDfc09.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'lines min
-                            NUDfc09.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'lines  value
-                            NUDfc09.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        Else
-
-                            'NUDreps09.Value = 1
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    End If
-
-
-
-
-
-                End While
-
-
-
-
-                'combotabpatterns_indexnametoindexvalue
-
-
-            ElseIf (linein = "[trick coding version 3.1]") Then
-
-
-
-
-
-                readline(SR, linein)
-
-                If (Not linein.StartsWith("[start trick data]")) Then
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    Return False
-                End If
-                settrickcodingversion(3.2) 'for now we are automatically updating from 3.1 to 3.2
-
-                trickdata = New ArrayList 'not neccesray (and wrong) to initialize becaue first few EEprom values stored in file
-                Dim trickbytes As Int16
-                Try
-                    trickbytes = Convert.ToInt16(linein.Substring("[start trick data]".Length))
-                Catch ex As Exception
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    Return False
-
-                End Try
-
-                Dim bytecounter As Int16 = 0
-
-                While bytecounter < trickbytes And SR.Length > 0
-
-                    trickdata.Add(SR(0))
-                    If SR <= 1 Then
-                        SR = ""
-                    Else
-                        SR = SR.Substring(1)
-                    End If
-
-                    bytecounter += 1
-
-                End While
-
-                'Dim tempch As Char = SR.Read
-
-                If (SR(0)) <> Constants.vbCr And (SR(1)) <> Constants.vbLf Then
-                    'there should be a crlf imediatelly after trick data
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    Return False
-
-
-                End If
-                If SR.Length <= 2 Then
-                    SR = ""
-                Else
-                    SR = SR.Substring(2)
-                End If
-
-                readline(SR, linein)
-
-                If (linein <> "[end trick data]") Then
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    Return False
-                End If
-
-                readline(SR, linein)
-
-                If (linein <> "[start keyword data]") Then
-
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open file! it is corrupt!")
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    Return False
-                End If
-
-                Dim keywordlinecounter As Int16 = 0
-                Dim kewywordcontrollcounter As Int16 = 0
-
-
-                While (readline(SR, linein) And linein <> "[end keyword data]")
-
-                    'this routine will not complain if the file ends with out "[end keywords]" tag as long as data is otherwise complete
-
-                    'a hack
-                    'If kewywordcontrollcounter = 5 Then
-                    '    'reps max
-                    '    linein = 1
-                    'Else
-                    '    kewywordcontrollcounter = 7
-                    '    'reps value
-                    '    linein = 1
-                    'End If
-
-
-                    If keywordlinecounter = 0 Then
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw00.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern00.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
+            '                NUDfc04.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc04.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc04.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '                ''NUDreps04.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            Else
+
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+
+            '        ElseIf keywordlinecounter = 5 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw05.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern05.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc05.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc05.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc05.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '                ''NUDreps05.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            Else
+
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+
+            '        ElseIf keywordlinecounter = 6 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw06.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern06.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc06.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc06.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc06.Value = Convert.ToInt16(linein)
+
+            '                'NUDreps06.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            Else
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+
+
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+
+            '        ElseIf keywordlinecounter = 7 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw07.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern07.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc07.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc07.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc07.Value = Convert.ToInt16(linein)
+            '                ''NUDreps07.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            Else
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+
+            '        ElseIf keywordlinecounter = 8 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw08.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern08.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc08.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc08.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc08.Value = Convert.ToInt16(linein)
+            '                ''NUDreps08.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            Else
+
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+
+            '        ElseIf keywordlinecounter = 9 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw09.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern09.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc09.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc09.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc09.Value = Convert.ToInt16(linein)
+            '                ''NUDreps09.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+
+            '            Else
+
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error")
+            '                databeinginternallymanipulated = True
+            '            End If
+            '            'endif
+            '        Else
+            '            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '            MsgBox("unable to open this file because it contains more keywords then this version of TiniWindow supports")
+            '            databeinginternallymanipulated = True
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            databeinginternallymanipulated = False
+            '            Return False
+            '        End If
+
+
+            '    End While
+
+            '    If kewywordcontrollcounter <> 0 Then
+            '        'part of a line was read but not all the controll variables were read
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("unable to open this file because it is corupt")
+            '        databeinginternallymanipulated = True
+            '        cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '        databeinginternallymanipulated = False
+            '        Return False
+
+            '    End If
+
+            '    While keywordlinecounter < 10
+            '        'fill in lines missing from file using default pattern which is emptylinem still, 1line 0 reps
+
+
+            '        'these conditions are a hack to avoid changing each condition below  
+            '        If kewywordcontrollcounter = 2 Then
+            '            'keyword
+            '            linein = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
+
+            '        ElseIf kewywordcontrollcounter = 3 Then
+            '            'pattern
+            '            linein = "still"
+            '        ElseIf kewywordcontrollcounter = 4 Then
+            '            'lines max
+
+            '            linein = "5"
+            '        ElseIf kewywordcontrollcounter = 5 Then
+            '            'lines min
+            '            linein = "0"
+
+            '        ElseIf kewywordcontrollcounter = 6 Then
+            '            'lines  value
+            '            linein = "1"
+
+            '        End If
+
+
+            '        If kewywordcontrollcounter = 0 Then
+            '            keywordallignment(keywordlinecounter) = Convert.ToInt16(linein)
+            '        ElseIf kewywordcontrollcounter = 1 Then
+
+            '            keywordexceedlinelength(keywordlinecounter) = Convert.ToBoolean(linein)
+
+            '        End If
+            '        If keywordlinecounter = 0 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+
+            '                'keyword
+            '                TBkw00.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern00.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc00.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc00.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc00.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            Else
+
+            '                ''NUDreps00.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+            '        ElseIf keywordlinecounter = 1 Then
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw01.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern01.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc01.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc01.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc01.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            Else
+
+            '                ''NUDreps01.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+
+            '        ElseIf keywordlinecounter = 2 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw02.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern02.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc02.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc02.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc02.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            Else
+
+            '                ''NUDreps02.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+            '        ElseIf keywordlinecounter = 3 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw03.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern03.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc03.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc03.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc03.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            Else
+
+            '                ''NUDreps03.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            End If
+
+            '        ElseIf keywordlinecounter = 4 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw04.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern04.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc04.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc04.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc04.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            Else
+
+            '                ''NUDreps04.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+            '        ElseIf keywordlinecounter = 5 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw05.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern05.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc05.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc05.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc05.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            Else
+
+            '                ''NUDreps05.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            End If
+
+            '        ElseIf keywordlinecounter = 6 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw06.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern06.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc06.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc06.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc06.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            Else
+
+            '                ''NUDreps06.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+            '        ElseIf keywordlinecounter = 7 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw07.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern07.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc07.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc07.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc07.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            Else
+
+            '                'NUDreps07.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+            '        ElseIf keywordlinecounter = 8 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw08.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern08.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc08.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc08.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc08.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            Else
+
+            '                'NUDreps08.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+            '            End If
+
+            '        ElseIf keywordlinecounter = 9 Then
+
+
+            '            If kewywordcontrollcounter = 2 Then
+            '                'keyword
+            '                TBkw09.Text = linein
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 3 Then
+            '                'pattern
+            '                CBpattern09.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 4 Then
+            '                'lines max
+
+            '                NUDfc09.Maximum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            ElseIf kewywordcontrollcounter = 5 Then
+            '                'lines min
+            '                NUDfc09.Minimum = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+
+            '            ElseIf kewywordcontrollcounter = 6 Then
+            '                'lines  value
+            '                NUDfc09.Value = Convert.ToInt16(linein)
+            '                kewywordcontrollcounter += 1
+            '            Else
+
+            '                'NUDreps09.Value = 1
+            '                kewywordcontrollcounter = 0
+            '                keywordlinecounter += 1
+
+            '            End If
+
+            '        End If
+
+
+
+
+
+            '    End While
+
+
+
+
+            '    'combotabpatterns_indexnametoindexvalue
+
+
 
-                            NUDfc00.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc00.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+
+            '    If (linein = "[trick coding version 2.1]" Or linein = "[trick coding version 2.2]") Then
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc00.Value = Convert.ToInt16(linein)
+            '        If linein = "[trick coding version 2.1]" Then
 
+            '            settrickcodingversion(2.1)
+            '        ElseIf linein = "[trick coding version 2.2]" Then
+            '            settrickcodingversion(2.2)
+            '        Else
+            '            MsgBox("error opening file - please report this bug")
 
-                            kewywordcontrollcounter += 1
+            '        End If
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps00.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps00.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
 
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '        trickdata = New ArrayList 'not neccesray (and wrong) to initialize becaue first few EEprom values stored in file
 
-                            'if the file calls for 0 reps set line count to 0
+            '        If Me.currenttrickcodingversion = Form1.TRICKCODINGVERSION_LINESONLY_PRE_20110310 Then
+            '            While (SR.Length > 0)
 
-                            'NUDreps00.Value = 1 ' 
+            '                Dim value As Int16 = Asc(SR(0))
+            '                If SR.Length = 1 Then
+            '                    SR = ""
 
-                            If Convert.ToInt16(linein) = 0 Then
+            '                Else
+            '                    SR = SR(1)
+            '                End If
 
-                                NUDfc00.Value = 0
+            '                trickdata.Add(value)
 
-                            End If
+            '            End While
 
 
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
+            '        ElseIf Me.currenttrickcodingversion = Form1.TRICKCODINGVERSION_LINESONLY_CURRENT Then
+            '            While (SR.Length > 0)
+            '                If (SR.EndsWith(Constants.vbCrLf)) Then
+            '                    SR = SR.Substring(0, SR.Length - 2)
+            '                End If
 
-                        End If
+            '                If (SR.EndsWith(Constants.vbCr)) Then
+            '                    SR = SR.Substring(0, SR.Length - 1)
+            '                End If
 
-                    ElseIf keywordlinecounter = 1 Then
+            '                If (SR.EndsWith(Constants.vbLf)) Then
+            '                    SR = SR.Substring(0, SR.Length - 1)
+            '                End If
 
+            '                Dim valasstring As String = (SR(0)) & (SR(1)) '2 bytes 
+            '                trickdata.Add(Convert.ToInt16(valasstring, 16))
 
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw01.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern01.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
+            '                If SR.Length <= 2 Then
+            '                    SR = ""
+            '                Else
+            '                    SR = SR.Substring(2)
+            '                End If
 
-                            NUDfc01.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc01.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '            End While
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc01.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps01.Maximum = 1
-                            kewywordcontrollcounter += 1
+            '        End If
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps01.Minimum = 1
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
 
+            '        If linein = "[trick coding version 2.1]" Then
+            '            'prompt to update file format
 
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '            openoldfiledialog.ShowDialog()
+            '            databeinginternallymanipulated = True
 
-                            'if the file calls for 0 reps set line count to 0
+            '            If openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Yes Then
+            '                'update
+            '                settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT) '2.2
+            '                change = True
 
-                            'NUDreps01.Value = 1 ' 
+            '            ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.No Then
+            '                'don't update
 
-                            If Convert.ToInt16(linein) = 0 Then
-                                NUDfc01.Minimum = 0
-                                NUDfc01.Value = 0
+            '            ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Cancel Then
 
-                            End If
+            '                cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '                refresh_demo()
+            '                databeinginternallymanipulated = False
+            '                Return False
 
+            '            Else
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("error opening file" + Constants.vbCrLf + "please report this bug")
+            '                databeinginternallymanipulated = True
+            '                cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '                refresh_demo()
+            '                databeinginternallymanipulated = False
+            '                Return False
 
 
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
+            '            End If
 
 
-                        End If
+            '        End If
 
 
 
+            '        If Not tricks_datavalid() Then
+            '            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '            MsgBox("Display patterns are corrupt" + Constants.vbCrLf + "default have been set")
+            '            databeinginternallymanipulated = True
+            '            tricks_set_default()
 
-                    ElseIf keywordlinecounter = 2 Then
 
+            '        End If
+            '        If Not tricks_makecompatible_with_1_003() Then
+            '            'prompt goes here
+            '            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '            attemptimporttrickswithunsupporteddata.ShowDialog()
+            '            databeinginternallymanipulated = True
 
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw02.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern02.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
+            '        End If
 
-                            NUDfc02.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc02.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '    ElseIf (linein = "[trick coding version 1.2]") Then
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc02.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '        'this is an older file format this has very limited support on this version of Tiniwindow
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps02.Maximum = 1
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps02.Minimum = 1
-                            kewywordcontrollcounter += 1
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        openoldfiledialog.ShowDialog()
+            '        databeinginternallymanipulated = True
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
+            '        If openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Yes Then
+            '            'update
+            '            settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
+            '            change = True
 
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '        ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.No Then
+            '            'don't update
+            '            settrickcodingversion(1.2)
+            '        ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Cancel Then
 
-                            'if the file calls for 0 reps set line count to 0
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            refresh_demo()
+            '            databeinginternallymanipulated = False
+            '            Return False
 
-                            'NUDreps02.Value = 1 ' 
+            '        Else
+            '            databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '            MsgBox("error opening file" + Constants.vbCrLf + "please report this bug")
+            '            databeinginternallymanipulated = True
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            refresh_demo()
+            '            databeinginternallymanipulated = False
+            '            Return False
 
-                            If Convert.ToInt16(linein) = 0 Then
-                                NUDfc02.Minimum = 0
-                                NUDfc02.Value = 0
 
-                            End If
+            '        End If
 
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
+            '        While (True)
 
-                        End If
+            '            'there is no repetition
+            '            'the only purpose of the wile is to allow breaking out of the block if their is an error
 
-                    ElseIf keywordlinecounter = 3 Then
 
+            '            'first line has active trick and the single parameter for trick 1
+            '            'second line has 3 parameters for trick 1
 
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw03.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern03.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
 
-                            NUDfc03.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc03.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '            tricks_initialize()
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc03.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps03.Maximum = 1
-                            kewywordcontrollcounter += 1
+            '            If (SR.Length) < 0 Then
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("trick data in file is corrupt!")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '            End If
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps03.Minimum = 1
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '            'get and store selected trick
+            '            'can not be set before appending tricks 
+            '            'because this would trip an error condition
+            '            Dim selectedtrickindex = SR(0)
 
-                            'if the file calls for 0 reps set line count to 0
+            '            If SR.Length <= 1 Then
 
-                            'NUDreps03.Value = 1 ' 
+            '            Else
+            '                SR = SR.Substring(1)
+            '            End If
 
-                            If Convert.ToInt16(linein) = 0 Then
-                                NUDfc03.Minimum = 0
-                                NUDfc03.Value = 0
 
-                            End If
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
+            '            If (SR.Length) < 0 Then
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("trick data in file is corrupt!")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '            End If
 
-                        End If
 
-                    ElseIf keywordlinecounter = 4 Then
+            '            'get and set trick 0
+            '            Dim tempactiveline As Integer = Asc(SR(0))
+            '            If SR.Length <= 1 Then
+            '                SR = ""
+            '            Else
+            '                SR = SR.Substring(1)
+            '            End If
 
 
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw04.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern04.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
+            '            If Not (tricks_append_showoneline(tempactiveline)) Then
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox(tempactiveline.ToString + " there is an internal error appending trick 0" + Constants.vbCrLf + "please report the bug")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '            End If
 
-                            NUDfc04.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc04.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc04.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '            If (SR(0) + (SR(1)) <> Constants.vbCrLf) Then
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps04.Maximum = 1
-                            kewywordcontrollcounter += 1
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("trick data in file is corrupt!")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '                'copytrickdata(oldtricks, tricks)
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps04.Minimum = 1
-                            kewywordcontrollcounter += 1
+            '                'Exit While
+            '            End If
+            '            If SR.Length <= 2 Then
+            '                SR = ""
+            '            Else
+            '                SR = SR.Substring(2)
+            '            End If
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '            If (SR.Length) < 0 Then
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("trick data in file is corrupt!")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '            End If
 
-                            'if the file calls for 0 reps set line count to 0
+            '            'get and set trick 1
+            '            Dim temp_startline As Integer = Asc(SR(0))
+            '            SR = SR(1)
+            '            If (SR.Length) < 0 Then
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("trick data in file is corrupt!")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '            End If
 
-                            'NUDreps04.Value = 1 ' 
+            '            Dim temp_linecount As Integer = Asc(SR(0))
+            '            SR = SR(1)
+            '            If (SR.Length) < 0 Then
+            '                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '                MsgBox("trick data in file is corrupt!")
+            '                databeinginternallymanipulated = True
+            '                tricks_set_default()
+            '                Exit While
+            '            End If
 
-                            If Convert.ToInt16(linein) = 0 Then
-                                NUDfc04.Minimum = 0
-                                NUDfc04.Value = 0
+            '            Dim temp_time As Integer = Asc(SR(0))
+            '            If SR.Length <= 1 Then
+            '                SR = ""
+            '            Else
+            '                SR = SR.Substring(1)
+            '            End If
 
-                            End If
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
 
-                        End If
+            '            tricks_append_rotatethroughlines(temp_startline, temp_linecount, temp_time)
 
-                    ElseIf keywordlinecounter = 5 Then
 
 
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw05.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern05.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
+            '            'If (Chr(SR.Read) + Chr(SR.Read) <> Constants.vbCrLf) Then
+            '            '    MsgBox("trick data in file is corrupt!")
+            '            '    tricks_set_default()
+            '            '    Exit While
 
-                            NUDfc05.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc05.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '            '    'copytrickdata(oldtricks, tricks)
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc05.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '            '    'Exit While
+            '            'End If
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps05.Maximum = 1
-                            kewywordcontrollcounter += 1
+            '            tricks_set_activetrick(selectedtrickindex)
+            '            Exit While
+            '        End While
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps05.Minimum = 1
-                            kewywordcontrollcounter += 1
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '    ElseIf (linein = "[trick coding version 1]") Then
 
-                            'if the file calls for 0 reps set line count to 0
+            '        Dim message As String = "Trick coding version 1 was used very early in R&D and is no longer supported" + Constants.vbCrLf
+            '        message += "default tricks have been set"
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox(message)
+            '        databeinginternallymanipulated = True
 
-                            ''NUDreps06.Value = 1 ' 
 
-                            If Convert.ToInt16(linein) = 0 Then
+            '        tricks_set_default()
+            '        settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
 
-                                NUDfc05.Minimum = 0
-                                NUDfc05.Value = 0
+            '        change = True
+            '        ''the file only contains data for trick 0 
+            '        ''since this version was used very early in R&d and not released  
+            '        ''files will be updated to version 1.2  
+            '        'currenttrickcodingversion = DEFAULTTRICKCODINGVERSION
+            '        'activetrick = SR.Read
+            '        'Dim loopcounter = 1
+            '        'While (loopcounter < tricktypecount)
+            '        '    Dim loopcounter2 = 0
 
-                            End If
 
+            '        '    Dim loop2max As Integer = tricks(loopcounter, tricks_2nd_demention_index.actualvalue).Count
+            '        '    While (loopcounter2 < loop2max)
+            '        '        Dim parameter As Int16 = SR.Read
+            '        '        tricks(loopcounter, tricks_2nd_demention_index.actualvalue)(loopcounter2) = parameter
+            '        '        loopcounter2 += 1
+            '        '    End While
 
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
+            '        '    If (Chr(SR.Read) + Chr(SR.Read) <> Constants.vbCrLf) Then
+            '        '        MsgBox("trick data in file is corrupt!")
+            '        '        copytrickdata(oldtricks, tricks)
+            '        '        Exit While
+            '        '    End If
 
-                        End If
+            '        '    loopcounter += 1
 
-                    ElseIf keywordlinecounter = 6 Then
+            '        'End While
 
 
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw06.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern06.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
+            '    ElseIf (linein.Substring(0, 21) = "[trick coding version") Then
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        attempttoopenfilewithunrecognizedtrickcodingversion.ShowDialog()
+            '        databeinginternallymanipulated = True
 
-                            NUDfc06.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc06.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '        'gggggg'
+            '        If (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.Yes) Then
+            '            pan_filerestrictions.Visible = True
+            '            men_write_device.Enabled = False
+            '            settrickcodingversion(-1)
+            '            unrecognisedtrickdata = linein + Constants.vbCrLf + SR 'to end
+            '            SR = ""
 
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc06.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
+            '            mark_unselected(TB0)
+            '            mark_unselected(TB1)
+            '            mark_unselected(TB2)
+            '            mark_unselected(TB3)
+            '            mark_unselected(TB4)
+            '            mark_unselected(TB5)
+            '            mark_unselected(TB6)
+            '            mark_unselected(TB7)
+            '            mark_unselected(TB8)
+            '            mark_unselected(TB9)
 
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            ''NUDreps06.Maximum = 1
-                            kewywordcontrollcounter += 1
+            '        ElseIf (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.OK) Then
 
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            ''NUDreps06.Minimum = 1
-                            kewywordcontrollcounter += 1
+            '            tricks_set_default()
+            '            settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
 
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
+            '            change = True
 
-                            'if the file calls for 0 reps set line count to 0
 
-                            ''NUDreps06.Value = 1 ' 
+            '        ElseIf (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.Retry) Then
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            OpenFile()
+            '            databeinginternallymanipulated = True
+            '            refresh_demo()
+            '            databeinginternallymanipulated = False
+            '            Return False
+            '        ElseIf (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.Cancel) Then
+            '            cancelopenfile(cancelopenfileflags.restoreStoredState)
+            '            refresh_demo()
+            '            databeinginternallymanipulated = False
+            '            Return False
 
-                            If Convert.ToInt16(linein) = 0 Then
 
-                                NUDfc06.Minimum = 0
-                                NUDfc06.Value = 0
+            '        End If
 
-                            End If
+            '    Else
 
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
+            '        'this section used to be reached when somthing other then trick data followed line 10
+            '        'should never now be reached
+            '        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
+            '        MsgBox("error adfads in opening file" + Constants.vbCrLf + "Please report bug")
+            '        databeinginternallymanipulated = True
+            '    End If
+            'Else
+            '    'file ends after 10 lines - ie no trick info
 
-                        End If
+            '    'since no software was released with files containing no trick data, they will be updated to current version  
+            '    settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
 
-                    ElseIf keywordlinecounter = 7 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw07.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern07.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc07.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc07.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc07.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps07.Maximum = 1
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps07.Minimum = 1
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
-
-                            'if the file calls for 0 reps set line count to 0
-
-                            'NUDreps07.Value = 1 ' 
-
-                            If Convert.ToInt16(linein) = 0 Then
-
-                                NUDfc07.Minimum = 0
-                                NUDfc07.Value = 0
-
-                            End If
-
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 8 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw08.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern08.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc08.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc08.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc08.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps08.Maximum = 1
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps08.Minimum = 1
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
-
-                            'if the file calls for 0 reps set line count to 0
-
-                            'NUDreps08.Value = 1 ' 
-
-                            If Convert.ToInt16(linein) = 0 Then
-
-
-                                NUDfc08.Minimum = 0
-
-                                NUDfc08.Value = 0
-
-                            End If
-
-
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 9 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw09.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern09.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc09.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc09.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc09.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps09.Maximum = 1
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps09.Minimum = 1
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'set reps to 1 because this version of tiniwindow doesnt use reps
-
-                            'if the file calls for 0 reps set line count to 0
-
-                            'NUDreps09.Value = 1 ' 
-
-                            If Convert.ToInt16(linein) = 0 Then
-
-                                NUDfc09.Minimum = 0
-                                NUDfc09.Value = 0
-
-                            End If
-
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    Else
-
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("unable to open this file because it contains more keywords then this version of TiniWindow supports")
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        Return False
-                    End If
-
-
-                End While
-
-                If kewywordcontrollcounter <> 0 Then
-                    'part of a line was read but not all the controll variables were read
-
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("unable to open this file because it is corupt")
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    Return False
-
-                End If
-
-                While keywordlinecounter < 10
-                    'fill in lines missing from file using default pattern which is emptylinem still, 1line 0 reps
-
-
-                    'these conditions are a hack to avoid changing each condition below  
-                    If kewywordcontrollcounter = 0 Then
-                        'keyword
-                        linein = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
-
-                    ElseIf kewywordcontrollcounter = 1 Then
-                        'pattern
-                        linein = "still"
-                    ElseIf kewywordcontrollcounter = 2 Then
-                        'lines max
-
-                        linein = "5"
-                    ElseIf kewywordcontrollcounter = 3 Then
-                        'lines min
-                        linein = "0"
-
-                    ElseIf kewywordcontrollcounter = 4 Then
-                        'lines  value
-                        linein = "0"
-
-                    ElseIf kewywordcontrollcounter = 5 Then
-                        'reps max
-                        linein = "1"
-                    ElseIf kewywordcontrollcounter = 6 Then
-                        'reps min
-                        linein = "1"
-
-                    ElseIf kewywordcontrollcounter = 7 Then
-                        'reps value
-                        linein = "1"
-                    End If
-
-                    If keywordlinecounter = 0 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw00.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern00.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc00.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc00.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc00.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps00.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps00.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps00.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 1 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw01.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern01.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc01.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc01.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc01.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps01.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps01.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps01.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-
-                        End If
-
-
-
-
-                    ElseIf keywordlinecounter = 2 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw02.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern02.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc02.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc02.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc02.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps02.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps02.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps02.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 3 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw03.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern03.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc03.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc03.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc03.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps03.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps03.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps03.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 4 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw04.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern04.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc04.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc04.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc04.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps04.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps04.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps04.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 5 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw05.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern05.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc05.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc05.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc05.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps05.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps05.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps05.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 6 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw06.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern06.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc06.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc06.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc06.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            ''NUDreps06.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            ''NUDreps06.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            ''NUDreps06.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 7 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw07.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern07.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc07.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc07.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc07.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps07.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps07.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps07.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 8 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw08.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern08.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc08.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc08.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc08.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps08.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps08.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps08.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    ElseIf keywordlinecounter = 9 Then
-
-
-                        If kewywordcontrollcounter = 0 Then
-                            'keyword
-                            TBkw09.Text = linein
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 1 Then
-                            'pattern
-                            CBpattern09.SelectedIndex = combotabpatterns_indexnametoindexvalue(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 2 Then
-                            'lines max
-
-                            NUDfc09.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-                        ElseIf kewywordcontrollcounter = 3 Then
-                            'lines min
-                            NUDfc09.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 4 Then
-                            'lines  value
-                            NUDfc09.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 5 Then
-                            'reps max
-                            'NUDreps09.Maximum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 6 Then
-                            'reps min
-                            'NUDreps09.Minimum = Convert.ToInt16(linein)
-                            kewywordcontrollcounter += 1
-
-                        ElseIf kewywordcontrollcounter = 7 Then
-                            'reps value
-                            'NUDreps09.Value = Convert.ToInt16(linein)
-                            kewywordcontrollcounter = 0
-                            keywordlinecounter += 1
-
-                        End If
-
-                    Else
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("unable to open this file because it contains more keywords then this version of TiniWindow supports")
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        Return False
-                    End If
-
-
-
-
-
-                End While
-
-
-
-
-                'combotabpatterns_indexnametoindexvalue
-            ElseIf (linein = "[trick coding version 2.1]" Or linein = "[trick coding version 2.2]") Then
-
-                If linein = "[trick coding version 2.1]" Then
-
-                    settrickcodingversion(2.1)
-                ElseIf linein = "[trick coding version 2.2]" Then
-                    settrickcodingversion(2.2)
-                Else
-                    MsgBox("error opening file - please report this bug")
-
-                End If
-
-
-
-
-                trickdata = New ArrayList 'not neccesray (and wrong) to initialize becaue first few EEprom values stored in file
-
-                If Me.currenttrickcodingversion = Form1.TRICKCODINGVERSION_LINESONLY_PRE_20110310 Then
-                    While (SR.Length > 0)
-
-                        Dim value As Int16 = Asc(SR(0))
-                        If SR.Length = 1 Then
-                            SR = ""
-
-                        Else
-                            SR = SR(1)
-                        End If
-
-                        trickdata.Add(value)
-
-                    End While
-
-
-                ElseIf Me.currenttrickcodingversion = Form1.TRICKCODINGVERSION_LINESONLY_CURRENT Then
-                    While (SR.Length > 0)
-                        If (SR.EndsWith(Constants.vbCrLf)) Then
-                            SR = SR.Substring(0, SR.Length - 2)
-                        End If
-
-                        If (SR.EndsWith(Constants.vbCr)) Then
-                            SR = SR.Substring(0, SR.Length - 1)
-                        End If
-
-                        If (SR.EndsWith(Constants.vbLf)) Then
-                            SR = SR.Substring(0, SR.Length - 1)
-                        End If
-
-                        Dim valasstring As String = (SR(0)) & (SR(1)) '2 bytes 
-                        trickdata.Add(Convert.ToInt16(valasstring, 16))
-
-                        If SR.Length <= 2 Then
-                            SR = ""
-                        Else
-                            SR = SR.Substring(2)
-                        End If
-
-                    End While
-
-
-                End If
-
-
-
-                If linein = "[trick coding version 2.1]" Then
-                    'prompt to update file format
-
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    openoldfiledialog.ShowDialog()
-                    databeinginternallymanipulated = True
-
-                    If openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Yes Then
-                        'update
-                        settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT) '2.2
-                        change = True
-
-                    ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.No Then
-                        'don't update
-
-                    ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Cancel Then
-
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        refresh_demo()
-                        databeinginternallymanipulated = False
-                        Return False
-
-                    Else
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("error opening file" + Constants.vbCrLf + "please report this bug")
-                        databeinginternallymanipulated = True
-                        cancelopenfile(cancelopenfileflags.restoreStoredState)
-                        refresh_demo()
-                        databeinginternallymanipulated = False
-                        Return False
-
-
-                    End If
-
-
-                End If
-
-
-
-                If Not tricks_datavalid() Then
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("Display patterns are corrupt" + Constants.vbCrLf + "default have been set")
-                    databeinginternallymanipulated = True
-                    tricks_set_default()
-
-
-                End If
-                If Not tricks_makecompatible_with_1_003() Then
-                    'prompt goes here
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    attemptimporttrickswithunsupporteddata.ShowDialog()
-                    databeinginternallymanipulated = True
-
-                End If
-
-            ElseIf (linein = "[trick coding version 1.2]") Then
-
-                'this is an older file format this has very limited support on this version of Tiniwindow
-
-
-                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                openoldfiledialog.ShowDialog()
-                databeinginternallymanipulated = True
-
-                If openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Yes Then
-                    'update
-                    settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
-                    change = True
-
-                ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.No Then
-                    'don't update
-                    settrickcodingversion(1.2)
-                ElseIf openoldfiledialog.DialogResult = Windows.Forms.DialogResult.Cancel Then
-
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    refresh_demo()
-                    databeinginternallymanipulated = False
-                    Return False
-
-                Else
-                    databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                    MsgBox("error opening file" + Constants.vbCrLf + "please report this bug")
-                    databeinginternallymanipulated = True
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    refresh_demo()
-                    databeinginternallymanipulated = False
-                    Return False
-
-
-                End If
-
-                While (True)
-
-                    'there is no repetition
-                    'the only purpose of the wile is to allow breaking out of the block if their is an error
-
-
-                    'first line has active trick and the single parameter for trick 1
-                    'second line has 3 parameters for trick 1
-
-
-                    tricks_initialize()
-
-
-                    If (SR.Length) < 0 Then
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("trick data in file is corrupt!")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                    End If
-
-
-                    'get and store selected trick
-                    'can not be set before appending tricks 
-                    'because this would trip an error condition
-                    Dim selectedtrickindex = SR(0)
-
-                    If SR.Length <= 1 Then
-
-                    Else
-                        SR = SR.Substring(1)
-                    End If
-
-
-                    If (SR.Length) < 0 Then
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("trick data in file is corrupt!")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                    End If
-
-
-                    'get and set trick 0
-                    Dim tempactiveline As Integer = Asc(SR(0))
-                    If SR.Length <= 1 Then
-                        SR = ""
-                    Else
-                        SR = SR.Substring(1)
-                    End If
-
-
-                    If Not (tricks_append_showoneline(tempactiveline)) Then
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox(tempactiveline.ToString + " there is an internal error appending trick 0" + Constants.vbCrLf + "please report the bug")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                    End If
-
-
-                    If (SR(0) + (SR(1)) <> Constants.vbCrLf) Then
-
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("trick data in file is corrupt!")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                        'copytrickdata(oldtricks, tricks)
-
-                        'Exit While
-                    End If
-                    If SR.Length <= 2 Then
-                        SR = ""
-                    Else
-                        SR = SR.Substring(2)
-                    End If
-
-                    If (SR.Length) < 0 Then
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("trick data in file is corrupt!")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                    End If
-
-                    'get and set trick 1
-                    Dim temp_startline As Integer = Asc(SR(0))
-                    SR = SR(1)
-                    If (SR.Length) < 0 Then
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("trick data in file is corrupt!")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                    End If
-
-                    Dim temp_linecount As Integer = Asc(SR(0))
-                    SR = SR(1)
-                    If (SR.Length) < 0 Then
-                        databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                        MsgBox("trick data in file is corrupt!")
-                        databeinginternallymanipulated = True
-                        tricks_set_default()
-                        Exit While
-                    End If
-
-                    Dim temp_time As Integer = Asc(SR(0))
-                    If SR.Length <= 1 Then
-                        SR = ""
-                    Else
-                        SR = SR.Substring(1)
-                    End If
-
-
-                    tricks_append_rotatethroughlines(temp_startline, temp_linecount, temp_time)
-
-
-
-                    'If (Chr(SR.Read) + Chr(SR.Read) <> Constants.vbCrLf) Then
-                    '    MsgBox("trick data in file is corrupt!")
-                    '    tricks_set_default()
-                    '    Exit While
-
-                    '    'copytrickdata(oldtricks, tricks)
-
-                    '    'Exit While
-                    'End If
-
-                    tricks_set_activetrick(selectedtrickindex)
-                    Exit While
-                End While
-
-
-            ElseIf (linein = "[trick coding version 1]") Then
-
-                Dim message As String = "Trick coding version 1 was used very early in R&D and is no longer supported" + Constants.vbCrLf
-                message += "default tricks have been set"
-                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                MsgBox(message)
-                databeinginternallymanipulated = True
-
-
-                tricks_set_default()
-                settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
-
-                change = True
-                ''the file only contains data for trick 0 
-                ''since this version was used very early in R&d and not released  
-                ''files will be updated to version 1.2  
-                'currenttrickcodingversion = DEFAULTTRICKCODINGVERSION
-                'activetrick = SR.Read
-                'Dim loopcounter = 1
-                'While (loopcounter < tricktypecount)
-                '    Dim loopcounter2 = 0
-
-
-                '    Dim loop2max As Integer = tricks(loopcounter, tricks_2nd_demention_index.actualvalue).Count
-                '    While (loopcounter2 < loop2max)
-                '        Dim parameter As Int16 = SR.Read
-                '        tricks(loopcounter, tricks_2nd_demention_index.actualvalue)(loopcounter2) = parameter
-                '        loopcounter2 += 1
-                '    End While
-
-                '    If (Chr(SR.Read) + Chr(SR.Read) <> Constants.vbCrLf) Then
-                '        MsgBox("trick data in file is corrupt!")
-                '        copytrickdata(oldtricks, tricks)
-                '        Exit While
-                '    End If
-
-                '    loopcounter += 1
-
-                'End While
-
-
-            ElseIf (linein.Substring(0, 21) = "[trick coding version") Then
-                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                attempttoopenfilewithunrecognizedtrickcodingversion.ShowDialog()
-                databeinginternallymanipulated = True
-
-                'gggggg'
-                If (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.Yes) Then
-                    pan_filerestrictions.Visible = True
-                    men_write_device.Enabled = False
-                    settrickcodingversion(-1)
-                    unrecognisedtrickdata = linein + Constants.vbCrLf + SR 'to end
-                    SR = ""
-
-                    mark_unselected(TB0)
-                    mark_unselected(TB1)
-                    mark_unselected(TB2)
-                    mark_unselected(TB3)
-                    mark_unselected(TB4)
-                    mark_unselected(TB5)
-                    mark_unselected(TB6)
-                    mark_unselected(TB7)
-                    mark_unselected(TB8)
-                    mark_unselected(TB9)
-
-                ElseIf (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.OK) Then
-
-                    tricks_set_default()
-                    settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
-
-                    change = True
-
-
-                ElseIf (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.Retry) Then
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    OpenFile()
-                    databeinginternallymanipulated = True
-                    refresh_demo()
-                    databeinginternallymanipulated = False
-                    Return False
-                ElseIf (attempttoopenfilewithunrecognizedtrickcodingversion.DialogResult = Windows.Forms.DialogResult.Cancel) Then
-                    cancelopenfile(cancelopenfileflags.restoreStoredState)
-                    refresh_demo()
-                    databeinginternallymanipulated = False
-                    Return False
-
-
-                End If
-
-            Else
-
-                'this section used to be reached when somthing other then trick data followed line 10
-                'should never now be reached
-                databeinginternallymanipulated = False 'prevent tripping watchdog timmer
-                MsgBox("error adfads in opening file" + Constants.vbCrLf + "Please report bug")
-                databeinginternallymanipulated = True
-            End If
-        Else
-            'file ends after 10 lines - ie no trick info
-
-            'since no software was released with files containing no trick data, they will be updated to current version  
-            settrickcodingversion(TRICKCODINGVERSION_LINESONLY_CURRENT)
-
-        End If
+            'End If
 
 
 
@@ -8793,8 +7224,8 @@ Public Class Form1
         '    End If
         '    '(returnArrayIndex.checkboxes)(returnArraySecondDimention.index)
 
-        'End If
-                
+        End If
+
 
         If linecount > MAXLINES Then
             Me.set_linecount(MAXLINES, line_configuration.add_or_truncate_position._end)
@@ -9377,15 +7808,9 @@ Public Class Form1
 
         currenttrickcodingversion = version
 
-        If version = Convert.ToSingle(3.1) Then
+        
 
-            MsgBox("Error: This version of TiniWindow does not support trick coding version 3.1" & Constants.vbCrLf & "updated to version 3.2")
-
-            currenttrickcodingversion = 3.2
-
-            LineConfigurationToolStripMenuItem.Enabled = True
-
-        ElseIf version = Convert.ToSingle(2.1) Or version = Convert.ToSingle(3.2) Then
+        If version = Convert.ToSingle(2.1) Then
             LineConfigurationToolStripMenuItem.Enabled = True
         ElseIf version = Convert.ToSingle(1.2) Then
             LineConfigurationToolStripMenuItem.Enabled = False
@@ -9919,7 +8344,8 @@ Public Class Form1
         databeinginternallymanipulated = True
 
 
-        currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT
+      currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+
 
         'If TabControl1.SelectedTab Is Tab_Combo Then
 
@@ -9930,30 +8356,26 @@ Public Class Form1
             'Dim linecountcopy As Integer = textdata.Count
 
             Dim loopcounte As Integer = 0
-            combotab_clear_data() 'erases all data
+            setlinecount(1) 'discard all but first line
+            Dim blankline As String = "" 'make first line blank
+            blankline.PadLeft(Me.linelength)
+            textdata(0) = blankline
 
-            'setlinecount(totallines) 'make it so that there are 30 blanc lines
-            setlinecount(1) 'make it so that there is one blanc line
-
-
-
-            'While loopcounte < totallines
-            '    textdata.Add(Me.jpstringsfunctions.padleft(" ", " ", linelength))
-
-            '    loopcounte += 1
-            'End While
             textdata_top()
 
         ElseIf TabControl1.SelectedTab Is Me.Tab_Easy Then
             RB_pat_Constant.Checked = True
             Txt_keyword.Text = ""
-            combotab_clear_data()
+            'combotab_clear_data()
         ElseIf TabControl1.SelectedTab Is Me.Tab_FreeStyle Then
 
             'sloppy way of doing it but combotab_clear_data empties textdata array
-            combotab_clear_data()
+            'combotab_clear_data()
 
-            setlinecount(1) 'make it so that there is one blanc line
+            setlinecount(1) 'discard all but first line
+            Dim blankline As String = "" 'make first line blank
+            blankline.PadLeft(Me.linelength)
+            textdata(0) = blankline
 
             Me.refresh_freestyle_text()
 
@@ -13493,7 +11915,7 @@ Public Class Form1
 
     Private Sub setprev_selectionifo(ByRef prev_selectionindex As ArrayList, ByRef prev_selectionlength As ArrayList)
         'this function is intended to be used called by 'Tim_trickcontrolls_Tick ()
-        'to create a pince point for things that are done a couple different places 
+      'to create a pinch point for things that are done a couple different places 
 
         prev_selectionindex = New ArrayList
         prev_selectionlength = New ArrayList
@@ -14293,8 +12715,8 @@ Public Class Form1
             Lbl_easy_linetime.Text = "STILL"
             Lbl_easy_sequencetime.Text = ""
 
-            Lbl_combo_linetime.Text = "STILL"
-            Lbl_combo_sequencetime.Text = ""
+            'Lbl_combo_linetime.Text = "STILL"
+            'Lbl_combo_sequencetime.Text = ""
 
             Lbl_lines_linetime.Text = "STILL"
             Lbl_lines_sequencetime.Text = ""
@@ -14336,8 +12758,8 @@ Public Class Form1
 
                 Lbl_easy_linetime.Text = timeinseconds.ToString + "   sec/line"
                 Lbl_easy_sequencetime.Text = "Total  " + (timeinseconds * linecount).ToString + "  sec/cycle"
-                Lbl_combo_linetime.Text = timeinseconds.ToString + "   sec/line"
-                Lbl_combo_sequencetime.Text = "Total  " + (timeinseconds * linecount).ToString + "  sec/cycle"
+                ' Lbl_combo_linetime.Text = timeinseconds.ToString + "   sec/line"
+                'Lbl_combo_sequencetime.Text = "Total  " + (timeinseconds * linecount).ToString + "  sec/cycle"
 
                 Lbl_lines_linetime.Text = timeinseconds.ToString + "   sec/line"
                 Lbl_lines_sequencetime.Text = "Total  " + (timeinseconds * linecount).ToString + "  sec/cycle"
@@ -14348,9 +12770,9 @@ Public Class Form1
                 'error condition no simulation
                 Txt_demo_oneline.Text = ""
                 Lbl_easy_linetime.Text = "internal error"
-                Lbl_easy_sequencetime.Text = "internal error" + Constants.vbCrLf + "Please report this bug"
-                Lbl_combo_linetime.Text = "internal error"
-                Lbl_combo_sequencetime.Text = "internal error" + Constants.vbCrLf + "Please report this bug"
+                'Lbl_easy_sequencetime.Text = "internal error" + Constants.vbCrLf + "Please report this bug"
+                'Lbl_combo_linetime.Text = "internal error"
+                'Lbl_combo_sequencetime.Text = "internal error" + Constants.vbCrLf + "Please report this bug"
                 Lbl_lines_linetime.Text = "internal error"
                 Lbl_lines_sequencetime.Text = "internal error" + Constants.vbCrLf + "Please report this bug"
 
@@ -14814,27 +13236,27 @@ Public Class Form1
                 If (controllrectangle.Contains(mouselocation)) Then
                     'user has clicked on box
 
-                    If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
-                        Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
+                    'If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
+                    '    Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
 
-                        message += "Are you sure you want to proceed"
+                    '    message += "Are you sure you want to proceed"
 
-                        Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
+                    '    Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
 
-                        If result = Windows.Forms.DialogResult.Cancel Then
+                    '    If result = Windows.Forms.DialogResult.Cancel Then
 
-                            Return
-                        Else
-                            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+                    '        Return
+                    '    Else
+                    '        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
 
-                                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                            Else
-                                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
-                            End If
+                    '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+                    '        Else
+                    '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+                    '        End If
 
 
-                        End If
-                    End If
+                    '    End If
+                    'End If
 
 
                     Dim selectedvalue As Integer = Convert.ToInt16(tolineboxes(tolineboxes_walker).tag)
@@ -17549,52 +15971,52 @@ Public Class Form1
 
 
 
-            If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT) And Not databeinginternallymanipulated Then
+            'If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT) And Not databeinginternallymanipulated Then
 
-                If promptbeforedisablingstandadtab Then
-
-
-
-                    Dim message As String = " If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
-
-                    message += "Are you sure you want to proceed"
-
-                    Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
-
-                    If result = Windows.Forms.DialogResult.Cancel Then
-
-                        sender.text = previous_keyword
-
-                        recursive = False
-                        Return
-                    Else
-                        If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310) Then
-
-                            'assume they want to continue using old file format
-                            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                        Else
-                            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
-
-                        End If
+            '    If promptbeforedisablingstandadtab Then
 
 
 
-                    End If
-                Else
+            '        Dim message As String = " If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
 
-                    'make change with no prompt or option to cancle
+            '        message += "Are you sure you want to proceed"
 
-                    If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310) Then
+            '        Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
 
-                        'assume they want to continue using old file format
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                    Else
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+            '        If result = Windows.Forms.DialogResult.Cancel Then
 
-                    End If
+            '            sender.text = previous_keyword
 
-                End If
-            End If
+            '            recursive = False
+            '            Return
+            '        Else
+            '            If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310) Then
+
+            '                'assume they want to continue using old file format
+            '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+            '            Else
+            '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+
+            '            End If
+
+
+
+            '        End If
+            '    Else
+
+            '        'make change with no prompt or option to cancle
+
+            '        If (currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310) Then
+
+            '            'assume they want to continue using old file format
+            '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+            '        Else
+            '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+
+            '        End If
+
+            '    End If
+            'End If
             hidetooltip()
 
 
@@ -18166,13 +16588,13 @@ Public Class Form1
 
             settings(settingsindex.linelength) = value
 
-            If Not combotab_generatelines() Then
-                settings(settingsindex.linelength) = oldvalue
-                currentlychanginglinelength = False
-                Return False
-            End If
+            'If Not combotab_generatelines() Then
+            '    settings(settingsindex.linelength) = oldvalue
+            '    currentlychanginglinelength = False
+            '    Return False
+            'End If
 
-            combotab_refreshlinedata()
+            'combotab_refreshlinedata()
 
         Else
 
@@ -18402,7 +16824,7 @@ Public Class Form1
 
         NUD_cardcount_easytab.Value = value
         NUD_lines_cardcount.Value = value
-        NUD_combo_cardcount.Value = value
+        'NUD_combo_cardcount.Value = value
         NUD_cardcount_freestyletab.Value = value
 
         'Num_linelength value change event will call this function recursively
@@ -18421,7 +16843,7 @@ Public Class Form1
 
 
 
-    Private Sub Num_linelength_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NUD_lines_cardcount.ValueChanged, NUD_combo_cardcount.ValueChanged, NUD_cardcount_freestyletab.ValueChanged, NUD_cardcount_easytab.ValueChanged
+    Private Sub Num_linelength_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NUD_lines_cardcount.ValueChanged, NUD_cardcount_freestyletab.ValueChanged, NUD_cardcount_easytab.ValueChanged
         'this functions handles the value change event for the controll on all 3 tabs
 
 
@@ -18458,7 +16880,7 @@ Public Class Form1
             If Not formloaded Then
 
                 recursive = True
-                NUD_combo_cardcount.Value = sender.value
+                'NUD_combo_cardcount.Value = sender.value
                 NUD_cardcount_easytab.Value = sender.value
                 NUD_lines_cardcount.Value = sender.value
                 NUD_cardcount_freestyletab.Value = sender.value
@@ -18498,225 +16920,227 @@ Public Class Form1
 
             If formloaded Then
 
-                If Me.currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-                    'Dim longestkeyword As Integer = TBkw00.Text.Trim.Length
-                    Dim countoftruncatedkeywords As Integer = 0
+                'If Me.currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+                '    'Dim longestkeyword As Integer = TBkw00.Text.Trim.Length
+                '    Dim countoftruncatedkeywords As Integer = 0
 
-                    If TBkw00.Text.Trim.Length > sender.value Then
+                '    If TBkw00.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
+                '        countoftruncatedkeywords += 1
+                '    End If
 
-                    If TBkw01.Text.Trim.Length > sender.value Then
+                '    If TBkw01.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
+                '        countoftruncatedkeywords += 1
+                '    End If
 
-                    If TBkw02.Text.Trim.Length > sender.value Then
+                '    If TBkw02.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw03.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw03.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw04.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw04.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw05.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw05.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw06.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw06.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw07.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw07.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw08.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw08.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-                    If TBkw09.Text.Trim.Length > sender.value Then
+                '        countoftruncatedkeywords += 1
+                '    End If
+                '    If TBkw09.Text.Trim.Length > sender.value Then
 
-                        countoftruncatedkeywords += 1
-                    End If
-
-
-
-                    If countoftruncatedkeywords > 0 Then
-
-                        Dim controlls_array As ArrayList = New ArrayList
-                        controlls_array = New ArrayList
-
-                        controlls_array.Add(New ArrayList)
-                        controlls_array.Add(New ArrayList)
-                        controlls_array.Add(New ArrayList)
-
-
-                        controlls_array(mymsg.parameterArrayIndex.ControllType).add("button")
-                        controlls_array(mymsg.parameterArrayIndex.ControllValue).add("Continue")
-                        controlls_array(mymsg.parameterArrayIndex.ControllIdentifier).add("Continue")
-
-
-                        controlls_array(mymsg.parameterArrayIndex.ControllType).add("label5")
-                        controlls_array(mymsg.parameterArrayIndex.ControllValue).add("")
-                        controlls_array(mymsg.parameterArrayIndex.ControllIdentifier).add("")
-
-
-                        controlls_array(mymsg.parameterArrayIndex.ControllType).add("button")
-                        controlls_array(mymsg.parameterArrayIndex.ControllValue).add("Cancel")
-                        controlls_array(mymsg.parameterArrayIndex.ControllIdentifier).add("Cancel")
-
-                        Dim message As String = "If you proceed with changing to " & sender.value.ToString & " cards" & Constants.vbCrLf
-                        message &= countoftruncatedkeywords & " keywords will loose letters"
+                '        countoftruncatedkeywords += 1
+                '    End If
 
 
 
+                '    If countoftruncatedkeywords > 0 Then
 
-                        Dim selection_array As ArrayList = mymsg.showform(message, controlls_array)
-                        Dim pressed_button As String = selection_array(mymsg.returnArrayIndex.button)(mymsg.returnArraySecondDimention.identifyer)
+                '        Dim controlls_array As ArrayList = New ArrayList
+                '        controlls_array = New ArrayList
 
-                        If pressed_button.ToLower = "cancel" Then
+                '        controlls_array.Add(New ArrayList)
+                '        controlls_array.Add(New ArrayList)
+                '        controlls_array.Add(New ArrayList)
 
-                            NUD_combo_cardcount.Value = oldvalue
-                            NUD_cardcount_easytab.Value = oldvalue
-                            NUD_lines_cardcount.Value = oldvalue
-                            NUD_cardcount_freestyletab.Value = oldvalue
 
-                            databeinginternallymanipulated = False
-                            recursive = False
-                            Return
+                '        controlls_array(mymsg.parameterArrayIndex.ControllType).add("button")
+                '        controlls_array(mymsg.parameterArrayIndex.ControllValue).add("Continue")
+                '        controlls_array(mymsg.parameterArrayIndex.ControllIdentifier).add("Continue")
 
-                        ElseIf pressed_button.ToLower = "continue" Then
 
-                            'Txt_keyword.Text = Txt_keyword.Text.Trim 'remove spaces from beginning or word before truncating from end
+                '        controlls_array(mymsg.parameterArrayIndex.ControllType).add("label5")
+                '        controlls_array(mymsg.parameterArrayIndex.ControllValue).add("")
+                '        controlls_array(mymsg.parameterArrayIndex.ControllIdentifier).add("")
 
-                            TBkw00.Text = TBkw00.Text.TrimEnd
-                            If TBkw00.Text.TrimEnd.Length > sender.value Then
-                                TBkw00.Text = TBkw00.Text.TrimStart
-                                If TBkw00.Text.TrimEnd.Length > sender.value Then
-                                    TBkw00.Text = TBkw00.Text.Substring(0, sender.value)
-                                End If
-                            End If
 
-                            TBkw01.Text = TBkw01.Text.TrimEnd
-                            If TBkw01.Text.TrimEnd.Length > sender.value Then
-                                TBkw01.Text = TBkw01.Text.TrimStart
-                                If TBkw01.Text.TrimEnd.Length > sender.value Then
-                                    TBkw01.Text = TBkw01.Text.Substring(0, sender.value)
-                                End If
-                            End If
+                '        controlls_array(mymsg.parameterArrayIndex.ControllType).add("button")
+                '        controlls_array(mymsg.parameterArrayIndex.ControllValue).add("Cancel")
+                '        controlls_array(mymsg.parameterArrayIndex.ControllIdentifier).add("Cancel")
 
-                            TBkw02.Text = TBkw02.Text.TrimEnd
-                            If TBkw02.Text.TrimEnd.Length > sender.value Then
-                                TBkw02.Text = TBkw02.Text.TrimStart
-                                If TBkw02.Text.TrimEnd.Length > sender.value Then
-                                    TBkw02.Text = TBkw02.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw03.Text = TBkw03.Text.TrimEnd
-                            If TBkw03.Text.TrimEnd.Length > sender.value Then
-                                TBkw03.Text = TBkw03.Text.TrimStart
-                                If TBkw03.Text.TrimEnd.Length > sender.value Then
-                                    TBkw03.Text = TBkw03.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw04.Text = TBkw04.Text.TrimEnd
-                            If TBkw04.Text.TrimEnd.Length > sender.value Then
-                                TBkw04.Text = TBkw04.Text.TrimStart
-                                If TBkw04.Text.TrimEnd.Length > sender.value Then
-                                    TBkw04.Text = TBkw04.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw05.Text = TBkw05.Text.TrimEnd
-                            If TBkw05.Text.TrimEnd.Length > sender.value Then
-                                TBkw05.Text = TBkw05.Text.TrimStart
-                                If TBkw05.Text.TrimEnd.Length > sender.value Then
-                                    TBkw05.Text = TBkw05.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw06.Text = TBkw06.Text.TrimEnd
-                            If TBkw06.Text.TrimEnd.Length > sender.value Then
-                                TBkw06.Text = TBkw06.Text.TrimStart
-                                If TBkw06.Text.TrimEnd.Length > sender.value Then
-                                    TBkw06.Text = TBkw06.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw07.Text = TBkw07.Text.TrimEnd
-                            If TBkw07.Text.TrimEnd.Length > sender.value Then
-                                TBkw07.Text = TBkw07.Text.TrimStart
-                                If TBkw07.Text.TrimEnd.Length > sender.value Then
-                                    TBkw07.Text = TBkw07.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw08.Text = TBkw08.Text.TrimEnd
-                            If TBkw08.Text.TrimEnd.Length > sender.value Then
-                                TBkw08.Text = TBkw08.Text.TrimStart
-                                If TBkw08.Text.TrimEnd.Length > sender.value Then
-                                    TBkw08.Text = TBkw08.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            TBkw09.Text = TBkw09.Text.TrimEnd
-                            If TBkw09.Text.TrimEnd.Length > sender.value Then
-                                TBkw09.Text = TBkw09.Text.TrimStart
-                                If TBkw09.Text.TrimEnd.Length > sender.value Then
-                                    TBkw09.Text = TBkw09.Text.Substring(0, sender.value)
-                                End If
-                            End If
-
-                            'Me.set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, False, False)
-                            'bypass the normal set linelight function
-                            Me.linelength = sender.value
-                            combotab_refreshlinedata()
-                            Me.combotab_generatelines()
-
-                            NUD_combo_cardcount.Value = sender.value
-                            NUD_cardcount_easytab.Value = sender.value
-                            NUD_lines_cardcount.Value = sender.value
-                            NUD_cardcount_freestyletab.Value = oldvalue
-
-                            databeinginternallymanipulated = False
-                            recursive = False
-
-                            oldvalue = sender.value
-                            Return
-
-                        End If
-
-                    Else
-                        'the change will not result is keywords being truncated
-                        'Me.linelength = sender.value
-                        Me.set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, False, False)
-
-                        combotab_refreshlinedata()
-                        Me.combotab_generatelines()
-
-                        NUD_combo_cardcount.Value = sender.value
-                        NUD_cardcount_easytab.Value = sender.value
-                        NUD_lines_cardcount.Value = sender.value
-                        NUD_cardcount_freestyletab.Value = sender.value
-                        databeinginternallymanipulated = False
-                        recursive = False
-                        oldvalue = sender.value
-                        Return
+                '        Dim message As String = "If you proceed with changing to " & sender.value.ToString & " cards" & Constants.vbCrLf
+                '        message &= countoftruncatedkeywords & " keywords will loose letters"
 
 
 
-                    End If
+
+                '        Dim selection_array As ArrayList = mymsg.showform(message, controlls_array)
+                '        Dim pressed_button As String = selection_array(mymsg.returnArrayIndex.button)(mymsg.returnArraySecondDimention.identifyer)
+
+                '        If pressed_button.ToLower = "cancel" Then
+
+                '            NUD_combo_cardcount.Value = oldvalue
+                '            NUD_cardcount_easytab.Value = oldvalue
+                '            NUD_lines_cardcount.Value = oldvalue
+                '            NUD_cardcount_freestyletab.Value = oldvalue
+
+                '            databeinginternallymanipulated = False
+                '            recursive = False
+                '            Return
+
+                '        ElseIf pressed_button.ToLower = "continue" Then
+
+                '            'Txt_keyword.Text = Txt_keyword.Text.Trim 'remove spaces from beginning or word before truncating from end
+
+                '            TBkw00.Text = TBkw00.Text.TrimEnd
+                '            If TBkw00.Text.TrimEnd.Length > sender.value Then
+                '                TBkw00.Text = TBkw00.Text.TrimStart
+                '                If TBkw00.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw00.Text = TBkw00.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw01.Text = TBkw01.Text.TrimEnd
+                '            If TBkw01.Text.TrimEnd.Length > sender.value Then
+                '                TBkw01.Text = TBkw01.Text.TrimStart
+                '                If TBkw01.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw01.Text = TBkw01.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw02.Text = TBkw02.Text.TrimEnd
+                '            If TBkw02.Text.TrimEnd.Length > sender.value Then
+                '                TBkw02.Text = TBkw02.Text.TrimStart
+                '                If TBkw02.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw02.Text = TBkw02.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw03.Text = TBkw03.Text.TrimEnd
+                '            If TBkw03.Text.TrimEnd.Length > sender.value Then
+                '                TBkw03.Text = TBkw03.Text.TrimStart
+                '                If TBkw03.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw03.Text = TBkw03.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw04.Text = TBkw04.Text.TrimEnd
+                '            If TBkw04.Text.TrimEnd.Length > sender.value Then
+                '                TBkw04.Text = TBkw04.Text.TrimStart
+                '                If TBkw04.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw04.Text = TBkw04.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw05.Text = TBkw05.Text.TrimEnd
+                '            If TBkw05.Text.TrimEnd.Length > sender.value Then
+                '                TBkw05.Text = TBkw05.Text.TrimStart
+                '                If TBkw05.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw05.Text = TBkw05.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw06.Text = TBkw06.Text.TrimEnd
+                '            If TBkw06.Text.TrimEnd.Length > sender.value Then
+                '                TBkw06.Text = TBkw06.Text.TrimStart
+                '                If TBkw06.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw06.Text = TBkw06.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw07.Text = TBkw07.Text.TrimEnd
+                '            If TBkw07.Text.TrimEnd.Length > sender.value Then
+                '                TBkw07.Text = TBkw07.Text.TrimStart
+                '                If TBkw07.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw07.Text = TBkw07.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw08.Text = TBkw08.Text.TrimEnd
+                '            If TBkw08.Text.TrimEnd.Length > sender.value Then
+                '                TBkw08.Text = TBkw08.Text.TrimStart
+                '                If TBkw08.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw08.Text = TBkw08.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            TBkw09.Text = TBkw09.Text.TrimEnd
+                '            If TBkw09.Text.TrimEnd.Length > sender.value Then
+                '                TBkw09.Text = TBkw09.Text.TrimStart
+                '                If TBkw09.Text.TrimEnd.Length > sender.value Then
+                '                    TBkw09.Text = TBkw09.Text.Substring(0, sender.value)
+                '                End If
+                '            End If
+
+                '            'Me.set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, False, False)
+                '            'bypass the normal set linelight function
+                '            Me.linelength = sender.value
+                '            combotab_refreshlinedata()
+                '            Me.combotab_generatelines()
+
+                '            NUD_combo_cardcount.Value = sender.value
+                '            NUD_cardcount_easytab.Value = sender.value
+                '            NUD_lines_cardcount.Value = sender.value
+                '            NUD_cardcount_freestyletab.Value = oldvalue
+
+                '            databeinginternallymanipulated = False
+                '            recursive = False
+
+                '            oldvalue = sender.value
+                '            Return
+
+                '        End If
+
+                '    Else
+                '        'the change will not result is keywords being truncated
+                '        'Me.linelength = sender.value
+                '        Me.set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, False, False)
+
+                '        combotab_refreshlinedata()
+                '        Me.combotab_generatelines()
+
+                '        NUD_combo_cardcount.Value = sender.value
+                '        NUD_cardcount_easytab.Value = sender.value
+                '        NUD_lines_cardcount.Value = sender.value
+                '        NUD_cardcount_freestyletab.Value = sender.value
+                '        databeinginternallymanipulated = False
+                '        recursive = False
+                '        oldvalue = sender.value
+                '        Return
 
 
-                ElseIf Me.possible_to_view_file_in_easytab Then 'Me.TabControl1.SelectedTab Is Me.Tab_easy Then
+
+                '    End If
+
+
+                'Else
+
+                If Me.possible_to_view_file_in_easytab Then 'Me.TabControl1.SelectedTab Is Me.Tab_easy Then
                     refresh_easy_tab()
                     If Txt_keyword.Text.Trim.Length > sender.value Then
                         '''''''
@@ -18753,7 +17177,7 @@ Public Class Form1
 
                         If pressed_button.ToLower = "cancel" Then
 
-                            NUD_combo_cardcount.Value = oldvalue
+                            'NUD_combo_cardcount.Value = oldvalue
                             NUD_cardcount_easytab.Value = oldvalue
                             NUD_lines_cardcount.Value = oldvalue
                             NUD_cardcount_freestyletab.Value = oldvalue
@@ -18781,7 +17205,7 @@ Public Class Form1
 
                         Txt_keyword.Text = Txt_keyword.Text.Trim 'remove spaces from beginning of word before truncating from end
                         Me.set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, True, False)
-                        NUD_combo_cardcount.Value = sender.value
+                        'NUD_combo_cardcount.Value = sender.value
                         NUD_cardcount_easytab.Value = sender.value
                         NUD_lines_cardcount.Value = sender.value
                         NUD_cardcount_freestyletab.Value = sender.value
@@ -18844,7 +17268,7 @@ Public Class Form1
 
                         If pressed_button.ToLower = "cancel" Then
 
-                            NUD_combo_cardcount.Value = oldvalue
+                            'NUD_combo_cardcount.Value = oldvalue
                             NUD_cardcount_easytab.Value = oldvalue
                             NUD_lines_cardcount.Value = oldvalue
                             NUD_cardcount_freestyletab.Value = oldvalue
@@ -18876,7 +17300,7 @@ Public Class Form1
                                 loopcounter += 1
                             End While
                             set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, False, False)
-                            NUD_combo_cardcount.Value = sender.value
+                            'NUD_combo_cardcount.Value = sender.value
                             NUD_cardcount_easytab.Value = sender.value
                             NUD_lines_cardcount.Value = sender.value
                             NUD_cardcount_freestyletab.Value = sender.value
@@ -18921,7 +17345,7 @@ Public Class Form1
                             loopcounter += 1
                         End While
                         set_linelenth(sender.value, line_configuration.add_or_truncate_position._end, False, False)
-                        NUD_combo_cardcount.Value = sender.value
+                        'NUD_combo_cardcount.Value = sender.value
                         NUD_cardcount_easytab.Value = sender.value
                         NUD_lines_cardcount.Value = sender.value
                         NUD_cardcount_freestyletab.Value = sender.value
@@ -18949,7 +17373,7 @@ Public Class Form1
                         recursive = False
 
                         NUD_cardcount_easytab.Value = oldvalue
-                        NUD_combo_cardcount.Value = oldvalue
+                        'NUD_combo_cardcount.Value = oldvalue
                         NUD_lines_cardcount.Value = oldvalue
                         NUD_cardcount_freestyletab.Value = oldvalue
 
@@ -19025,7 +17449,7 @@ Public Class Form1
             End If 'formloaded
 
 
-            NUD_combo_cardcount.Value = sender.value
+            'NUD_combo_cardcount.Value = sender.value
             NUD_cardcount_easytab.Value = sender.value
             NUD_lines_cardcount.Value = sender.value
             NUD_cardcount_freestyletab.Value = sender.value
@@ -19093,7 +17517,7 @@ Public Class Form1
 
     End Sub
 
-    Private Sub HSB_speed_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HSB_speed_linestab.ValueChanged, HSB_speed_freestyletab.ValueChanged, HSB_speed_easytab.ValueChanged, HSB_speed_combotab.ValueChanged
+    Private Sub HSB_speed_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles HSB_speed_linestab.ValueChanged, HSB_speed_freestyletab.ValueChanged, HSB_speed_easytab.ValueChanged
 
         Static recursive As Boolean = False
 
@@ -19105,7 +17529,7 @@ Public Class Form1
             recursive = True
 
             HSB_speed_easytab.Value = sender.value
-            HSB_speed_combotab.Value = sender.value
+            ' HSB_speed_combotab.Value = sender.value
             HSB_speed_linestab.Value = sender.value
 
             HSB_speed_freestyletab.Value = sender.value
@@ -19167,11 +17591,11 @@ Public Class Form1
 
     End Sub
 
-    Private Sub PB_snail_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PB_snail_easytab.Click, PictureBox4.Click, PictureBox5.Click, PB_snail_freestyletab.Click
+    Private Sub PB_snail_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PB_snail_easytab.Click, PictureBox5.Click, PB_snail_freestyletab.Click
         HSB_speed_easytab.Value = HSB_speed_easytab.Minimum
     End Sub
 
-    Private Sub PB_horse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PB_horse_easytab.Click, PictureBox3.Click, PictureBox2.Click, PB_horse_freestyletab.Click
+    Private Sub PB_horse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles PB_horse_easytab.Click, PictureBox2.Click, PB_horse_freestyletab.Click
         HSB_speed_easytab.Value = 255
     End Sub
 
@@ -20077,43 +18501,43 @@ Public Class Form1
             Return
         End If
 
-        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
-            If promptbeforedisablingstandadtab Then
+        'If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
+        '    If promptbeforedisablingstandadtab Then
 
 
-                Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
+        '        Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
 
-                message += "Are you sure you want to proceed"
+        '        message += "Are you sure you want to proceed"
 
-                Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
+        '        Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
 
-                If result = Windows.Forms.DialogResult.Cancel Then
+        '        If result = Windows.Forms.DialogResult.Cancel Then
 
-                    currentlychanginglinecount = True
-                    NUD_linestab_liinecounts.Value = linecount
-                    currentlychanginglinecount = False
+        '            currentlychanginglinecount = True
+        '            NUD_linestab_liinecounts.Value = linecount
+        '            currentlychanginglinecount = False
 
-                    Return
-                Else
+        '            Return
+        '        Else
 
-                    If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-                        'assume they want to stick with old file format
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                    Else
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
-                    End If
+        '            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+        '                'assume they want to stick with old file format
+        '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+        '            Else
+        '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+        '            End If
 
-                End If
-            Else
-                If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-                    'assume they want to stick with old file format
-                    currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                Else
-                    currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
-                End If
+        '        End If
+        '    Else
+        '        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+        '            'assume they want to stick with old file format
+        '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+        '        Else
+        '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+        '        End If
 
-            End If
-        End If
+        '    End If
+        'End If
         If Not set_linecount(NUD_linestab_liinecounts.Value, line_configuration.add_or_truncate_position._end) Then
             MsgBox("bug - error setting line count")
         End If
@@ -20157,782 +18581,32 @@ Public Class Form1
 
     'End Sub
 
-    Public Sub combotab_clear_data()
+    'Public Sub combotab_clear_data()
+
+    '    combotab_initialize_keywordallignment(True)
+
+    '    NUDfc00.Minimum = 0
+    '    NUDfc01.Minimum = 0
+    '    NUDfc02.Minimum = 0
+    '    NUDfc03.Minimum = 0
+    '    NUDfc04.Minimum = 0
+    '    NUDfc05.Minimum = 0
+    '    NUDfc06.Minimum = 0
+    '    NUDfc07.Minimum = 0
+    '    NUDfc08.Minimum = 0
+    '    NUDfc09.Minimum = 0
+
+    '    NUDfc00.Value = 0
+    '    NUDfc01.Value = 0
+    '    NUDfc02.Value = 0
+    '    NUDfc03.Value = 0
+    '    NUDfc04.Value = 0
+    '    NUDfc05.Value = 0
+    '    NUDfc06.Value = 0
+    '    NUDfc07.Value = 0
+    '    NUDfc08.Value = 0
+    '    NUDfc09.Value = 0
 
-        combotab_initialize_keywordallignment(True)
-
-        NUDfc00.Minimum = 0
-        NUDfc01.Minimum = 0
-        NUDfc02.Minimum = 0
-        NUDfc03.Minimum = 0
-        NUDfc04.Minimum = 0
-        NUDfc05.Minimum = 0
-        NUDfc06.Minimum = 0
-        NUDfc07.Minimum = 0
-        NUDfc08.Minimum = 0
-        NUDfc09.Minimum = 0
-
-        NUDfc00.Value = 0
-        NUDfc01.Value = 0
-        NUDfc02.Value = 0
-        NUDfc03.Value = 0
-        NUDfc04.Value = 0
-        NUDfc05.Value = 0
-        NUDfc06.Value = 0
-        NUDfc07.Value = 0
-        NUDfc08.Value = 0
-        NUDfc09.Value = 0
-
-
-        CBpattern00.SelectedIndex = 0
-        CBpattern01.SelectedIndex = 0
-        CBpattern02.SelectedIndex = 0
-        CBpattern03.SelectedIndex = 0
-        CBpattern04.SelectedIndex = 0
-        CBpattern05.SelectedIndex = 0
-        CBpattern06.SelectedIndex = 0
-        CBpattern07.SelectedIndex = 0
-        CBpattern08.SelectedIndex = 0
-        CBpattern09.SelectedIndex = 0
-
-        TBkw00.Text = ""
-        TBkw01.Text = ""
-        TBkw02.Text = ""
-        TBkw03.Text = ""
-        TBkw04.Text = ""
-        TBkw05.Text = ""
-        TBkw06.Text = ""
-        TBkw07.Text = ""
-        TBkw08.Text = ""
-        TBkw09.Text = ""
-
-
-
-
-        combotab_generatelines()
-        combotab_refreshlinedata()
-
-
-    End Sub
-
-    Public Sub combotab_position_elements()
-
-
-        If True Then
-
-            'eventualy the condition will test if one sign configuration selected
-
-            Dim ystep As Int16 = 21
-            Dim ystart As Int16 = +Label78.Location.Y + Label78.Height + 5   ' 30 'Panel37.Height + Panel37.Location.Y + 30
-            Dim spacebetweencontrolls As Int16 = 3
-
-            'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
-            '                        'in this configuration only lables of first index 0 are visiblr
-
-            Dim LBLkw00y As Int16 = ystart 'vertical location of first word  numbering lable 
-
-            Dim LBLkw0_ystep As Int16 = ystep 'change in verticle location of eacc word  numbering lable after first
-
-
-
-            Dim TBkw0_x As Int16 = 3 'horizontal location of all index 0 keyword text boxes
-            'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
-
-
-
-            Dim TBkw00y As Int16 = ystart 'vertical location of first index 0 keyword text boxes 
-            Dim cbpattern00y As Int16 = TBkw00y 'vertical location of first pattern selecting combobox 
-
-            Dim NUDfc00y As Int16 = ystart 'vertical location of first linecount selecting combobox
-
-
-
-
-            Dim TBkw__ystep As Int16 = ystep 'change in verticle location of eacc keyword text boxes after first
-
-
-
-
-
-
-            Dim CBpattern__x As Int16 = TBkw0_x + TBkw00.Width + spacebetweencontrolls
-            Dim CBpattern__ystep As Int16 = ystep 'change in verticle location of pattern combobox after first
-
-            Dim NUDfc__x As Int16 = CBpattern__x + CBpattern00.Width + spacebetweencontrolls
-
-
-            Dim NUDfc__ystep As Int16 = ystep 'change in verticle location of line count combobox after first
-
-
-
-            Dim NUDreps__x As Int16 = NUDfc__x + NUDfc00.Width + spacebetweencontrolls
-            Dim NUDreps00y As Int16 = ystart
-            Dim NUDreps__ystep As Int16 = ystep
-
-            'Dim TBtpf__x As Int16 = 0 'not used NUDreps__x + NUDreps00.Width + spacebetweencontrolls
-
-
-            Dim TBtpf00y As Int16 = ystart
-            Dim TBtpf__ystep As Int16 = ystep
-            'TBtpf00
-
-
-
-            If legacysettings(legacysettingsindex.showreps) = 0 Then
-
-                'hide reps NUDs and line total boxes
-                'note in the visibility change routine the value will be set to 1
-
-                'Lbl_totalpatternframes.Visible = False
-                'Lbl_patternreps.Visible = False
-
-                ''NUDreps00.Visible = False
-                ''NUDreps01.Visible = False
-                ''NUDreps02.Visible = False
-                ''NUDreps03.Visible = False
-                ''NUDreps04.Visible = False
-                ''NUDreps05.Visible = False
-                ''NUDreps06.Visible = False
-                ''NUDreps07.Visible = False
-                ''NUDreps08.Visible = False
-                ''NUDreps09.Visible = False
-
-
-
-
-                'TBtpf00.Visible = False
-                'TBtpf01.Visible = False
-                'TBtpf02.Visible = False
-                'TBtpf03.Visible = False
-                'TBtpf04.Visible = False
-                'TBtpf05.Visible = False
-                'TBtpf06.Visible = False
-                'TBtpf07.Visible = False
-                'TBtpf08.Visible = False
-                'TBtpf09.Visible = False
-
-
-
-                'ystep = 30
-                'ystart = 132
-                'spacebetweencontrolls = 8
-
-                'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
-                '                        'in this configuration only lables of first index 0 are visiblr
-
-                LBLkw00y = ystart 'vertical location of first word  numbering lable 
-
-                LBLkw0_ystep = ystep 'change in verticle location of eacc word  numbering lable after first
-
-
-
-                'TBkw0_x = 10 'horizontal location of all index 0 keyword text boxes
-                'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
-
-
-
-                TBkw00y = ystart 'vertical location of first index 0 keyword text boxes 
-                cbpattern00y = TBkw00y 'vertical location of first pattern selecting combobox 
-
-                NUDfc00y = ystart 'vertical location of first linecount selecting combobox
-
-
-
-
-                TBkw__ystep = ystep 'change in verticle location of eacc keyword text boxes after first
-
-
-
-
-
-
-                CBpattern__x = TBkw0_x + TBkw00.Width + spacebetweencontrolls
-                CBpattern__ystep = ystep 'change in verticle location of pattern combobox after first
-
-                NUDfc__x = CBpattern__x + CBpattern00.Width + spacebetweencontrolls
-
-
-                NUDfc__ystep = ystep 'change in verticle location of line count combobox after first
-
-
-
-                'NUDreps__x = NUDfc__x + NUDfc00.Width + spacebetweencontrolls
-                'NUDreps00y = ystart
-                'NUDreps__ystep = ystep
-
-                'TBtpf__x = 'NUDreps__x + 'NUDreps00.Width + spacebetweencontrolls
-
-
-                TBtpf00y = ystart
-                TBtpf__ystep = ystep
-                'TBtpf00
-
-
-
-
-            ElseIf legacysettings(legacysettingsindex.showreps) = 1 Or legacysettings(legacysettingsindex.showreps) = 2 Then
-
-                'section not currently used 
-                'probably will be removed from subsequent versions because only released copy of version using this was to pitabite
-
-                'these 2 labels deleted from panel to avoid clutter
-                'if we decide to use this leagcy section we will have to put back
-                'Lbl_totalpatternframes.Visible = True
-                'Lbl_patternreps.Visible = True
-
-
-                'NUDreps00.Visible = True
-                'NUDreps01.Visible = True
-                'NUDreps02.Visible = True
-                'NUDreps03.Visible = True
-                'NUDreps04.Visible = True
-                'NUDreps05.Visible = True
-                ''NUDreps06.Visible = True
-                'NUDreps07.Visible = True
-                'NUDreps08.Visible = True
-                'NUDreps09.Visible = True
-
-
-
-
-                'TBtpf00.Visible = True
-                'TBtpf01.Visible = True
-                'TBtpf02.Visible = True
-                'TBtpf03.Visible = True
-                'TBtpf04.Visible = True
-                'TBtpf05.Visible = True
-                'TBtpf06.Visible = True
-                'TBtpf07.Visible = True
-                'TBtpf08.Visible = True
-                'TBtpf09.Visible = True
-
-
-
-
-                ystep = 30
-                ystart = 132
-                spacebetweencontrolls = 8
-
-                'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
-                '                        'in this configuration only lables of first index 0 are visiblr
-
-                LBLkw00y = ystart 'vertical location of first word  numbering lable 
-
-                LBLkw0_ystep = ystep 'change in verticle location of eacc word  numbering lable after first
-
-
-
-                TBkw0_x = 10 'horizontal location of all index 0 keyword text boxes
-                'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
-
-
-
-                TBkw00y = ystart 'vertical location of first index 0 keyword text boxes 
-                cbpattern00y = TBkw00y 'vertical location of first pattern selecting combobox 
-
-                NUDfc00y = ystart 'vertical location of first linecount selecting combobox
-
-
-
-
-                TBkw__ystep = ystep 'change in verticle location of eacc keyword text boxes after first
-
-
-
-
-
-
-                CBpattern__x = TBkw0_x + TBkw00.Width + spacebetweencontrolls
-                CBpattern__ystep = ystep 'change in verticle location of pattern combobox after first
-
-                NUDfc__x = CBpattern__x + CBpattern00.Width + spacebetweencontrolls
-
-
-                NUDfc__ystep = ystep 'change in verticle location of line count combobox after first
-
-
-
-                'NUDreps__x = NUDfc__x + NUDfc00.Width + spacebetweencontrolls
-                'NUDreps00y = ystart
-                'NUDreps__ystep = ystep
-
-                'TBtpf__x = 'NUDreps__x + 'NUDreps00.Width + spacebetweencontrolls
-
-
-                TBtpf00y = ystart
-                TBtpf__ystep = ystep
-                'TBtpf00
-
-
-
-
-            End If
-
-
-
-
-            Dim stepcounter As Int16 = 1
-
-
-
-
-            'hide all first index = 1 controls (these will later be shown for second light)
-
-            'TBkw10.Visible = False
-            'TBkw11.Visible = False
-            'TBkw12.Visible = False
-            'TBkw13.Visible = False
-            'TBkw14.Visible = False
-            'TBkw15.Visible = False
-            'TBkw16.Visible = False
-            'TBkw17.Visible = False
-            'TBkw18.Visible = False
-            'TBkw19.Visible = False
-            'CBpattern10.Visible = False
-            'CBpattern11.Visible = False
-            'CBpattern12.Visible = False
-            'CBpattern13.Visible = False
-            'CBpattern14.Visible = False
-            'CBpattern15.Visible = False
-            'CBpattern16.Visible = False
-            'CBpattern17.Visible = False
-            'CBpattern18.Visible = False
-            'CBpattern19.Visible = False
-            'NUDfc10.Visible = False
-            ''NUDfc11.Visible = False
-            'NUDfc12.Visible = False
-            'NUDfc13.Visible = False
-            'NUDfc14.Visible = False
-            'NUDfc15.Visible = False
-            'NUDfc16.Visible = False
-            'NUDfc17.Visible = False
-            'NUDfc18.Visible = False
-            'NUDfc19.Visible = False
-
-
-
-
-            'position kewword textboxes, repetition NUDs and total lines TBs
-            'initially I did the first few controll seperately then realized that they can be combined
-            'eventially I will move the controlls postitioning below into this section
-
-
-            TBkw00.Location = New Point(TBkw0_x, TBkw00y)
-            'NUDreps00.Location = New Point('NUDreps__x, 'NUDreps00y)
-
-            ' TBtpf00.Location = New Point(TBtpf__x, TBtpf00y)
-
-            stepcounter = 1
-
-            TBkw01.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps01.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf01.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw02.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps02.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf02.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-
-            TBkw03.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps03.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf03.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw04.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps04.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf04.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw05.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps05.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf05.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw06.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            ''NUDreps06.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf06.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw07.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps07.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf07.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw08.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps08.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf08.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-            stepcounter += 1
-
-            TBkw09.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'NUDreps09.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
-            'TBtpf09.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
-
-
-
-
-
-            'position patterncomoboxes
-            CBpattern00.Location = New Point(CBpattern__x, cbpattern00y)
-            stepcounter = 1
-            'CBpattern10.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-
-            'stepcounter += 1
-            CBpattern01.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern11.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            CBpattern02.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern12.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern03.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern13.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern04.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern14.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern05.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern15.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern06.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern16.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern07.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern17.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern08.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            stepcounter += 1
-            'CBpattern18.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            CBpattern09.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern19.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-
-
-
-            'positiion framcount comboboxes
-            NUDfc00.Location = New Point(NUDfc__x, NUDfc00y)
-            stepcounter = 1
-            'NUDfc10.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-
-            'stepcounter += 1
-            NUDfc01.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc11.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc02.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc12.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc03.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc13.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc04.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc14.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc05.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc15.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc06.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc16.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc07.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc17.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc08.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            stepcounter += 1
-            'NUDfc18.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            NUDfc09.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc19.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-        End If
-        If False Then
-            'eventualy the condition will test if DNA pattern selected
-            'commneted out when controlled deleted  from combo tab to reduce clutter
-            'if we use this section we will have to put controlls back
-
-
-            ''this condition is unfinished because I decided to postpone implementing functionality for multiple signs
-            'Dim ystep As Int16 = 23
-
-            'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
-            ''                        'in this configuration only lables of first index 0 are visiblr
-
-            'Dim LBLkw00y As Int16 = 75 'vertical location of first word  numbering lable 
-
-            'Dim LBLkw0_ystep As Int16 = ystep  'change in verticle location of eacc word  numbering lable after first
-
-
-
-            'Dim TBkw0_x As Int16 = 25 'horizontal location of all index 0 keyword text boxes
-            'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
-
-
-
-            'Dim TBkw00y As Int16 = 75 'vertical location of first index 0 keyword text boxes 
-            'Dim cbpattern00y As Int16 = TBkw00y 'vertical location of first pattern selecting combobox 
-
-            'Dim NUDfc00y As Int16 = TBkw00y 'vertical location of first linecount selecting combobox
-
-
-
-
-            'Dim TBkw__ystep As Int16 = ystep 'change in verticle location of eacc keyword text boxes after first
-
-
-
-
-
-
-            'Dim CBpattern__x As Int16 = TBkw1_x + TBkw10.Width + 25
-            'Dim CBpattern__ystep As Int16 = ystep 'change in verticle location of pattern combobox after first
-
-            'Dim NUDfc__x As Int16 = CBpattern__x + CBpattern00.Width + 25
-            'Dim NUDfc__ystep As Int16 = ystep 'change in verticle location of line count combobox after first
-
-
-            'Dim stepcounter As Int16 = 1
-
-
-            ''position kewword textboxes
-            'TBkw00.Location = New Point(TBkw0_x, TBkw00y)
-            'TBkw10.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw01.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw11.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw02.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw12.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw03.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw13.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw04.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw14.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw05.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw15.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw06.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw16.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw07.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw17.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw08.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw18.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw09.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
-            'stepcounter += 1
-            'TBkw19.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
-
-
-
-            ''position patterncomoboxes
-            'CBpattern00.Location = New Point(CBpattern__x, cbpattern00y)
-            'stepcounter = 1
-            'CBpattern10.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-
-            'stepcounter += 1
-            'CBpattern01.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern11.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern02.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern12.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern03.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern13.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern04.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern14.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern05.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern15.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern06.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern16.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern07.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern17.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern08.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern18.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-            'stepcounter += 1
-            'CBpattern09.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-            'stepcounter += 1
-            'CBpattern19.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
-
-
-
-
-            ''positiion framcount comboboxes
-            'NUDfc00.Location = New Point(NUDfc__x, NUDfc00y)
-            'stepcounter = 1
-            'NUDfc10.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-
-            'stepcounter += 1
-            'NUDfc01.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc11.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc02.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc12.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc03.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc13.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc04.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc14.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc05.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc15.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc06.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc16.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc07.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc17.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc08.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc18.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-            'stepcounter += 1
-            'NUDfc09.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-            'stepcounter += 1
-            'NUDfc19.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
-
-        End If
-
-
-
-    End Sub
-
-
-
-    'Public Sub combotab_refreshpatterns()
-
-
-    '    Dim patternames As String() = System.Enum.GetNames(GetType(combotab_patterns))
-    '    Dim loopcounter As Int16 = 0
-
-    '    While loopcounter < patternames.Length
-    '        Dim thispattername As String = patternames(loopcounter)
-    '        thispattername = Me.combotabpatterns_dataname_to_displayname(thispattername)
-    '        'thispattername = thispattername.Replace(" and ", " & ")
-
-    '        'thispattername = jpstringsfunctions.capitolizewords(thispattername)
-
-    '        CBpattern00.Items.Add(thispattername)
-    '        CBpattern01.Items.Add(thispattername)
-    '        CBpattern02.Items.Add(thispattername)
-    '        CBpattern03.Items.Add(thispattername)
-    '        CBpattern04.Items.Add(thispattername)
-    '        CBpattern05.Items.Add(thispattername)
-    '        CBpattern06.Items.Add(thispattername)
-    '        CBpattern07.Items.Add(thispattername)
-    '        CBpattern08.Items.Add(thispattername)
-    '        CBpattern09.Items.Add(thispattername)
-    '        'CBpattern10.Items.Add(thispattername)
-    '        'CBpattern11.Items.Add(thispattername)
-    '        'CBpattern12.Items.Add(thispattername)
-    '        'CBpattern13.Items.Add(thispattername)
-    '        'CBpattern14.Items.Add(thispattername)
-    '        'CBpattern15.Items.Add(thispattername)
-    '        'CBpattern16.Items.Add(thispattername)
-    '        'CBpattern17.Items.Add(thispattername)
-    '        'CBpattern18.Items.Add(thispattername)
-    '        'CBpattern19.Items.Add(thispattername)
-
-
-    '        loopcounter += 1
-    '    End While
 
     '    CBpattern00.SelectedIndex = 0
     '    CBpattern01.SelectedIndex = 0
@@ -20944,119 +18618,869 @@ Public Class Form1
     '    CBpattern07.SelectedIndex = 0
     '    CBpattern08.SelectedIndex = 0
     '    CBpattern09.SelectedIndex = 0
-    '    'CBpattern10.SelectedIndex = 0
-    '    'CBpattern11.SelectedIndex = 0
-    '    'CBpattern12.SelectedIndex = 0
-    '    'CBpattern13.SelectedIndex = 0
-    '    'CBpattern14.SelectedIndex = 0
-    '    'CBpattern15.SelectedIndex = 0
-    '    'CBpattern16.SelectedIndex = 0
-    '    'CBpattern17.SelectedIndex = 0
-    '    'CBpattern18.SelectedIndex = 0
-    '    'CBpattern19.SelectedIndex = 0
+
+    '    TBkw00.Text = ""
+    '    TBkw01.Text = ""
+    '    TBkw02.Text = ""
+    '    TBkw03.Text = ""
+    '    TBkw04.Text = ""
+    '    TBkw05.Text = ""
+    '    TBkw06.Text = ""
+    '    TBkw07.Text = ""
+    '    TBkw08.Text = ""
+    '    TBkw09.Text = ""
 
 
 
 
-    '    Return
-
-    '    'below is old code
-
-    '    'commented out patterns have not yet been implimented
+    '    combotab_generatelines()
+    '    combotab_refreshlinedata()
 
 
-    '    combo_patterns.Clear()
-    '    'combo_patterns.Add("(none)")
-    '    combo_patterns.Add("Still")
-    '    combo_patterns.Add("Scroll Left")
-    '    combo_patterns.Add("Scroll Right")
-    '    'combo_patterns.Add("Join In")
-    '    combo_patterns.Add("Split Out")
-    '    'combo_patterns.Add("Zoom In and Out")
-    '    'combo_patterns.Add("Zoom Out and In")
-    '    combo_patterns.Add("Add On")
-    '    combo_patterns.Add("Subtract Off")
-    '    combo_patterns.Add("Add and Subtract")
-    '    'combo_patterns.Add("Subtract and Add")
-    '    'combo_patterns.Add("Custom")
+    'End Sub
+
+    'Public Sub combotab_position_elements()
 
 
-    '    'For Each id As Int32 In people_ids_temp
+    '    If True Then
 
-    '    CBpattern00.Items.Clear()
-    '    CBpattern01.Items.Clear()
-    '    CBpattern02.Items.Clear()
-    '    CBpattern03.Items.Clear()
-    '    CBpattern04.Items.Clear()
-    '    CBpattern05.Items.Clear()
-    '    CBpattern06.Items.Clear()
-    '    CBpattern07.Items.Clear()
-    '    CBpattern08.Items.Clear()
-    '    CBpattern09.Items.Clear()
-    '    'CBpattern10.Items.Clear()
-    '    'CBpattern11.Items.Clear()
-    '    'CBpattern12.Items.Clear()
-    '    'CBpattern13.Items.Clear()
-    '    'CBpattern14.Items.Clear()
-    '    'CBpattern15.Items.Clear()
-    '    'CBpattern16.Items.Clear()
-    '    'CBpattern17.Items.Clear()
-    '    'CBpattern18.Items.Clear()
-    '    'CBpattern19.Items.Clear()
+    '        'eventualy the condition will test if one sign configuration selected
 
+    '        Dim ystep As Int16 = 21
+    '        Dim ystart As Int16 = +Label78.Location.Y + Label78.Height + 5   ' 30 'Panel37.Height + Panel37.Location.Y + 30
+    '        Dim spacebetweencontrolls As Int16 = 3
 
-    '    For Each pattern As String In combo_patterns
+    '        'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
+    '        '                        'in this configuration only lables of first index 0 are visiblr
 
-    '        CBpattern00.Items.Add(pattern)
-    '        CBpattern01.Items.Add(pattern)
-    '        CBpattern02.Items.Add(pattern)
-    '        CBpattern03.Items.Add(pattern)
-    '        CBpattern04.Items.Add(pattern)
-    '        CBpattern05.Items.Add(pattern)
-    '        CBpattern06.Items.Add(pattern)
-    '        CBpattern07.Items.Add(pattern)
-    '        CBpattern08.Items.Add(pattern)
-    '        CBpattern09.Items.Add(pattern)
-    '        'CBpattern10.Items.Add(pattern)
-    '        'CBpattern11.Items.Add(pattern)
-    '        'CBpattern12.Items.Add(pattern)
-    '        'CBpattern13.Items.Add(pattern)
-    '        'CBpattern14.Items.Add(pattern)
-    '        'CBpattern15.Items.Add(pattern)
-    '        'CBpattern16.Items.Add(pattern)
-    '        'CBpattern17.Items.Add(pattern)
-    '        'CBpattern18.Items.Add(pattern)
-    '        'CBpattern19.Items.Add(pattern)
+    '        Dim LBLkw00y As Int16 = ystart 'vertical location of first word  numbering lable 
+
+    '        Dim LBLkw0_ystep As Int16 = ystep 'change in verticle location of eacc word  numbering lable after first
 
 
 
-    '    Next
+    '        Dim TBkw0_x As Int16 = 3 'horizontal location of all index 0 keyword text boxes
+    '        'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
 
-    '    CBpattern00.SelectedIndex = 0
-    '    CBpattern01.SelectedIndex = 0
-    '    CBpattern02.SelectedIndex = 0
-    '    CBpattern03.SelectedIndex = 0
-    '    CBpattern04.SelectedIndex = 0
-    '    CBpattern05.SelectedIndex = 0
-    '    CBpattern06.SelectedIndex = 0
-    '    CBpattern07.SelectedIndex = 0
-    '    CBpattern08.SelectedIndex = 0
-    '    CBpattern09.SelectedIndex = 0
-    '    'CBpattern10.SelectedIndex = 0
-    '    'CBpattern11.SelectedIndex = 0
-    '    'CBpattern12.SelectedIndex = 0
-    '    'CBpattern13.SelectedIndex = 0
-    '    'CBpattern14.SelectedIndex = 0
-    '    'CBpattern15.SelectedIndex = 0
-    '    'CBpattern16.SelectedIndex = 0
-    '    'CBpattern17.SelectedIndex = 0
-    '    'CBpattern18.SelectedIndex = 0
-    '    'CBpattern19.SelectedIndex = 0
+
+
+    '        Dim TBkw00y As Int16 = ystart 'vertical location of first index 0 keyword text boxes 
+    '        Dim cbpattern00y As Int16 = TBkw00y 'vertical location of first pattern selecting combobox 
+
+    '        Dim NUDfc00y As Int16 = ystart 'vertical location of first linecount selecting combobox
+
+
+
+
+    '        Dim TBkw__ystep As Int16 = ystep 'change in verticle location of eacc keyword text boxes after first
+
+
+
+
+
+
+    '        Dim CBpattern__x As Int16 = TBkw0_x + TBkw00.Width + spacebetweencontrolls
+    '        Dim CBpattern__ystep As Int16 = ystep 'change in verticle location of pattern combobox after first
+
+    '        Dim NUDfc__x As Int16 = CBpattern__x + CBpattern00.Width + spacebetweencontrolls
+
+
+    '        Dim NUDfc__ystep As Int16 = ystep 'change in verticle location of line count combobox after first
+
+
+
+    '        Dim NUDreps__x As Int16 = NUDfc__x + NUDfc00.Width + spacebetweencontrolls
+    '        Dim NUDreps00y As Int16 = ystart
+    '        Dim NUDreps__ystep As Int16 = ystep
+
+    '        'Dim TBtpf__x As Int16 = 0 'not used NUDreps__x + NUDreps00.Width + spacebetweencontrolls
+
+
+    '        Dim TBtpf00y As Int16 = ystart
+    '        Dim TBtpf__ystep As Int16 = ystep
+    '        'TBtpf00
+
+
+
+    '        If legacysettings(legacysettingsindex.showreps) = 0 Then
+
+    '            'hide reps NUDs and line total boxes
+    '            'note in the visibility change routine the value will be set to 1
+
+    '            'Lbl_totalpatternframes.Visible = False
+    '            'Lbl_patternreps.Visible = False
+
+    '            ''NUDreps00.Visible = False
+    '            ''NUDreps01.Visible = False
+    '            ''NUDreps02.Visible = False
+    '            ''NUDreps03.Visible = False
+    '            ''NUDreps04.Visible = False
+    '            ''NUDreps05.Visible = False
+    '            ''NUDreps06.Visible = False
+    '            ''NUDreps07.Visible = False
+    '            ''NUDreps08.Visible = False
+    '            ''NUDreps09.Visible = False
+
+
+
+
+    '            'TBtpf00.Visible = False
+    '            'TBtpf01.Visible = False
+    '            'TBtpf02.Visible = False
+    '            'TBtpf03.Visible = False
+    '            'TBtpf04.Visible = False
+    '            'TBtpf05.Visible = False
+    '            'TBtpf06.Visible = False
+    '            'TBtpf07.Visible = False
+    '            'TBtpf08.Visible = False
+    '            'TBtpf09.Visible = False
+
+
+
+    '            'ystep = 30
+    '            'ystart = 132
+    '            'spacebetweencontrolls = 8
+
+    '            'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
+    '            '                        'in this configuration only lables of first index 0 are visiblr
+
+    '            LBLkw00y = ystart 'vertical location of first word  numbering lable 
+
+    '            LBLkw0_ystep = ystep 'change in verticle location of eacc word  numbering lable after first
+
+
+
+    '            'TBkw0_x = 10 'horizontal location of all index 0 keyword text boxes
+    '            'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
+
+
+
+    '            TBkw00y = ystart 'vertical location of first index 0 keyword text boxes 
+    '            cbpattern00y = TBkw00y 'vertical location of first pattern selecting combobox 
+
+    '            NUDfc00y = ystart 'vertical location of first linecount selecting combobox
+
+
+
+
+    '            TBkw__ystep = ystep 'change in verticle location of eacc keyword text boxes after first
+
+
+
+
+
+
+    '            CBpattern__x = TBkw0_x + TBkw00.Width + spacebetweencontrolls
+    '            CBpattern__ystep = ystep 'change in verticle location of pattern combobox after first
+
+    '            NUDfc__x = CBpattern__x + CBpattern00.Width + spacebetweencontrolls
+
+
+    '            NUDfc__ystep = ystep 'change in verticle location of line count combobox after first
+
+
+
+    '            'NUDreps__x = NUDfc__x + NUDfc00.Width + spacebetweencontrolls
+    '            'NUDreps00y = ystart
+    '            'NUDreps__ystep = ystep
+
+    '            'TBtpf__x = 'NUDreps__x + 'NUDreps00.Width + spacebetweencontrolls
+
+
+    '            TBtpf00y = ystart
+    '            TBtpf__ystep = ystep
+    '            'TBtpf00
+
+
+
+
+    '        ElseIf legacysettings(legacysettingsindex.showreps) = 1 Or legacysettings(legacysettingsindex.showreps) = 2 Then
+
+    '            'section not currently used 
+    '            'probably will be removed from subsequent versions because only released copy of version using this was to pitabite
+
+    '            'these 2 labels deleted from panel to avoid clutter
+    '            'if we decide to use this leagcy section we will have to put back
+    '            'Lbl_totalpatternframes.Visible = True
+    '            'Lbl_patternreps.Visible = True
+
+
+    '            'NUDreps00.Visible = True
+    '            'NUDreps01.Visible = True
+    '            'NUDreps02.Visible = True
+    '            'NUDreps03.Visible = True
+    '            'NUDreps04.Visible = True
+    '            'NUDreps05.Visible = True
+    '            ''NUDreps06.Visible = True
+    '            'NUDreps07.Visible = True
+    '            'NUDreps08.Visible = True
+    '            'NUDreps09.Visible = True
+
+
+
+
+    '            'TBtpf00.Visible = True
+    '            'TBtpf01.Visible = True
+    '            'TBtpf02.Visible = True
+    '            'TBtpf03.Visible = True
+    '            'TBtpf04.Visible = True
+    '            'TBtpf05.Visible = True
+    '            'TBtpf06.Visible = True
+    '            'TBtpf07.Visible = True
+    '            'TBtpf08.Visible = True
+    '            'TBtpf09.Visible = True
+
+
+
+
+    '            ystep = 30
+    '            ystart = 132
+    '            spacebetweencontrolls = 8
+
+    '            'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
+    '            '                        'in this configuration only lables of first index 0 are visiblr
+
+    '            LBLkw00y = ystart 'vertical location of first word  numbering lable 
+
+    '            LBLkw0_ystep = ystep 'change in verticle location of eacc word  numbering lable after first
+
+
+
+    '            TBkw0_x = 10 'horizontal location of all index 0 keyword text boxes
+    '            'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
+
+
+
+    '            TBkw00y = ystart 'vertical location of first index 0 keyword text boxes 
+    '            cbpattern00y = TBkw00y 'vertical location of first pattern selecting combobox 
+
+    '            NUDfc00y = ystart 'vertical location of first linecount selecting combobox
+
+
+
+
+    '            TBkw__ystep = ystep 'change in verticle location of eacc keyword text boxes after first
+
+
+
+
+
+
+    '            CBpattern__x = TBkw0_x + TBkw00.Width + spacebetweencontrolls
+    '            CBpattern__ystep = ystep 'change in verticle location of pattern combobox after first
+
+    '            NUDfc__x = CBpattern__x + CBpattern00.Width + spacebetweencontrolls
+
+
+    '            NUDfc__ystep = ystep 'change in verticle location of line count combobox after first
+
+
+
+    '            'NUDreps__x = NUDfc__x + NUDfc00.Width + spacebetweencontrolls
+    '            'NUDreps00y = ystart
+    '            'NUDreps__ystep = ystep
+
+    '            'TBtpf__x = 'NUDreps__x + 'NUDreps00.Width + spacebetweencontrolls
+
+
+    '            TBtpf00y = ystart
+    '            TBtpf__ystep = ystep
+    '            'TBtpf00
+
+
+
+
+    '        End If
+
+
+
+
+    '        Dim stepcounter As Int16 = 1
+
+
+
+
+    '        'hide all first index = 1 controls (these will later be shown for second light)
+
+    '        'TBkw10.Visible = False
+    '        'TBkw11.Visible = False
+    '        'TBkw12.Visible = False
+    '        'TBkw13.Visible = False
+    '        'TBkw14.Visible = False
+    '        'TBkw15.Visible = False
+    '        'TBkw16.Visible = False
+    '        'TBkw17.Visible = False
+    '        'TBkw18.Visible = False
+    '        'TBkw19.Visible = False
+    '        'CBpattern10.Visible = False
+    '        'CBpattern11.Visible = False
+    '        'CBpattern12.Visible = False
+    '        'CBpattern13.Visible = False
+    '        'CBpattern14.Visible = False
+    '        'CBpattern15.Visible = False
+    '        'CBpattern16.Visible = False
+    '        'CBpattern17.Visible = False
+    '        'CBpattern18.Visible = False
+    '        'CBpattern19.Visible = False
+    '        'NUDfc10.Visible = False
+    '        ''NUDfc11.Visible = False
+    '        'NUDfc12.Visible = False
+    '        'NUDfc13.Visible = False
+    '        'NUDfc14.Visible = False
+    '        'NUDfc15.Visible = False
+    '        'NUDfc16.Visible = False
+    '        'NUDfc17.Visible = False
+    '        'NUDfc18.Visible = False
+    '        'NUDfc19.Visible = False
+
+
+
+
+    '        'position kewword textboxes, repetition NUDs and total lines TBs
+    '        'initially I did the first few controll seperately then realized that they can be combined
+    '        'eventially I will move the controlls postitioning below into this section
+
+
+    '        TBkw00.Location = New Point(TBkw0_x, TBkw00y)
+    '        'NUDreps00.Location = New Point('NUDreps__x, 'NUDreps00y)
+
+    '        ' TBtpf00.Location = New Point(TBtpf__x, TBtpf00y)
+
+    '        stepcounter = 1
+
+    '        TBkw01.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps01.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf01.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw02.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps02.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf02.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+
+    '        TBkw03.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps03.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf03.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw04.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps04.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf04.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw05.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps05.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf05.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw06.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        ''NUDreps06.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf06.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw07.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps07.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf07.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw08.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps08.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf08.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+    '        stepcounter += 1
+
+    '        TBkw09.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'NUDreps09.Location = New Point('NUDreps__x, 'NUDreps00y + stepcounter * 'NUDreps__ystep)
+    '        'TBtpf09.Location = New Point(TBtpf__x, TBtpf00y + stepcounter * TBtpf__ystep)
+
+
+
+
+
+    '        'position patterncomoboxes
+    '        CBpattern00.Location = New Point(CBpattern__x, cbpattern00y)
+    '        stepcounter = 1
+    '        'CBpattern10.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+
+    '        'stepcounter += 1
+    '        CBpattern01.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern11.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        CBpattern02.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern12.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern03.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern13.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern04.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern14.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern05.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern15.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern06.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern16.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern07.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern17.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern08.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        stepcounter += 1
+    '        'CBpattern18.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        CBpattern09.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern19.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+
+
+
+    '        'positiion framcount comboboxes
+    '        NUDfc00.Location = New Point(NUDfc__x, NUDfc00y)
+    '        stepcounter = 1
+    '        'NUDfc10.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+
+    '        'stepcounter += 1
+    '        NUDfc01.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc11.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc02.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc12.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc03.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc13.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc04.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc14.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc05.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc15.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc06.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc16.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc07.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc17.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc08.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        stepcounter += 1
+    '        'NUDfc18.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        NUDfc09.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc19.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '    End If
+    '    If False Then
+    '        'eventualy the condition will test if DNA pattern selected
+    '        'commneted out when controlled deleted  from combo tab to reduce clutter
+    '        'if we use this section we will have to put controlls back
+
+
+    '        ''this condition is unfinished because I decided to postpone implementing functionality for multiple signs
+    '        'Dim ystep As Int16 = 23
+
+    '        'Dim LBLkw0_x As Int16 = 2 'horizontal location of all word  numbering lables 
+    '        ''                        'in this configuration only lables of first index 0 are visiblr
+
+    '        'Dim LBLkw00y As Int16 = 75 'vertical location of first word  numbering lable 
+
+    '        'Dim LBLkw0_ystep As Int16 = ystep  'change in verticle location of eacc word  numbering lable after first
+
+
+
+    '        'Dim TBkw0_x As Int16 = 25 'horizontal location of all index 0 keyword text boxes
+    '        'Dim TBkw1_x As Int16 = 35 'horizontal location of all index 1 keyword text boxes
+
+
+
+    '        'Dim TBkw00y As Int16 = 75 'vertical location of first index 0 keyword text boxes 
+    '        'Dim cbpattern00y As Int16 = TBkw00y 'vertical location of first pattern selecting combobox 
+
+    '        'Dim NUDfc00y As Int16 = TBkw00y 'vertical location of first linecount selecting combobox
+
+
+
+
+    '        'Dim TBkw__ystep As Int16 = ystep 'change in verticle location of eacc keyword text boxes after first
+
+
+
+
+
+
+    '        'Dim CBpattern__x As Int16 = TBkw1_x + TBkw10.Width + 25
+    '        'Dim CBpattern__ystep As Int16 = ystep 'change in verticle location of pattern combobox after first
+
+    '        'Dim NUDfc__x As Int16 = CBpattern__x + CBpattern00.Width + 25
+    '        'Dim NUDfc__ystep As Int16 = ystep 'change in verticle location of line count combobox after first
+
+
+    '        'Dim stepcounter As Int16 = 1
+
+
+    '        ''position kewword textboxes
+    '        'TBkw00.Location = New Point(TBkw0_x, TBkw00y)
+    '        'TBkw10.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw01.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw11.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw02.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw12.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw03.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw13.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw04.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw14.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw05.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw15.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw06.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw16.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw07.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw17.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw08.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw18.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw09.Location = New Point(TBkw0_x, TBkw00y + stepcounter * TBkw__ystep)
+    '        'stepcounter += 1
+    '        'TBkw19.Location = New Point(TBkw1_x, TBkw00y + stepcounter * TBkw__ystep)
+
+
+
+    '        ''position patterncomoboxes
+    '        'CBpattern00.Location = New Point(CBpattern__x, cbpattern00y)
+    '        'stepcounter = 1
+    '        'CBpattern10.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+
+    '        'stepcounter += 1
+    '        'CBpattern01.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern11.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern02.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern12.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern03.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern13.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern04.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern14.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern05.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern15.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern06.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern16.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern07.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern17.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern08.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern18.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+    '        'stepcounter += 1
+    '        'CBpattern09.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+    '        'stepcounter += 1
+    '        'CBpattern19.Location = New Point(CBpattern__x, cbpattern00y + stepcounter * CBpattern__ystep)
+
+
+
+
+    '        ''positiion framcount comboboxes
+    '        'NUDfc00.Location = New Point(NUDfc__x, NUDfc00y)
+    '        'stepcounter = 1
+    '        'NUDfc10.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+
+    '        'stepcounter += 1
+    '        'NUDfc01.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc11.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc02.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc12.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc03.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc13.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc04.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc14.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc05.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc15.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc06.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc16.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc07.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc17.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc08.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc18.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+    '        'stepcounter += 1
+    '        'NUDfc09.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '        'stepcounter += 1
+    '        'NUDfc19.Location = New Point(NUDfc__x, NUDfc00y + stepcounter * NUDfc__ystep)
+
+    '    End If
+
 
 
     'End Sub
 
 
+
+    ''Public Sub combotab_refreshpatterns()
+
+
+    ''    Dim patternames As String() = System.Enum.GetNames(GetType(combotab_patterns))
+    ''    Dim loopcounter As Int16 = 0
+
+    ''    While loopcounter < patternames.Length
+    ''        Dim thispattername As String = patternames(loopcounter)
+    ''        thispattername = Me.combotabpatterns_dataname_to_displayname(thispattername)
+    ''        'thispattername = thispattername.Replace(" and ", " & ")
+
+    ''        'thispattername = jpstringsfunctions.capitolizewords(thispattername)
+
+    ''        CBpattern00.Items.Add(thispattername)
+    ''        CBpattern01.Items.Add(thispattername)
+    ''        CBpattern02.Items.Add(thispattername)
+    ''        CBpattern03.Items.Add(thispattername)
+    ''        CBpattern04.Items.Add(thispattername)
+    ''        CBpattern05.Items.Add(thispattername)
+    ''        CBpattern06.Items.Add(thispattername)
+    ''        CBpattern07.Items.Add(thispattername)
+    ''        CBpattern08.Items.Add(thispattername)
+    ''        CBpattern09.Items.Add(thispattername)
+    ''        'CBpattern10.Items.Add(thispattername)
+    ''        'CBpattern11.Items.Add(thispattername)
+    ''        'CBpattern12.Items.Add(thispattername)
+    ''        'CBpattern13.Items.Add(thispattername)
+    ''        'CBpattern14.Items.Add(thispattername)
+    ''        'CBpattern15.Items.Add(thispattername)
+    ''        'CBpattern16.Items.Add(thispattername)
+    ''        'CBpattern17.Items.Add(thispattername)
+    ''        'CBpattern18.Items.Add(thispattername)
+    ''        'CBpattern19.Items.Add(thispattername)
+
+
+    ''        loopcounter += 1
+    ''    End While
+
+    ''    CBpattern00.SelectedIndex = 0
+    ''    CBpattern01.SelectedIndex = 0
+    ''    CBpattern02.SelectedIndex = 0
+    ''    CBpattern03.SelectedIndex = 0
+    ''    CBpattern04.SelectedIndex = 0
+    ''    CBpattern05.SelectedIndex = 0
+    ''    CBpattern06.SelectedIndex = 0
+    ''    CBpattern07.SelectedIndex = 0
+    ''    CBpattern08.SelectedIndex = 0
+    ''    CBpattern09.SelectedIndex = 0
+    ''    'CBpattern10.SelectedIndex = 0
+    ''    'CBpattern11.SelectedIndex = 0
+    ''    'CBpattern12.SelectedIndex = 0
+    ''    'CBpattern13.SelectedIndex = 0
+    ''    'CBpattern14.SelectedIndex = 0
+    ''    'CBpattern15.SelectedIndex = 0
+    ''    'CBpattern16.SelectedIndex = 0
+    ''    'CBpattern17.SelectedIndex = 0
+    ''    'CBpattern18.SelectedIndex = 0
+    ''    'CBpattern19.SelectedIndex = 0
+
+
+
+
+    ''    Return
+
+    ''    'below is old code
+
+    ''    'commented out patterns have not yet been implimented
+
+
+    ''    combo_patterns.Clear()
+    ''    'combo_patterns.Add("(none)")
+    ''    combo_patterns.Add("Still")
+    ''    combo_patterns.Add("Scroll Left")
+    ''    combo_patterns.Add("Scroll Right")
+    ''    'combo_patterns.Add("Join In")
+    ''    combo_patterns.Add("Split Out")
+    ''    'combo_patterns.Add("Zoom In and Out")
+    ''    'combo_patterns.Add("Zoom Out and In")
+    ''    combo_patterns.Add("Add On")
+    ''    combo_patterns.Add("Subtract Off")
+    ''    combo_patterns.Add("Add and Subtract")
+    ''    'combo_patterns.Add("Subtract and Add")
+    ''    'combo_patterns.Add("Custom")
+
+
+    ''    'For Each id As Int32 In people_ids_temp
+
+    ''    CBpattern00.Items.Clear()
+    ''    CBpattern01.Items.Clear()
+    ''    CBpattern02.Items.Clear()
+    ''    CBpattern03.Items.Clear()
+    ''    CBpattern04.Items.Clear()
+    ''    CBpattern05.Items.Clear()
+    ''    CBpattern06.Items.Clear()
+    ''    CBpattern07.Items.Clear()
+    ''    CBpattern08.Items.Clear()
+    ''    CBpattern09.Items.Clear()
+    ''    'CBpattern10.Items.Clear()
+    ''    'CBpattern11.Items.Clear()
+    ''    'CBpattern12.Items.Clear()
+    ''    'CBpattern13.Items.Clear()
+    ''    'CBpattern14.Items.Clear()
+    ''    'CBpattern15.Items.Clear()
+    ''    'CBpattern16.Items.Clear()
+    ''    'CBpattern17.Items.Clear()
+    ''    'CBpattern18.Items.Clear()
+    ''    'CBpattern19.Items.Clear()
+
+
+    ''    For Each pattern As String In combo_patterns
+
+    ''        CBpattern00.Items.Add(pattern)
+    ''        CBpattern01.Items.Add(pattern)
+    ''        CBpattern02.Items.Add(pattern)
+    ''        CBpattern03.Items.Add(pattern)
+    ''        CBpattern04.Items.Add(pattern)
+    ''        CBpattern05.Items.Add(pattern)
+    ''        CBpattern06.Items.Add(pattern)
+    ''        CBpattern07.Items.Add(pattern)
+    ''        CBpattern08.Items.Add(pattern)
+    ''        CBpattern09.Items.Add(pattern)
+    ''        'CBpattern10.Items.Add(pattern)
+    ''        'CBpattern11.Items.Add(pattern)
+    ''        'CBpattern12.Items.Add(pattern)
+    ''        'CBpattern13.Items.Add(pattern)
+    ''        'CBpattern14.Items.Add(pattern)
+    ''        'CBpattern15.Items.Add(pattern)
+    ''        'CBpattern16.Items.Add(pattern)
+    ''        'CBpattern17.Items.Add(pattern)
+    ''        'CBpattern18.Items.Add(pattern)
+    ''        'CBpattern19.Items.Add(pattern)
+
+
+
+    ''    Next
+
+    ''    CBpattern00.SelectedIndex = 0
+    ''    CBpattern01.SelectedIndex = 0
+    ''    CBpattern02.SelectedIndex = 0
+    ''    CBpattern03.SelectedIndex = 0
+    ''    CBpattern04.SelectedIndex = 0
+    ''    CBpattern05.SelectedIndex = 0
+    ''    CBpattern06.SelectedIndex = 0
+    ''    CBpattern07.SelectedIndex = 0
+    ''    CBpattern08.SelectedIndex = 0
+    ''    CBpattern09.SelectedIndex = 0
+    ''    'CBpattern10.SelectedIndex = 0
+    ''    'CBpattern11.SelectedIndex = 0
+    ''    'CBpattern12.SelectedIndex = 0
+    ''    'CBpattern13.SelectedIndex = 0
+    ''    'CBpattern14.SelectedIndex = 0
+    ''    'CBpattern15.SelectedIndex = 0
+    ''    'CBpattern16.SelectedIndex = 0
+    ''    'CBpattern17.SelectedIndex = 0
+    ''    'CBpattern18.SelectedIndex = 0
+    ''    'CBpattern19.SelectedIndex = 0
+
+
+    ''End Sub
+
+    ''here
     Public Sub refresh_available_lines()
 
         Const EEpromspace As Int16 = 512
@@ -21101,773 +19525,773 @@ Public Class Form1
 
 
     End Sub
-    Private Sub combotab_refreshlinedata()
-        'this refreshed the fram data in the lable 
-        'it also changes the max and min values for the line count and rep boxes
+    'Private Sub combotab_refreshlinedata()
+    '    'this refreshed the fram data in the lable 
+    '    'it also changes the max and min values for the line count and rep boxes
 
 
-        'for NUDfc0x we set the minvalue to one step less then the actual minimum value for the pattern.
-        'we set tag to the actual minimum value for the pattern.
-        'elsewhere in the code if the value set is less then the value in tag, the value is set to 0. 
+    '    'for NUDfc0x we set the minvalue to one step less then the actual minimum value for the pattern.
+    '    'we set tag to the actual minimum value for the pattern.
+    '    'elsewhere in the code if the value set is less then the value in tag, the value is set to 0. 
 
 
-        'Dim unusedfont As Font = New Font(TBkw00.Font.FontFamily, TBkw00.Font.Size)
+    '    'Dim unusedfont As Font = New Font(TBkw00.Font.FontFamily, TBkw00.Font.Size)
 
-        Dim needtoregeneratelines As Boolean = False 'no line values have changed.. Ie not necceary to refresh lines
+    '    Dim needtoregeneratelines As Boolean = False 'no line values have changed.. Ie not necceary to refresh lines
 
 
-        Dim unshowncolor As Color = Color.LightGray
-        Dim showncolor As Color = Color.Black
+    '    Dim unshowncolor As Color = Color.LightGray
+    '    Dim showncolor As Color = Color.Black
 
-        Dim cursorposition As Int16
-        Dim highlightedlength As Int16
+    '    Dim cursorposition As Int16
+    '    Dim highlightedlength As Int16
 
-        Dim restorevalue = databeinginternallymanipulated
-        databeinginternallymanipulated = True
+    '    Dim restorevalue = databeinginternallymanipulated
+    '    databeinginternallymanipulated = True
 
-        refresh_available_lines()
+    '    refresh_available_lines()
 
 
 
 
 
-        'go through each keyword line and update info
+    '    'go through each keyword line and update info
 
-        Dim thispattern As String
-        Dim thiskeyword As String
-        Dim currentlinesinpattern As Int16
-        Dim currentreps As Int16
-        Dim currentpatterntotallines As Int16
-        Dim linesusedbyotherpatterns As Int16
-        Dim linesavailableforpattern As Int16
+    '    Dim thispattern As String
+    '    Dim thiskeyword As String
+    '    Dim currentlinesinpattern As Int16
+    '    Dim currentreps As Int16
+    '    Dim currentpatterntotallines As Int16
+    '    Dim linesusedbyotherpatterns As Int16
+    '    Dim linesavailableforpattern As Int16
 
-        'Dim hypotheticaltotallinesforvaluebeingtested As Int16
+    '    'Dim hypotheticaltotallinesforvaluebeingtested As Int16
 
-        Dim minlinesinpattern As Int16 '= get_minlinesforpattern(pattern, keyword)
-        Dim maxlinesinpattern As Int16 '= get_maxlinesforpattern(pattern, keyword)
-        Dim linestep As Int16 '= get_linescountstepforpattern(pattern, keyword)
-        Dim maxwordlength As Int16
+    '    Dim minlinesinpattern As Int16 '= get_minlinesforpattern(pattern, keyword)
+    '    Dim maxlinesinpattern As Int16 '= get_maxlinesforpattern(pattern, keyword)
+    '    Dim linestep As Int16 '= get_linescountstepforpattern(pattern, keyword)
+    '    Dim maxwordlength As Int16
 
-        'Dim newminlinesinpat As Int16
-        'Dim newmaxlines As Int16
-        Const newminreps As Int16 = 0
-        Dim newmaxreps As Int16
+    '    'Dim newminlinesinpat As Int16
+    '    'Dim newmaxlines As Int16
+    '    Const newminreps As Int16 = 0
+    '    Dim newmaxreps As Int16
 
 
-        ''''''''line 0
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex))
-        thiskeyword = TBkw00.Text
-        currentlinesinpattern = NUDfc00.Value
-        currentreps = 1 'NUDreps00.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    ''''''''line 0
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex))
+    '    thiskeyword = TBkw00.Text
+    '    currentlinesinpattern = NUDfc00.Value
+    '    currentreps = 1 'NUDreps00.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
 
-        If NUDfc00.Value < minlinesinpattern Or NUDfc00.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    If NUDfc00.Value < minlinesinpattern Or NUDfc00.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that does not exceed what is available
+    '    'set the highest maxreps that does not exceed what is available
 
 
-        If currentlinesinpattern = 0 Then
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
 
 
-            NUDfc00.Minimum = minlinesinpattern - NUDfc00.Increment 'see note at top of function
-        End If
+    '        NUDfc00.Minimum = minlinesinpattern - NUDfc00.Increment 'see note at top of function
+    '    End If
 
 
 
-        NUDfc00.Tag = minlinesinpattern
+    '    NUDfc00.Tag = minlinesinpattern
 
-        NUDfc00.Maximum = maxlinesinpattern
-        'NUDreps00.Minimum = newminreps
-        'NUDreps00.Maximum = newmaxreps
-        'TBtpf00.Text = currentpatterntotallines
+    '    NUDfc00.Maximum = maxlinesinpattern
+    '    'NUDreps00.Minimum = newminreps
+    '    'NUDreps00.Maximum = newmaxreps
+    '    'TBtpf00.Text = currentpatterntotallines
 
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw00.SelectionStart
-        highlightedlength = TBkw00.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw00.SelectionStart
+    '    highlightedlength = TBkw00.SelectionLength
 
-        TBkw00.Select(0, maxwordlength)
-        TBkw00.SelectionColor = showncolor
-        TBkw00.Select(maxwordlength, TBkw00.Text.Length - maxwordlength)
-        TBkw00.SelectionColor = unshowncolor
+    '    TBkw00.Select(0, maxwordlength)
+    '    TBkw00.SelectionColor = showncolor
+    '    TBkw00.Select(maxwordlength, TBkw00.Text.Length - maxwordlength)
+    '    TBkw00.SelectionColor = unshowncolor
 
-        TBkw00.SelectionStart = cursorposition
-        TBkw00.SelectionLength = highlightedlength
+    '    TBkw00.SelectionStart = cursorposition
+    '    TBkw00.SelectionLength = highlightedlength
 
 
 
 
-        ''''''''''''''''''''''''''''''''''''
-        ''''''''line 1
-        '''''''''''''''''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex))
-        thiskeyword = TBkw01.Text
-        currentlinesinpattern = NUDfc01.Value
-        currentreps = 1 'NUDreps01.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    ''''''''''''''''''''''''''''''''''''
+    '    ''''''''line 1
+    '    '''''''''''''''''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex))
+    '    thiskeyword = TBkw01.Text
+    '    currentlinesinpattern = NUDfc01.Value
+    '    currentreps = 1 'NUDreps01.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
 
-        If NUDfc01.Value < minlinesinpattern Or NUDfc01.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc01.Value < minlinesinpattern Or NUDfc01.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc01.Minimum = minlinesinpattern - NUDfc01.Increment 'see note at top of function
-        End If
+    '        NUDfc01.Minimum = minlinesinpattern - NUDfc01.Increment 'see note at top of function
+    '    End If
 
-        NUDfc01.Tag = minlinesinpattern 'see note at top of function
+    '    NUDfc01.Tag = minlinesinpattern 'see note at top of function
 
-        NUDfc01.Maximum = maxlinesinpattern
-        'NUDreps01.Minimum = newminreps
-        'NUDreps01.Maximum = newmaxreps
-        'TBtpf01.Text = currentpatterntotallines
+    '    NUDfc01.Maximum = maxlinesinpattern
+    '    'NUDreps01.Minimum = newminreps
+    '    'NUDreps01.Maximum = newmaxreps
+    '    'TBtpf01.Text = currentpatterntotallines
 
 
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw01.SelectionStart
-        highlightedlength = TBkw01.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw01.SelectionStart
+    '    highlightedlength = TBkw01.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw01.SelectAll()
-            TBkw01.SelectionColor = unshowncolor
-            TBkw01.SelectionStart = cursorposition
-            TBkw01.SelectionLength = highlightedlength
+    '    If currentreps = 0 Then
+    '        TBkw01.SelectAll()
+    '        TBkw01.SelectionColor = unshowncolor
+    '        TBkw01.SelectionStart = cursorposition
+    '        TBkw01.SelectionLength = highlightedlength
 
-        Else
+    '    Else
 
-            TBkw01.Select(0, maxwordlength)
-            TBkw01.SelectionColor = showncolor
-            TBkw01.Select(maxwordlength, TBkw01.Text.Length - maxwordlength)
-            TBkw01.SelectionColor = unshowncolor
+    '        TBkw01.Select(0, maxwordlength)
+    '        TBkw01.SelectionColor = showncolor
+    '        TBkw01.Select(maxwordlength, TBkw01.Text.Length - maxwordlength)
+    '        TBkw01.SelectionColor = unshowncolor
 
-            TBkw01.SelectionStart = cursorposition
-            TBkw01.SelectionLength = highlightedlength
+    '        TBkw01.SelectionStart = cursorposition
+    '        TBkw01.SelectionLength = highlightedlength
 
-        End If
+    '    End If
 
-        '''''''''''''''''''''''''''''
-        ''''''''line 2
-        '''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex))
-        thiskeyword = TBkw02.Text
-        currentlinesinpattern = NUDfc02.Value
-        currentreps = 1 'NUDreps02.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    '''''''''''''''''''''''''''''
+    '    ''''''''line 2
+    '    '''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex))
+    '    thiskeyword = TBkw02.Text
+    '    currentlinesinpattern = NUDfc02.Value
+    '    currentreps = 1 'NUDreps02.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc02.Value < minlinesinpattern Or NUDfc02.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc02.Value < minlinesinpattern Or NUDfc02.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        If currentlinesinpattern = 0 Then
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc02.Minimum = minlinesinpattern - NUDfc02.Increment 'see note at top of function
-        End If
+    '        NUDfc02.Minimum = minlinesinpattern - NUDfc02.Increment 'see note at top of function
+    '    End If
 
-        NUDfc02.Tag = minlinesinpattern 'see note at top of function
-        NUDfc02.Maximum = maxlinesinpattern
-        'NUDreps02.Minimum = newminreps
-        'NUDreps02.Maximum = newmaxreps
-        'TBtpf02.Text = currentpatterntotallines
+    '    NUDfc02.Tag = minlinesinpattern 'see note at top of function
+    '    NUDfc02.Maximum = maxlinesinpattern
+    '    'NUDreps02.Minimum = newminreps
+    '    'NUDreps02.Maximum = newmaxreps
+    '    'TBtpf02.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw02.SelectionStart
-        highlightedlength = TBkw02.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw02.SelectionStart
+    '    highlightedlength = TBkw02.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw02.SelectAll()
-            TBkw02.SelectionColor = unshowncolor
-            TBkw02.SelectionStart = cursorposition
-            TBkw02.SelectionLength = highlightedlength
-        Else
+    '    If currentreps = 0 Then
+    '        TBkw02.SelectAll()
+    '        TBkw02.SelectionColor = unshowncolor
+    '        TBkw02.SelectionStart = cursorposition
+    '        TBkw02.SelectionLength = highlightedlength
+    '    Else
 
-            TBkw02.Select(0, maxwordlength)
-            TBkw02.SelectionColor = showncolor
-            TBkw02.Select(maxwordlength, TBkw02.Text.Length - maxwordlength)
-            TBkw02.SelectionColor = unshowncolor
+    '        TBkw02.Select(0, maxwordlength)
+    '        TBkw02.SelectionColor = showncolor
+    '        TBkw02.Select(maxwordlength, TBkw02.Text.Length - maxwordlength)
+    '        TBkw02.SelectionColor = unshowncolor
 
-            TBkw02.SelectionStart = cursorposition
-            TBkw02.SelectionLength = highlightedlength
-        End If
-        ''''''''''''''''''''''''''''
-        ''''''''line 3
-        ''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex))
-        thiskeyword = TBkw03.Text
-        currentlinesinpattern = NUDfc03.Value
-        currentreps = 1 'NUDreps03.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '        TBkw02.SelectionStart = cursorposition
+    '        TBkw02.SelectionLength = highlightedlength
+    '    End If
+    '    ''''''''''''''''''''''''''''
+    '    ''''''''line 3
+    '    ''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex))
+    '    thiskeyword = TBkw03.Text
+    '    currentlinesinpattern = NUDfc03.Value
+    '    currentreps = 1 'NUDreps03.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc03.Value < minlinesinpattern Or NUDfc03.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc03.Value < minlinesinpattern Or NUDfc03.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc03.Minimum = minlinesinpattern - NUDfc01.Increment 'see note at top of function
-        End If
+    '        NUDfc03.Minimum = minlinesinpattern - NUDfc01.Increment 'see note at top of function
+    '    End If
 
-        NUDfc03.Tag = minlinesinpattern 'see note at top of function
-        NUDfc03.Maximum = maxlinesinpattern
-        'NUDreps03.Minimum = newminreps
-        'NUDreps03.Maximum = newmaxreps
-        'TBtpf03.Text = currentpatterntotallines
+    '    NUDfc03.Tag = minlinesinpattern 'see note at top of function
+    '    NUDfc03.Maximum = maxlinesinpattern
+    '    'NUDreps03.Minimum = newminreps
+    '    'NUDreps03.Maximum = newmaxreps
+    '    'TBtpf03.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw03.SelectionStart
-        highlightedlength = TBkw03.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw03.SelectionStart
+    '    highlightedlength = TBkw03.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw03.SelectAll()
-            TBkw03.SelectionColor = unshowncolor
-            TBkw03.SelectionStart = cursorposition
-            TBkw03.SelectionLength = highlightedlength
+    '    If currentreps = 0 Then
+    '        TBkw03.SelectAll()
+    '        TBkw03.SelectionColor = unshowncolor
+    '        TBkw03.SelectionStart = cursorposition
+    '        TBkw03.SelectionLength = highlightedlength
 
-        Else
+    '    Else
 
-            TBkw03.Select(0, maxwordlength)
-            TBkw03.SelectionColor = showncolor
-            TBkw03.Select(maxwordlength, TBkw03.Text.Length - maxwordlength)
-            TBkw03.SelectionColor = unshowncolor
+    '        TBkw03.Select(0, maxwordlength)
+    '        TBkw03.SelectionColor = showncolor
+    '        TBkw03.Select(maxwordlength, TBkw03.Text.Length - maxwordlength)
+    '        TBkw03.SelectionColor = unshowncolor
 
-            TBkw03.SelectionStart = cursorposition
-            TBkw03.SelectionLength = highlightedlength
+    '        TBkw03.SelectionStart = cursorposition
+    '        TBkw03.SelectionLength = highlightedlength
 
-        End If
-        '''''''''''''''''''''''''''''''''''
-        ''''''''line 4
-        '''''''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex))
-        thiskeyword = TBkw04.Text
-        currentlinesinpattern = NUDfc04.Value
-        currentreps = 1 'NUDreps04.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    End If
+    '    '''''''''''''''''''''''''''''''''''
+    '    ''''''''line 4
+    '    '''''''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex))
+    '    thiskeyword = TBkw04.Text
+    '    currentlinesinpattern = NUDfc04.Value
+    '    currentreps = 1 'NUDreps04.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc04.Value < minlinesinpattern Or NUDfc04.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc04.Value < minlinesinpattern Or NUDfc04.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc04.Minimum = minlinesinpattern - NUDfc04.Increment 'see note at top of function
-        End If
+    '        NUDfc04.Minimum = minlinesinpattern - NUDfc04.Increment 'see note at top of function
+    '    End If
 
 
-        NUDfc04.Maximum = maxlinesinpattern
-        NUDfc04.Tag = minlinesinpattern 'see note at top of function
-        'NUDreps04.Minimum = newminreps
-        'NUDreps04.Maximum = newmaxreps
-        'TBtpf04.Text = currentpatterntotallines
+    '    NUDfc04.Maximum = maxlinesinpattern
+    '    NUDfc04.Tag = minlinesinpattern 'see note at top of function
+    '    'NUDreps04.Minimum = newminreps
+    '    'NUDreps04.Maximum = newmaxreps
+    '    'TBtpf04.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
 
-        cursorposition = TBkw04.SelectionStart
-        highlightedlength = TBkw04.SelectionLength
+    '    cursorposition = TBkw04.SelectionStart
+    '    highlightedlength = TBkw04.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw04.SelectAll()
-            TBkw04.SelectionColor = unshowncolor
-            TBkw04.SelectionStart = cursorposition
-            TBkw04.SelectionLength = highlightedlength
+    '    If currentreps = 0 Then
+    '        TBkw04.SelectAll()
+    '        TBkw04.SelectionColor = unshowncolor
+    '        TBkw04.SelectionStart = cursorposition
+    '        TBkw04.SelectionLength = highlightedlength
 
-        Else
+    '    Else
 
-            TBkw04.Select(0, maxwordlength)
-            TBkw04.SelectionColor = showncolor
-            TBkw04.Select(maxwordlength, TBkw04.Text.Length - maxwordlength)
-            TBkw04.SelectionColor = unshowncolor
+    '        TBkw04.Select(0, maxwordlength)
+    '        TBkw04.SelectionColor = showncolor
+    '        TBkw04.Select(maxwordlength, TBkw04.Text.Length - maxwordlength)
+    '        TBkw04.SelectionColor = unshowncolor
 
-            TBkw04.SelectionStart = cursorposition
-            TBkw04.SelectionLength = highlightedlength
+    '        TBkw04.SelectionStart = cursorposition
+    '        TBkw04.SelectionLength = highlightedlength
 
-        End If
+    '    End If
 
 
-        '''''''''''''''''''''''''''''''''''
-        ''''''''line 5
-        '''''''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex))
-        thiskeyword = TBkw05.Text
-        currentlinesinpattern = NUDfc05.Value
-        currentreps = 1 'NUDreps05.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    '''''''''''''''''''''''''''''''''''
+    '    ''''''''line 5
+    '    '''''''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex))
+    '    thiskeyword = TBkw05.Text
+    '    currentlinesinpattern = NUDfc05.Value
+    '    currentreps = 1 'NUDreps05.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc05.Value < minlinesinpattern Or NUDfc05.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc05.Value < minlinesinpattern Or NUDfc05.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc05.Minimum = minlinesinpattern - NUDfc05.Increment 'see note at top of function
-        End If
+    '        NUDfc05.Minimum = minlinesinpattern - NUDfc05.Increment 'see note at top of function
+    '    End If
 
 
-        NUDfc05.Maximum = maxlinesinpattern
-        NUDfc05.Tag = minlinesinpattern 'see note at top of function
-        'NUDreps05.Minimum = newminreps
-        'NUDreps05.Maximum = newmaxreps
-        'TBtpf05.Text = currentpatterntotallines
+    '    NUDfc05.Maximum = maxlinesinpattern
+    '    NUDfc05.Tag = minlinesinpattern 'see note at top of function
+    '    'NUDreps05.Minimum = newminreps
+    '    'NUDreps05.Maximum = newmaxreps
+    '    'TBtpf05.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw05.SelectionStart
-        highlightedlength = TBkw05.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw05.SelectionStart
+    '    highlightedlength = TBkw05.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw05.SelectAll()
-            TBkw05.SelectionColor = unshowncolor
-            TBkw05.SelectionStart = cursorposition
-            TBkw05.SelectionLength = highlightedlength
+    '    If currentreps = 0 Then
+    '        TBkw05.SelectAll()
+    '        TBkw05.SelectionColor = unshowncolor
+    '        TBkw05.SelectionStart = cursorposition
+    '        TBkw05.SelectionLength = highlightedlength
 
-        Else
+    '    Else
 
-            TBkw05.Select(0, maxwordlength)
-            TBkw05.SelectionColor = showncolor
-            TBkw05.Select(maxwordlength, TBkw05.Text.Length - maxwordlength)
-            TBkw05.SelectionColor = unshowncolor
+    '        TBkw05.Select(0, maxwordlength)
+    '        TBkw05.SelectionColor = showncolor
+    '        TBkw05.Select(maxwordlength, TBkw05.Text.Length - maxwordlength)
+    '        TBkw05.SelectionColor = unshowncolor
 
-            TBkw05.SelectionStart = cursorposition
-            TBkw05.SelectionLength = highlightedlength
+    '        TBkw05.SelectionStart = cursorposition
+    '        TBkw05.SelectionLength = highlightedlength
 
-        End If
+    '    End If
 
-        '''''''''''''''''''''''''''''''''
-        ''''''''line 6
-        ''''''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex))
-        thiskeyword = TBkw06.Text
-        currentlinesinpattern = NUDfc06.Value
-        currentreps = 1 ''NUDreps06.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    '''''''''''''''''''''''''''''''''
+    '    ''''''''line 6
+    '    ''''''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex))
+    '    thiskeyword = TBkw06.Text
+    '    currentlinesinpattern = NUDfc06.Value
+    '    currentreps = 1 ''NUDreps06.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc06.Value < minlinesinpattern Or NUDfc06.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc06.Value < minlinesinpattern Or NUDfc06.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc06.Minimum = minlinesinpattern - NUDfc06.Increment 'see note at top of function
-        End If
+    '        NUDfc06.Minimum = minlinesinpattern - NUDfc06.Increment 'see note at top of function
+    '    End If
 
 
-        NUDfc06.Maximum = maxlinesinpattern
-        NUDfc06.Tag = minlinesinpattern 'see note at top of function
-        ''NUDreps06.Minimum = newminreps
-        ''NUDreps06.Maximum = newmaxreps
-        'TBtpf06.Text = currentpatterntotallines
+    '    NUDfc06.Maximum = maxlinesinpattern
+    '    NUDfc06.Tag = minlinesinpattern 'see note at top of function
+    '    ''NUDreps06.Minimum = newminreps
+    '    ''NUDreps06.Maximum = newmaxreps
+    '    'TBtpf06.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw06.SelectionStart
-        highlightedlength = TBkw06.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw06.SelectionStart
+    '    highlightedlength = TBkw06.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw06.SelectAll()
-            TBkw06.SelectionColor = unshowncolor
-            TBkw06.SelectionStart = cursorposition
-            TBkw06.SelectionLength = highlightedlength
-        Else
+    '    If currentreps = 0 Then
+    '        TBkw06.SelectAll()
+    '        TBkw06.SelectionColor = unshowncolor
+    '        TBkw06.SelectionStart = cursorposition
+    '        TBkw06.SelectionLength = highlightedlength
+    '    Else
 
-            TBkw06.Select(0, maxwordlength)
-            TBkw06.SelectionColor = showncolor
-            TBkw06.Select(maxwordlength, TBkw06.Text.Length - maxwordlength)
-            TBkw06.SelectionColor = unshowncolor
+    '        TBkw06.Select(0, maxwordlength)
+    '        TBkw06.SelectionColor = showncolor
+    '        TBkw06.Select(maxwordlength, TBkw06.Text.Length - maxwordlength)
+    '        TBkw06.SelectionColor = unshowncolor
 
-            TBkw06.SelectionStart = cursorposition
-            TBkw06.SelectionLength = highlightedlength
-        End If
+    '        TBkw06.SelectionStart = cursorposition
+    '        TBkw06.SelectionLength = highlightedlength
+    '    End If
 
-        ''''''''''''''''''''''''
-        ''''''''line 7
-        ''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex))
-        thiskeyword = TBkw07.Text
-        currentlinesinpattern = NUDfc07.Value
-        currentreps = 1 'NUDreps07.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    ''''''''''''''''''''''''
+    '    ''''''''line 7
+    '    ''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex))
+    '    thiskeyword = TBkw07.Text
+    '    currentlinesinpattern = NUDfc07.Value
+    '    currentreps = 1 'NUDreps07.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc07.Value < minlinesinpattern Or NUDfc07.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc07.Value < minlinesinpattern Or NUDfc07.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc07.Minimum = minlinesinpattern - NUDfc07.Increment 'see note at top of function
-        End If
+    '        NUDfc07.Minimum = minlinesinpattern - NUDfc07.Increment 'see note at top of function
+    '    End If
 
 
-        NUDfc07.Maximum = maxlinesinpattern
-        NUDfc07.Tag = minlinesinpattern 'see note at top of function
-        'NUDreps07.Minimum = newminreps
-        'NUDreps07.Maximum = newmaxreps
-        'TBtpf07.Text = currentpatterntotallines
+    '    NUDfc07.Maximum = maxlinesinpattern
+    '    NUDfc07.Tag = minlinesinpattern 'see note at top of function
+    '    'NUDreps07.Minimum = newminreps
+    '    'NUDreps07.Maximum = newmaxreps
+    '    'TBtpf07.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw07.SelectionStart
-        highlightedlength = TBkw07.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw07.SelectionStart
+    '    highlightedlength = TBkw07.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw07.SelectAll()
-            TBkw07.SelectionColor = unshowncolor
-            TBkw07.SelectionStart = cursorposition
-            TBkw07.SelectionLength = highlightedlength
-        Else
+    '    If currentreps = 0 Then
+    '        TBkw07.SelectAll()
+    '        TBkw07.SelectionColor = unshowncolor
+    '        TBkw07.SelectionStart = cursorposition
+    '        TBkw07.SelectionLength = highlightedlength
+    '    Else
 
-            TBkw07.Select(0, maxwordlength)
-            TBkw07.SelectionColor = showncolor
-            TBkw07.Select(maxwordlength, TBkw07.Text.Length - maxwordlength)
-            TBkw07.SelectionColor = unshowncolor
+    '        TBkw07.Select(0, maxwordlength)
+    '        TBkw07.SelectionColor = showncolor
+    '        TBkw07.Select(maxwordlength, TBkw07.Text.Length - maxwordlength)
+    '        TBkw07.SelectionColor = unshowncolor
 
-            TBkw07.SelectionStart = cursorposition
-            TBkw07.SelectionLength = highlightedlength
-        End If
+    '        TBkw07.SelectionStart = cursorposition
+    '        TBkw07.SelectionLength = highlightedlength
+    '    End If
 
-        '''''''''''''''''''''''''''''''''''''''
-        ''''''''line 8
-        ''''''''''''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex))
-        thiskeyword = TBkw08.Text
-        currentlinesinpattern = NUDfc08.Value
-        currentreps = 1 'NUDreps08.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '    '''''''''''''''''''''''''''''''''''''''
+    '    ''''''''line 8
+    '    ''''''''''''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex))
+    '    thiskeyword = TBkw08.Text
+    '    currentlinesinpattern = NUDfc08.Value
+    '    currentreps = 1 'NUDreps08.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc08.Value < minlinesinpattern Or NUDfc08.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc08.Value < minlinesinpattern Or NUDfc08.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc08.Minimum = minlinesinpattern - NUDfc08.Increment 'see note at top of function
-        End If
+    '        NUDfc08.Minimum = minlinesinpattern - NUDfc08.Increment 'see note at top of function
+    '    End If
 
 
-        NUDfc08.Maximum = maxlinesinpattern
-        NUDfc08.Tag = minlinesinpattern 'see note at top of function
-        'NUDreps08.Minimum = newminreps
-        'NUDreps08.Maximum = newmaxreps
-        'TBtpf08.Text = currentpatterntotallines
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw08.SelectionStart
-        highlightedlength = TBkw08.SelectionLength
+    '    NUDfc08.Maximum = maxlinesinpattern
+    '    NUDfc08.Tag = minlinesinpattern 'see note at top of function
+    '    'NUDreps08.Minimum = newminreps
+    '    'NUDreps08.Maximum = newmaxreps
+    '    'TBtpf08.Text = currentpatterntotallines
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw08.SelectionStart
+    '    highlightedlength = TBkw08.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw08.SelectAll()
-            TBkw08.SelectionColor = unshowncolor
-            TBkw08.SelectionStart = cursorposition
-            TBkw08.SelectionLength = highlightedlength
-        Else
+    '    If currentreps = 0 Then
+    '        TBkw08.SelectAll()
+    '        TBkw08.SelectionColor = unshowncolor
+    '        TBkw08.SelectionStart = cursorposition
+    '        TBkw08.SelectionLength = highlightedlength
+    '    Else
 
-            TBkw08.Select(0, maxwordlength)
-            TBkw08.SelectionColor = showncolor
-            TBkw08.Select(maxwordlength, TBkw08.Text.Length - maxwordlength)
-            TBkw08.SelectionColor = unshowncolor
+    '        TBkw08.Select(0, maxwordlength)
+    '        TBkw08.SelectionColor = showncolor
+    '        TBkw08.Select(maxwordlength, TBkw08.Text.Length - maxwordlength)
+    '        TBkw08.SelectionColor = unshowncolor
 
-            TBkw08.SelectionStart = cursorposition
-            TBkw08.SelectionLength = highlightedlength
-        End If
-        '''''''''''''''''''''''''''''''''''''''
-        ''''''''line 9
-        '''''''''''''''''''''''''''''''''''''''
-        thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex))
-        thiskeyword = TBkw09.Text
-        currentlinesinpattern = NUDfc09.Value
-        currentreps = 1 'NUDreps09.Value
-        minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
-        maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
-        linestep = get_linescountstepforpattern(thispattern, thiskeyword)
+    '        TBkw08.SelectionStart = cursorposition
+    '        TBkw08.SelectionLength = highlightedlength
+    '    End If
+    '    '''''''''''''''''''''''''''''''''''''''
+    '    ''''''''line 9
+    '    '''''''''''''''''''''''''''''''''''''''
+    '    thispattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex))
+    '    thiskeyword = TBkw09.Text
+    '    currentlinesinpattern = NUDfc09.Value
+    '    currentreps = 1 'NUDreps09.Value
+    '    minlinesinpattern = get_minlinesforpattern(thispattern, thiskeyword)
+    '    maxlinesinpattern = get_maxlinesforpattern(thispattern, thiskeyword, currentlinesinpattern)
+    '    linestep = get_linescountstepforpattern(thispattern, thiskeyword)
 
-        currentpatterntotallines = currentlinesinpattern * currentreps
-        linesusedbyotherpatterns = usedlines - currentpatterntotallines
-        linesavailableforpattern = totallines - linesusedbyotherpatterns
+    '    currentpatterntotallines = currentlinesinpattern * currentreps
+    '    linesusedbyotherpatterns = usedlines - currentpatterntotallines
+    '    linesavailableforpattern = totallines - linesusedbyotherpatterns
 
-        If NUDfc09.Value < minlinesinpattern Or NUDfc09.Value > maxlinesinpattern Then
-            needtoregeneratelines = True
-        End If
+    '    If NUDfc09.Value < minlinesinpattern Or NUDfc09.Value > maxlinesinpattern Then
+    '        needtoregeneratelines = True
+    '    End If
 
 
-        'make sure maxlines does not result exceed what is available
+    '    'make sure maxlines does not result exceed what is available
 
-        While maxlinesinpattern * currentreps > linesavailableforpattern
-            maxlinesinpattern -= 1
-        End While
+    '    While maxlinesinpattern * currentreps > linesavailableforpattern
+    '        maxlinesinpattern -= 1
+    '    End While
 
-        'set the highest maxreps that exceed what is available
-        If currentlinesinpattern = 0 Then
+    '    'set the highest maxreps that exceed what is available
+    '    If currentlinesinpattern = 0 Then
 
-            newmaxreps = currentreps
-        Else
+    '        newmaxreps = currentreps
+    '    Else
 
-            newmaxreps = 0
+    '        newmaxreps = 0
 
-            While newmaxreps * currentlinesinpattern <= linesavailableforpattern
+    '        While newmaxreps * currentlinesinpattern <= linesavailableforpattern
 
-                newmaxreps += 1
-            End While
-            newmaxreps -= 1 'the loop ends with this value one too high
+    '            newmaxreps += 1
+    '        End While
+    '        newmaxreps -= 1 'the loop ends with this value one too high
 
-            NUDfc09.Minimum = minlinesinpattern - NUDfc09.Increment 'see note at top of function
-        End If
+    '        NUDfc09.Minimum = minlinesinpattern - NUDfc09.Increment 'see note at top of function
+    '    End If
 
 
-        NUDfc09.Maximum = maxlinesinpattern
-        NUDfc09.Tag = minlinesinpattern 'see note at top of function
-        'NUDreps09.Minimum = newminreps
-        'NUDreps09.Maximum = newmaxreps
-        'TBtpf09.Text = currentpatterntotallines
+    '    NUDfc09.Maximum = maxlinesinpattern
+    '    NUDfc09.Tag = minlinesinpattern 'see note at top of function
+    '    'NUDreps09.Minimum = newminreps
+    '    'NUDreps09.Maximum = newmaxreps
+    '    'TBtpf09.Text = currentpatterntotallines
 
-        maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
-        cursorposition = TBkw09.SelectionStart
-        highlightedlength = TBkw09.SelectionLength
+    '    maxwordlength = get_maxlinelengthforpattern(thispattern, thiskeyword)
+    '    cursorposition = TBkw09.SelectionStart
+    '    highlightedlength = TBkw09.SelectionLength
 
-        If currentreps = 0 Then
-            TBkw09.SelectAll()
-            TBkw09.SelectionColor = unshowncolor
-            TBkw09.SelectionStart = cursorposition
-            TBkw09.SelectionLength = highlightedlength
+    '    If currentreps = 0 Then
+    '        TBkw09.SelectAll()
+    '        TBkw09.SelectionColor = unshowncolor
+    '        TBkw09.SelectionStart = cursorposition
+    '        TBkw09.SelectionLength = highlightedlength
 
-        Else
+    '    Else
 
-            TBkw09.Select(0, maxwordlength)
-            TBkw09.SelectionColor = showncolor
-            TBkw09.Select(maxwordlength, TBkw09.Text.Length - maxwordlength)
-            TBkw09.SelectionColor = unshowncolor
+    '        TBkw09.Select(0, maxwordlength)
+    '        TBkw09.SelectionColor = showncolor
+    '        TBkw09.Select(maxwordlength, TBkw09.Text.Length - maxwordlength)
+    '        TBkw09.SelectionColor = unshowncolor
 
-            TBkw09.SelectionStart = cursorposition
-            TBkw09.SelectionLength = highlightedlength
+    '        TBkw09.SelectionStart = cursorposition
+    '        TBkw09.SelectionLength = highlightedlength
 
-        End If
+    '    End If
 
 
-        databeinginternallymanipulated = restorevalue
+    '    databeinginternallymanipulated = restorevalue
 
-        If needtoregeneratelines Then
+    '    If needtoregeneratelines Then
 
-            combotab_generatelines()
+    '        combotab_generatelines()
 
-        End If
-    End Sub
-
+    '    End If
+    'End Sub
+    ''here
     Private Function get_minlinesforpattern(ByVal pattern As String, ByVal keyword As String) As Int16
 
 
@@ -22389,457 +20813,456 @@ Public Class Form1
 
     End Function
 
-    Private Sub CBpattern_common_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles CBpattern00.SelectedIndexChanged, CBpattern09.SelectedIndexChanged, CBpattern08.SelectedIndexChanged, CBpattern07.SelectedIndexChanged, CBpattern06.SelectedIndexChanged, CBpattern05.SelectedIndexChanged, CBpattern04.SelectedIndexChanged, CBpattern03.SelectedIndexChanged, CBpattern02.SelectedIndexChanged, CBpattern01.SelectedIndexChanged
+   'Private Sub CBpattern_common_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
 
-        Static previousvalues As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
-        If previousvalues.Count = 0 Then
-            'this condition only happens the first time this event is called (durring form load)
-            'the starting value of all 10 indexes is 0
-            loopcounter = 0
-            While loopcounter < 10
+   '    Static previousvalues As ArrayList = New ArrayList
+   '    Dim loopcounter As Int16 = 0
+   '    If previousvalues.Count = 0 Then
+   '        'this condition only happens the first time this event is called (durring form load)
+   '        'the starting value of all 10 indexes is 0
+   '        loopcounter = 0
+   '        While loopcounter < 10
 
-                previousvalues.Add(0)
-                loopcounter += 1
-            End While
+   '            previousvalues.Add(0)
+   '            loopcounter += 1
+   '        End While
 
-        End If
+   '    End If
 
-        If Not formloaded Then
-            'selection index change is trigered when the controll is loaded
+   '    If Not formloaded Then
+   '        'selection index change is trigered when the controll is loaded
 
 
 
-            Return
-        End If
+   '        Return
+   '    End If
 
-        If databeinginternallymanipulated Then
-            Return
+   '    If databeinginternallymanipulated Then
+   '        Return
 
-        End If
+   '    End If
 
-        databeinginternallymanipulated = True
+   '    databeinginternallymanipulated = True
 
 
 
-        'step1 set min and max lines for this key word bassed on selected pattern
-        'step2 if selected lines is not within range change selection
-        'step3 if the selected lines has changed then available lines and all other line count ranges need changing
+   '    'step1 set min and max lines for this key word bassed on selected pattern
+   '    'step2 if selected lines is not within range change selection
+   '    'step3 if the selected lines has changed then available lines and all other line count ranges need changing
 
 
 
 
-        'eeprom/line data
-        'Const EEpromspace As Int16 = 512
+   '    'eeprom/line data
+   '    'Const EEpromspace As Int16 = 512
 
-        'Dim EEpromconfigbytes As Int16 = 2 'linecount and line length
-        'Dim EEpromreservedbytes As Int16 = 11 'valid aplication, memory map and 9 reserved
-        'Dim EEpromtrickdata As Int16 = Me.trickdata.Count
+   '    'Dim EEpromconfigbytes As Int16 = 2 'linecount and line length
+   '    'Dim EEpromreservedbytes As Int16 = 11 'valid aplication, memory map and 9 reserved
+   '    'Dim EEpromtrickdata As Int16 = Me.trickdata.Count
 
-        'Dim maxlines As Int16
-        'Dim availableEEprom As Int16 = EEpromspace - EEpromconfigbytes - EEpromreservedbytes - EEpromtrickdata
-        'If Me.settings(settingsindex.linelength) = 0 Then
-        '    MsgBox("error linelentght = 0!")
-        '    maxlines = availableEEprom / 1
+   '    'Dim maxlines As Int16
+   '    'Dim availableEEprom As Int16 = EEpromspace - EEpromconfigbytes - EEpromreservedbytes - EEpromtrickdata
+   '    'If Me.settings(settingsindex.linelength) = 0 Then
+   '    '    MsgBox("error linelentght = 0!")
+   '    '    maxlines = availableEEprom / 1
 
-        'Else
-        '    maxlines = availableEEprom / Me.settings(settingsindex.linelength)
-        'End If
+   '    'Else
+   '    '    maxlines = availableEEprom / Me.settings(settingsindex.linelength)
+   '    'End If
 
-        'Dim usedlines As Int16 = textdata.Count
-        'Dim availablelines As Int16 = maxlines - usedlines
+   '    'Dim usedlines As Int16 = textdata.Count
+   '    'Dim availablelines As Int16 = maxlines - usedlines
 
 
-        refresh_available_lines()
+   '    refresh_available_lines()
 
-        'info from sender 
-        Dim pattern As String = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(sender.SelectedIndex)) 'get the name of the enum matching the index, then convert to legacy diaplay because several other functions use 
-        Dim index As String = sender.name.Substring(sender.name.Length - 2)
+   '    'info from sender 
+   '    'Dim pattern As String = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(sender.SelectedIndex)) 'get the name of the enum matching the index, then convert to legacy diaplay because several other functions use 
+   '    Dim index As String = sender.name.Substring(sender.name.Length - 2)
 
 
 
-        combotab_refresh_keywordallignment(Convert.ToInt16(index))
-        Dim keyword As String
-        Dim oldselectedreps As Int16
-        Dim oldselectedlines As Int16
-        Dim newselectedlines As Int16
-        Dim newselectedreps As Int16
-        If index = "00" Then
-            keyword = TBkw00.Text
-            oldselectedreps = 1 'NUDreps00.Value
-            oldselectedlines = NUDfc00.Value
-        ElseIf index = "01" Then
-            keyword = TBkw01.Text
-            oldselectedreps = 1 'NUDreps01.Value
-            oldselectedlines = NUDfc01.Value
-        ElseIf index = "02" Then
-            keyword = TBkw02.Text
-            oldselectedreps = 1 'NUDreps02.Value
-            oldselectedlines = NUDfc02.Value
-        ElseIf index = "03" Then
-            keyword = TBkw03.Text
-            oldselectedlines = NUDfc03.Value
-            oldselectedreps = 1 'NUDreps03.Value
-        ElseIf index = "04" Then
-            keyword = TBkw04.Text
-            oldselectedlines = NUDfc04.Value
-            oldselectedreps = 1 'NUDreps04.Value
-        ElseIf index = "05" Then
-            keyword = TBkw05.Text
-            oldselectedlines = NUDfc05.Value
-            oldselectedreps = 1 'NUDreps05.Value
-        ElseIf index = "06" Then
-            keyword = TBkw06.Text
-            oldselectedlines = NUDfc06.Value
-            oldselectedreps = 1
-        ElseIf index = "07" Then
-            keyword = TBkw07.Text
-            oldselectedlines = NUDfc07.Value
-            oldselectedreps = 1 'NUDreps07.Value
-        ElseIf index = "08" Then
-            keyword = TBkw08.Text
-            oldselectedlines = NUDfc08.Value
-            oldselectedreps = 1 'NUDreps08.Value
-        ElseIf index = "09" Then
+   '    combotab_refresh_keywordallignment(Convert.ToInt16(index))
+   '    Dim keyword As String
+   '    Dim oldselectedreps As Int16
+   '    Dim oldselectedlines As Int16
+   '    Dim newselectedlines As Int16
+   '    Dim newselectedreps As Int16
+   '    If index = "00" Then
+   '        keyword = TBkw00.Text
+   '        oldselectedreps = 1 'NUDreps00.Value
+   '        oldselectedlines = NUDfc00.Value
+   '    ElseIf index = "01" Then
+   '        keyword = TBkw01.Text
+   '        oldselectedreps = 1 'NUDreps01.Value
+   '        oldselectedlines = NUDfc01.Value
+   '    ElseIf index = "02" Then
+   '        keyword = TBkw02.Text
+   '        oldselectedreps = 1 'NUDreps02.Value
+   '        oldselectedlines = NUDfc02.Value
+   '    ElseIf index = "03" Then
+   '        keyword = TBkw03.Text
+   '        oldselectedlines = NUDfc03.Value
+   '        oldselectedreps = 1 'NUDreps03.Value
+   '    ElseIf index = "04" Then
+   '        keyword = TBkw04.Text
+   '        oldselectedlines = NUDfc04.Value
+   '        oldselectedreps = 1 'NUDreps04.Value
+   '    ElseIf index = "05" Then
+   '        keyword = TBkw05.Text
+   '        oldselectedlines = NUDfc05.Value
+   '        oldselectedreps = 1 'NUDreps05.Value
+   '    ElseIf index = "06" Then
+   '        keyword = TBkw06.Text
+   '        oldselectedlines = NUDfc06.Value
+   '        oldselectedreps = 1
+   '    ElseIf index = "07" Then
+   '        keyword = TBkw07.Text
+   '        oldselectedlines = NUDfc07.Value
+   '        oldselectedreps = 1 'NUDreps07.Value
+   '    ElseIf index = "08" Then
+   '        keyword = TBkw08.Text
+   '        oldselectedlines = NUDfc08.Value
+   '        oldselectedreps = 1 'NUDreps08.Value
+   '    ElseIf index = "09" Then
 
-            keyword = TBkw09.Text
-            oldselectedlines = NUDfc09.Value
-            oldselectedreps = 1 'NUDreps09.Value
+   '        keyword = TBkw09.Text
+   '        oldselectedlines = NUDfc09.Value
+   '        oldselectedreps = 1 'NUDreps09.Value
 
-        End If
+   '    End If
 
 
-        Dim maxwordlength As Int16 = get_maxlinelengthforpattern(pattern, keyword)
+   '    Dim maxwordlength As Int16 = get_maxlinelengthforpattern(pattern, keyword)
 
-        keyword = jpstringsfunctions.truncateright(keyword, maxwordlength) 'keyword has to be truncated BEFORE calculating other values
+   '    keyword = jpstringsfunctions.truncateright(keyword, maxwordlength) 'keyword has to be truncated BEFORE calculating other values
 
 
-        Dim minlinesinpattern As Int16 = get_minlinesforpattern(pattern, keyword)
-        Dim maxlinesinpattern As Int16 = get_maxlinesforpattern(pattern, keyword, oldselectedlines)
-        Dim defaultlinesinpattern As Int16 = get_defaultlinesforpattern(pattern, keyword)
-        Dim linestep As Int16 = get_linescountstepforpattern(pattern, keyword)
+   '    Dim minlinesinpattern As Int16 = get_minlinesforpattern(pattern, keyword)
+   '    Dim maxlinesinpattern As Int16 = get_maxlinesforpattern(pattern, keyword, oldselectedlines)
+   '    Dim defaultlinesinpattern As Int16 = get_defaultlinesforpattern(pattern, keyword)
+   '    Dim linestep As Int16 = get_linescountstepforpattern(pattern, keyword)
 
-        If minlinesinpattern > availablelines Then
+   '    If minlinesinpattern > availablelines Then
 
-            databeinginternallymanipulated = False 'prevent watchdog timmer going off
-            MsgBox("sorry, there are not sufficent available lines to select this pattern")
+   '        databeinginternallymanipulated = False 'prevent watchdog timmer going off
+   '        MsgBox("sorry, there are not sufficent available lines to select this pattern")
 
 
-            databeinginternallymanipulated = True
-            sender.selectedindex = previousvalues(Convert.ToInt16(index))
-            databeinginternallymanipulated = False
-            Return
-        End If
+   '        databeinginternallymanipulated = True
+   '        sender.selectedindex = previousvalues(Convert.ToInt16(index))
+   '        databeinginternallymanipulated = False
+   '        Return
+   '    End If
 
-        'keyword = jpstringsfunctions.truncateright(keyword, maxwordlength) 'truncate to maximum lenght which at time comment written was either line length or the current length of the keyword
+   '    'keyword = jpstringsfunctions.truncateright(keyword, maxwordlength) 'truncate to maximum lenght which at time comment written was either line length or the current length of the keyword
 
-        Dim oldtotallines As Int16 = oldselectedlines * oldselectedreps
+   '    Dim oldtotallines As Int16 = oldselectedlines * oldselectedreps
 
-        If maxlinesinpattern < minlinesinpattern Then
-            MsgBox("error maxlines is less then min lines" + Constants.vbCrLf + "please report this bug")
-            maxlinesinpattern = minlinesinpattern
+   '    If maxlinesinpattern < minlinesinpattern Then
+   '        MsgBox("error maxlines is less then min lines" + Constants.vbCrLf + "please report this bug")
+   '        maxlinesinpattern = minlinesinpattern
 
-        End If
+   '    End If
 
-        'comented out because if this situation is present then reps will be set to 0 below
-        'If minlinesinpattern > availablelines + oldtotallines Then
-        '    Dim message As String = "sorry, there are insufficent available lines to choose this display pattern"
-        '    MsgBox(message)
-        '    Return
-        'End If
+   '    'comented out because if this situation is present then reps will be set to 0 below
+   '    'If minlinesinpattern > availablelines + oldtotallines Then
+   '    '    Dim message As String = "sorry, there are insufficent available lines to choose this display pattern"
+   '    '    MsgBox(message)
+   '    '    Return
+   '    'End If
 
-        If legacysettings(legacysettingsindex.showreps) = 0 Then
-            'this is the code normaly executed
-            newselectedreps = 1 ' constant value. this value is retained in regular mode to minimize rewriting code
+   '    If legacysettings(legacysettingsindex.showreps) = 0 Then
+   '        'this is the code normaly executed
+   '        newselectedreps = 1 ' constant value. this value is retained in regular mode to minimize rewriting code
 
 
-            newselectedlines = Me.get_defaultlinesforpattern(pattern, keyword, oldselectedlines)
+   '        newselectedlines = Me.get_defaultlinesforpattern(pattern, keyword, oldselectedlines)
 
-            
 
 
-        ElseIf legacysettings(legacysettingsindex.showreps) = 1 Or legacysettings(legacysettingsindex.showreps) = 2 Then
-            'this code was copied and pasted from an olderversion of tiniwindow and is only executed when in legacy mode
 
-            'currently legacy mode is not supported. some infrastructer has been erected for future use but has not been tested
-            'this code likey will be deleted because the only released copy of the junky version using it was given to pita bite
+   '    ElseIf legacysettings(legacysettingsindex.showreps) = 1 Or legacysettings(legacysettingsindex.showreps) = 2 Then
+   '        'this code was copied and pasted from an olderversion of tiniwindow and is only executed when in legacy mode
 
+   '        'currently legacy mode is not supported. some infrastructer has been erected for future use but has not been tested
+   '        'this code likey will be deleted because the only released copy of the junky version using it was given to pita bite
 
-            Dim oldlinesvalid As Boolean
 
-            If oldselectedlines < minlinesinpattern Then
-                oldlinesvalid = False
-            Else
-                'deterine if old value falls with in min and step
-                loopcounter = minlinesinpattern
-                oldlinesvalid = False
-                While loopcounter <= maxlinesinpattern
-                    If loopcounter = oldselectedlines Then
-                        oldlinesvalid = True
-                    End If
-                    loopcounter += linestep
-                End While
+   '        Dim oldlinesvalid As Boolean
 
-            End If
+   '        If oldselectedlines < minlinesinpattern Then
+   '            oldlinesvalid = False
+   '        Else
+   '            'deterine if old value falls with in min and step
+   '            loopcounter = minlinesinpattern
+   '            oldlinesvalid = False
+   '            While loopcounter <= maxlinesinpattern
+   '                If loopcounter = oldselectedlines Then
+   '                    oldlinesvalid = True
+   '                End If
+   '                loopcounter += linestep
+   '            End While
 
-            If Not oldlinesvalid Then
-                'attempt to use the same total lines (lines times reps)
+   '        End If
 
+   '        If Not oldlinesvalid Then
+   '            'attempt to use the same total lines (lines times reps)
 
-                Dim loopcounter_lines As Int16 = minlinesinpattern
-                Dim loopcounter_reps As Int16 = 0
 
-                While loopcounter_lines < oldselectedlines And loopcounter_lines < maxlinesinpattern
-                    loopcounter_reps = 0
-                    While loopcounter_lines * loopcounter_reps < oldtotallines
+   '            Dim loopcounter_lines As Int16 = minlinesinpattern
+   '            Dim loopcounter_reps As Int16 = 0
 
+   '            While loopcounter_lines < oldselectedlines And loopcounter_lines < maxlinesinpattern
+   '                loopcounter_reps = 0
+   '                While loopcounter_lines * loopcounter_reps < oldtotallines
 
-                        loopcounter_reps += 1
 
-                    End While
-                    If loopcounter_lines * loopcounter_reps = oldtotallines Then
-                        Exit While
-                    End If
+   '                    loopcounter_reps += 1
 
-                    loopcounter_lines += linestep
-                End While
+   '                End While
+   '                If loopcounter_lines * loopcounter_reps = oldtotallines Then
+   '                    Exit While
+   '                End If
 
-                If loopcounter_lines * loopcounter_reps = oldtotallines Then
-                    'use the values from the loop which will have the lowest lines that can be multipled by reps to match old total lines
-                    newselectedlines = loopcounter_lines
-                    newselectedreps = loopcounter_reps
-                ElseIf oldtotallines <= maxlinesinpattern And oldtotallines >= minlinesinpattern Then
-                    'set the number of lines to the old total lines (or the closest valid cosidirng min and step) and the reps to 1
+   '                loopcounter_lines += linestep
+   '            End While
 
+   '            If loopcounter_lines * loopcounter_reps = oldtotallines Then
+   '                'use the values from the loop which will have the lowest lines that can be multipled by reps to match old total lines
+   '                newselectedlines = loopcounter_lines
+   '                newselectedreps = loopcounter_reps
+   '            ElseIf oldtotallines <= maxlinesinpattern And oldtotallines >= minlinesinpattern Then
+   '                'set the number of lines to the old total lines (or the closest valid cosidirng min and step) and the reps to 1
 
-                    'determine id oldtotallines conforms to min and step
-                    loopcounter = minlinesinpattern
-                    Dim addvalue As Int16 = 0
-                    Dim newvalueset As Boolean = False
 
+   '                'determine id oldtotallines conforms to min and step
+   '                loopcounter = minlinesinpattern
+   '                Dim addvalue As Int16 = 0
+   '                Dim newvalueset As Boolean = False
 
-                    'if the exact old linecount doesnt work, subtract 1 then add1 then subtract 2 then add2 etc
 
-                    While Not newvalueset
+   '                'if the exact old linecount doesnt work, subtract 1 then add1 then subtract 2 then add2 etc
 
-                        While loopcounter <= maxlinesinpattern
-                            If loopcounter = oldtotallines + addvalue Then
-                                newvalueset = True
-                                newselectedlines = loopcounter
-                            End If
-                            loopcounter += linestep
-                        End While
+   '                While Not newvalueset
 
-                        If addvalue = 0 Then
-                            addvalue = -1
-                        ElseIf addvalue < 0 Then
-                            addvalue = -addvalue
-                        ElseIf addvalue > 0 Then
-                            addvalue = -addvalue - 1
-                        Else
-                            MsgBox("error in loop")
-                            Exit While
-                        End If
+   '                    While loopcounter <= maxlinesinpattern
+   '                        If loopcounter = oldtotallines + addvalue Then
+   '                            newvalueset = True
+   '                            newselectedlines = loopcounter
+   '                        End If
+   '                        loopcounter += linestep
+   '                    End While
 
-                    End While
+   '                    If addvalue = 0 Then
+   '                        addvalue = -1
+   '                    ElseIf addvalue < 0 Then
+   '                        addvalue = -addvalue
+   '                    ElseIf addvalue > 0 Then
+   '                        addvalue = -addvalue - 1
+   '                    Else
+   '                        MsgBox("error in loop")
+   '                        Exit While
+   '                    End If
 
-                    If Not newvalueset Then
-                        MsgBox("error new value not set in loop for setting single rep total line count in pattern selection change event")
-                    End If
+   '                End While
 
-                    newselectedreps = 1
+   '                If Not newvalueset Then
+   '                    MsgBox("error new value not set in loop for setting single rep total line count in pattern selection change event")
+   '                End If
 
+   '                newselectedreps = 1
 
 
-                Else
-                    'most complicated scenario
-                    'all attemps to match old total lines failed
 
-                    'set the lines to the minimum for pattern and use the old reps
-                    'however if this would cause a EEprom overflow reduce number of reps
-                    'if neccesary go to 0 reps
+   '            Else
+   '                'most complicated scenario
+   '                'all attemps to match old total lines failed
 
-                    newselectedlines = minlinesinpattern
-                    newselectedreps = oldselectedreps
-                    While (newselectedlines * newselectedreps > (availablelines - oldtotallines))
+   '                'set the lines to the minimum for pattern and use the old reps
+   '                'however if this would cause a EEprom overflow reduce number of reps
+   '                'if neccesary go to 0 reps
 
+   '                newselectedlines = minlinesinpattern
+   '                newselectedreps = oldselectedreps
+   '                While (newselectedlines * newselectedreps > (availablelines - oldtotallines))
 
-                        newselectedreps -= 1
 
-                        If newselectedreps < 0 Then
-                            MsgBox("bug - newselectedreps < 0 in loop in  patternchange function ")
-                            newselectedreps = 0
-                            Exit While
-                        End If
-                    End While
+   '                    newselectedreps -= 1
 
+   '                    If newselectedreps < 0 Then
+   '                        MsgBox("bug - newselectedreps < 0 in loop in  patternchange function ")
+   '                        newselectedreps = 0
+   '                        Exit While
+   '                    End If
+   '                End While
 
 
-                End If
-            Else
 
+   '            End If
+   '        Else
 
 
-                newselectedlines = oldselectedlines
-                newselectedreps = oldselectedreps
-            End If
 
+   '            newselectedlines = oldselectedlines
+   '            newselectedreps = oldselectedreps
+   '        End If
 
 
 
-            'If maxlinesinpattern * oldselectedreps > availablelines Then
-            '    maxlinesinpattern = availablelines / oldselectedreps
-            'End If
 
+   '        'If maxlinesinpattern * oldselectedreps > availablelines Then
+   '        '    maxlinesinpattern = availablelines / oldselectedreps
+   '        'End If
 
-        Else
-            MsgBox("invalid value for legaxysettings(showreps) in patern selected index change")
-        End If
 
+   '    Else
+   '        MsgBox("invalid value for legaxysettings(showreps) in patern selected index change")
+   '    End If
 
 
-        'remember in setting the minimum value for the numeric up down controlls 
-        'that this value should be one line step below the actual minimum value for the pattern
-        'the reson for this is that the value change event uses a hack to set the value to 0 when this value is clicked to
 
-        If index = "00" Then
+   '    'remember in setting the minimum value for the numeric up down controlls 
+   '    'that this value should be one line step below the actual minimum value for the pattern
+   '    'the reson for this is that the value change event uses a hack to set the value to 0 when this value is clicked to
 
-            'oldselectedlines = NUDfc00.Value
-            'NUDfc00.Minimum = minlinesinpattern
-            NUDfc00.Maximum = maxlinesinpattern
-            NUDfc00.Increment = linestep
+   '    If index = "00" Then
 
-            NUDfc00.Minimum = minlinesinpattern - linestep
-            NUDfc00.Value = newselectedlines
+   '        'oldselectedlines = NUDfc00.Value
+   '        'NUDfc00.Minimum = minlinesinpattern
+   '        NUDfc00.Maximum = maxlinesinpattern
+   '        NUDfc00.Increment = linestep
 
-            'NUDreps00.Value = newselectedreps
+   '        NUDfc00.Minimum = minlinesinpattern - linestep
+   '        NUDfc00.Value = newselectedlines
 
+   '        'NUDreps00.Value = newselectedreps
 
-        ElseIf index = "01" Then
-            'oldselectedlines = NUDfc01.Value
-            'NUDfc01.Minimum = minlinesinpattern
-            NUDfc01.Maximum = maxlinesinpattern
-            NUDfc01.Increment = linestep
 
-            NUDfc01.Minimum = minlinesinpattern - linestep
-            NUDfc01.Value = newselectedlines
+   '    ElseIf index = "01" Then
+   '        'oldselectedlines = NUDfc01.Value
+   '        'NUDfc01.Minimum = minlinesinpattern
+   '        NUDfc01.Maximum = maxlinesinpattern
+   '        NUDfc01.Increment = linestep
 
-            'NUDreps01.Value = newselectedreps
+   '        NUDfc01.Minimum = minlinesinpattern - linestep
+   '        NUDfc01.Value = newselectedlines
 
-        ElseIf index = "02" Then
-            'oldselectedlines = NUDfc02.Value
-            'NUDfc02.Minimum = minlinesinpattern
-            NUDfc02.Maximum = maxlinesinpattern
-            NUDfc02.Increment = linestep
-            NUDfc02.Minimum = minlinesinpattern - linestep
-            NUDfc02.Value = newselectedlines
+   '        'NUDreps01.Value = newselectedreps
 
-            'NUDreps02.Value = newselectedreps
+   '    ElseIf index = "02" Then
+   '        'oldselectedlines = NUDfc02.Value
+   '        'NUDfc02.Minimum = minlinesinpattern
+   '        NUDfc02.Maximum = maxlinesinpattern
+   '        NUDfc02.Increment = linestep
+   '        NUDfc02.Minimum = minlinesinpattern - linestep
+   '        NUDfc02.Value = newselectedlines
 
-        ElseIf index = "03" Then
-            'oldselectedlines = NUDfc03.Value
-            'NUDfc03.Minimum = minlinesinpattern
-            NUDfc03.Maximum = maxlinesinpattern
-            NUDfc03.Increment = linestep
-            NUDfc03.Minimum = minlinesinpattern - linestep
-            NUDfc03.Value = newselectedlines
+   '        'NUDreps02.Value = newselectedreps
 
-            'NUDreps03.Value = newselectedreps
+   '    ElseIf index = "03" Then
+   '        'oldselectedlines = NUDfc03.Value
+   '        'NUDfc03.Minimum = minlinesinpattern
+   '        NUDfc03.Maximum = maxlinesinpattern
+   '        NUDfc03.Increment = linestep
+   '        NUDfc03.Minimum = minlinesinpattern - linestep
+   '        NUDfc03.Value = newselectedlines
 
-        ElseIf index = "04" Then
-            'oldselectedlines = NUDfc04.Value
-            'NUDfc04.Minimum = minlinesinpattern
-            NUDfc04.Maximum = maxlinesinpattern
-            NUDfc04.Increment = linestep
+   '        'NUDreps03.Value = newselectedreps
 
-            NUDfc04.Minimum = minlinesinpattern - linestep
-            NUDfc04.Value = newselectedlines
+   '    ElseIf index = "04" Then
+   '        'oldselectedlines = NUDfc04.Value
+   '        'NUDfc04.Minimum = minlinesinpattern
+   '        NUDfc04.Maximum = maxlinesinpattern
+   '        NUDfc04.Increment = linestep
 
-            'NUDreps04.Value = newselectedreps
+   '        NUDfc04.Minimum = minlinesinpattern - linestep
+   '        NUDfc04.Value = newselectedlines
 
-        ElseIf index = "05" Then
+   '        'NUDreps04.Value = newselectedreps
 
-            'oldselectedlines = NUDfc05.Value
-            'NUDfc05.Minimum = minlinesinpattern
-            NUDfc05.Maximum = maxlinesinpattern
-            NUDfc05.Increment = linestep
+   '    ElseIf index = "05" Then
 
-            NUDfc05.Minimum = minlinesinpattern - linestep
-            NUDfc05.Value = newselectedlines
+   '        'oldselectedlines = NUDfc05.Value
+   '        'NUDfc05.Minimum = minlinesinpattern
+   '        NUDfc05.Maximum = maxlinesinpattern
+   '        NUDfc05.Increment = linestep
 
-            'NUDreps05.Value = newselectedreps
+   '        NUDfc05.Minimum = minlinesinpattern - linestep
+   '        NUDfc05.Value = newselectedlines
 
-        ElseIf index = "06" Then
+   '        'NUDreps05.Value = newselectedreps
 
-            'oldselectedlines = NUDfc06.Value
-            'NUDfc06.Minimum = minlinesinpattern
-            NUDfc06.Maximum = maxlinesinpattern
-            NUDfc06.Increment = linestep
+   '    ElseIf index = "06" Then
 
-            NUDfc06.Minimum = minlinesinpattern - linestep
-            NUDfc06.Value = newselectedlines
+   '        'oldselectedlines = NUDfc06.Value
+   '        'NUDfc06.Minimum = minlinesinpattern
+   '        NUDfc06.Maximum = maxlinesinpattern
+   '        NUDfc06.Increment = linestep
 
-            ''NUDreps06.Value = newselectedreps
+   '        NUDfc06.Minimum = minlinesinpattern - linestep
+   '        NUDfc06.Value = newselectedlines
 
-        ElseIf index = "07" Then
-            'oldselectedlines = NUDfc07.Value
-            'NUDfc07.Minimum = minlinesinpattern
-            NUDfc07.Maximum = maxlinesinpattern
-            NUDfc07.Increment = linestep
+   '        ''NUDreps06.Value = newselectedreps
 
-            NUDfc07.Minimum = minlinesinpattern - linestep
-            NUDfc07.Value = newselectedlines
+   '    ElseIf index = "07" Then
+   '        'oldselectedlines = NUDfc07.Value
+   '        'NUDfc07.Minimum = minlinesinpattern
+   '        NUDfc07.Maximum = maxlinesinpattern
+   '        NUDfc07.Increment = linestep
 
-            'NUDreps07.Value = newselectedreps
+   '        NUDfc07.Minimum = minlinesinpattern - linestep
+   '        NUDfc07.Value = newselectedlines
 
-        ElseIf index = "08" Then
-            'oldselectedlines = NUDfc08.Value
-            'NUDfc08.Minimum = minlinesinpattern
-            NUDfc08.Maximum = maxlinesinpattern
+   '        'NUDreps07.Value = newselectedreps
 
+   '    ElseIf index = "08" Then
+   '        'oldselectedlines = NUDfc08.Value
+   '        'NUDfc08.Minimum = minlinesinpattern
+   '        NUDfc08.Maximum = maxlinesinpattern
 
-            NUDfc08.Increment = linestep
-            NUDfc08.Minimum = minlinesinpattern - linestep
-            NUDfc08.Value = newselectedlines
 
-            'NUDreps08.Value = newselectedreps
+   '        NUDfc08.Increment = linestep
+   '        NUDfc08.Minimum = minlinesinpattern - linestep
+   '        NUDfc08.Value = newselectedlines
 
+   '        'NUDreps08.Value = newselectedreps
 
-        ElseIf index = "09" Then
-            'oldselectedlines = NUDfc09.Value
-            'NUDfc09.Minimum = minlinesinpattern
-            NUDfc09.Maximum = maxlinesinpattern
 
-            NUDfc09.Minimum = minlinesinpattern - linestep
-            NUDfc09.Increment = linestep
-            NUDfc09.Value = newselectedlines
-            'NUDreps09.Value = newselectedreps
+   '    ElseIf index = "09" Then
+   '        'oldselectedlines = NUDfc09.Value
+   '        'NUDfc09.Minimum = minlinesinpattern
+   '        NUDfc09.Maximum = maxlinesinpattern
 
-        End If
+   '        NUDfc09.Minimum = minlinesinpattern - linestep
+   '        NUDfc09.Increment = linestep
+   '        NUDfc09.Value = newselectedlines
+   '        'NUDreps09.Value = newselectedreps
 
+   '    End If
 
 
-        If combotab_generatelines() Then
 
-            databeinginternallymanipulated = False
-            combotab_refreshlinedata()
-            previousvalues(Convert.ToInt16(index)) = sender.selectedindex
+   '    'If combotab_generatelines() Then
 
-            Return
+   '    '    databeinginternallymanipulated = False
+   '    '    combotab_refreshlinedata()
+   '    '    previousvalues(Convert.ToInt16(index)) = sender.selectedindex
 
-        Else
+   '    '    Return
 
-            databeinginternallymanipulated = False
-            MsgBox("error generating lines - please report this bug")
-            sender.selectedindex = previousvalues(Convert.ToInt16(index))
+   '    'Else
 
-            Return
+   '    databeinginternallymanipulated = False
+   '    MsgBox("error generating lines - please report this bug")
+   '    sender.selectedindex = previousvalues(Convert.ToInt16(index))
 
-        End If
+   '    Return
 
-    End Sub
+   '    'End If
 
+   'End Sub
 
 
 
@@ -22849,200 +21272,201 @@ Public Class Form1
 
 
 
-    Private Function combotab_generatepattern(ByVal pattern As String, ByVal keyword As String, ByVal lines As Int16, ByVal reps As Int16) As ArrayList
 
-        If lines = 0 Then
-            Return New ArrayList
-        End If
+    'Private Function combotab_generatepattern(ByVal pattern As String, ByVal keyword As String, ByVal lines As Int16, ByVal reps As Int16) As ArrayList
 
-        Dim loopcounter As Int16 = 0
-        Dim onerep As ArrayList = New ArrayList
-        Dim returnvalue As ArrayList = New ArrayList
+    '    If lines = 0 Then
+    '        Return New ArrayList
+    '    End If
 
-        If pattern.ToLower = "(none)" Then
-            Return New ArrayList
+    '    Dim loopcounter As Int16 = 0
+    '    Dim onerep As ArrayList = New ArrayList
+    '    Dim returnvalue As ArrayList = New ArrayList
 
-        ElseIf pattern.ToLower = "scroll left" Then
-            onerep = combotab_generatepattern_scrollleft(keyword, lines)
-        ElseIf pattern.ToLower = "scroll right" Then
-            onerep = combotab_generatepattern_scrollright(keyword, lines)
-        ElseIf pattern.ToLower = "still" Then
-            onerep = combotab_generatepattern_still(keyword, lines)
-        ElseIf pattern.ToLower = "add on" Then
-            onerep = combotab_generatepattern_addon(keyword, lines)
-        ElseIf pattern.ToLower = "subtract off" Then
-            onerep = combotab_generatepattern_subtractoff(keyword, lines)
-        ElseIf pattern.ToLower = "add and subtract" Then
-            onerep = combotab_generatepattern_addandsubtract(keyword, lines)
-        ElseIf pattern.ToLower = "subtract and add" Then
-            onerep = combotab_generatepattern_subtractandadd(keyword, lines)
-        ElseIf pattern.ToLower = "split out" Then
-            onerep = combotab_generatepattern_splitout(keyword, lines)
-        ElseIf pattern.ToLower = "join in" Then
-            onerep = combotab_generatepattern_joinin(keyword, lines)
-        ElseIf pattern.ToLower = "zoom in and out" Then
-            onerep = combotab_generatepattern_zoom_in_and_out(keyword, lines)
-        ElseIf pattern.ToLower = "zoom out and in" Then
-            onerep = combotab_generatepattern_zoom_out_and_in(keyword, lines)
-        ElseIf pattern.ToLower = "blink fast" Then
-            onerep = combotab_generatepattern_blinkfast(keyword, lines)
+    '    If pattern.ToLower = "(none)" Then
+    '        Return New ArrayList
 
-        ElseIf pattern.ToLower = "blink slow" Then
-            onerep = combotab_generatepattern_blinkslow(keyword, lines)
+    '    ElseIf pattern.ToLower = "scroll left" Then
+    '        onerep = combotab_generatepattern_scrollleft(keyword, lines)
+    '    ElseIf pattern.ToLower = "scroll right" Then
+    '        onerep = combotab_generatepattern_scrollright(keyword, lines)
+    '    ElseIf pattern.ToLower = "still" Then
+    '        onerep = combotab_generatepattern_still(keyword, lines)
+    '    ElseIf pattern.ToLower = "add on" Then
+    '        onerep = combotab_generatepattern_addon(keyword, lines)
+    '    ElseIf pattern.ToLower = "subtract off" Then
+    '        onerep = combotab_generatepattern_subtractoff(keyword, lines)
+    '    ElseIf pattern.ToLower = "add and subtract" Then
+    '        onerep = combotab_generatepattern_addandsubtract(keyword, lines)
+    '    ElseIf pattern.ToLower = "subtract and add" Then
+    '        onerep = combotab_generatepattern_subtractandadd(keyword, lines)
+    '    ElseIf pattern.ToLower = "split out" Then
+    '        onerep = combotab_generatepattern_splitout(keyword, lines)
+    '    ElseIf pattern.ToLower = "join in" Then
+    '        onerep = combotab_generatepattern_joinin(keyword, lines)
+    '    ElseIf pattern.ToLower = "zoom in and out" Then
+    '        onerep = combotab_generatepattern_zoom_in_and_out(keyword, lines)
+    '    ElseIf pattern.ToLower = "zoom out and in" Then
+    '        onerep = combotab_generatepattern_zoom_out_and_in(keyword, lines)
+    '    ElseIf pattern.ToLower = "blink fast" Then
+    '        onerep = combotab_generatepattern_blinkfast(keyword, lines)
 
-        Else
-            MsgBox("pattern not yet implimented")
-            'ElseIf pattern.ToLower = "(none)" Then
-            'ElseIf pattern.ToLower = "(none)" Then
-            'ElseIf pattern.ToLower = "(none)" Then
-            'ElseIf pattern.ToLower = "(none)" Then
-            'ElseIf pattern.ToLower = "(none)" Then
+    '    ElseIf pattern.ToLower = "blink slow" Then
+    '        onerep = combotab_generatepattern_blinkslow(keyword, lines)
 
-            Return returnvalue
-        End If
+    '    Else
+    '        MsgBox("pattern not yet implimented")
+    '        'ElseIf pattern.ToLower = "(none)" Then
+    '        'ElseIf pattern.ToLower = "(none)" Then
+    '        'ElseIf pattern.ToLower = "(none)" Then
+    '        'ElseIf pattern.ToLower = "(none)" Then
+    '        'ElseIf pattern.ToLower = "(none)" Then
 
-        While loopcounter < reps
-            returnvalue.AddRange(onerep)
-            loopcounter += 1
-        End While
-        Return returnvalue
-    End Function
-    Private Function combotab_generatelines() As Boolean
+    '        Return returnvalue
+    '    End If
 
-        'If Not formloaded Then
-        '    Return
-        'End If
-        Dim newtextdata As ArrayList = New ArrayList
-        newtextdata.Clear()
+    '    While loopcounter < reps
+    '        returnvalue.AddRange(onerep)
+    '        loopcounter += 1
+    '    End While
+    '    Return returnvalue
+    'End Function
+    'Private Function combotab_generatelines() As Boolean
 
-        Dim singlepatternholder As ArrayList = New ArrayList
+    '    'If Not formloaded Then
+    '    '    Return
+    '    'End If
+    '    Dim newtextdata As ArrayList = New ArrayList
+    '    newtextdata.Clear()
 
+    '    Dim singlepatternholder As ArrayList = New ArrayList
 
-        Dim keyword As String
-        Dim pattern As String
-        Dim lines As Int16
-        Dim reps As Int16
 
+    '    Dim keyword As String
+    '    Dim pattern As String
+    '    Dim lines As Int16
+    '    Dim reps As Int16
 
-        keyword = TBkw00.Text
 
-        '''
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex))
-        lines = NUDfc00.Value
-        reps = 1 'NUDreps00.Value
+    '    keyword = TBkw00.Text
 
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    '''
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex))
+    '    lines = NUDfc00.Value
+    '    reps = 1 'NUDreps00.Value
 
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw01.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex))
-        lines = NUDfc01.Value
-        reps = 1 'NUDreps01.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
+    '    keyword = TBkw01.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex))
+    '    lines = NUDfc01.Value
+    '    reps = 1 'NUDreps01.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw02.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex))
-        lines = NUDfc02.Value
-        reps = 1 'NUDreps02.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw03.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex))
-        lines = NUDfc03.Value
-        reps = 1 'NUDreps03.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw02.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex))
+    '    lines = NUDfc02.Value
+    '    reps = 1 'NUDreps02.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw04.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex))
-        lines = NUDfc04.Value
-        reps = 1 'NUDreps04.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw03.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex))
+    '    lines = NUDfc03.Value
+    '    reps = 1 'NUDreps03.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw05.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex))
-        lines = NUDfc05.Value
-        reps = 1 'NUDreps05.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw04.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex))
+    '    lines = NUDfc04.Value
+    '    reps = 1 'NUDreps04.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw06.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex))
-        lines = NUDfc06.Value
-        reps = 1 ''NUDreps06.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw05.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex))
+    '    lines = NUDfc05.Value
+    '    reps = 1 'NUDreps05.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw07.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex))
-        lines = NUDfc07.Value
-        reps = 1 'NUDreps07.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw06.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex))
+    '    lines = NUDfc06.Value
+    '    reps = 1 ''NUDreps06.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw08.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex))
-        lines = NUDfc08.Value
-        reps = 1 'NUDreps08.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw07.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex))
+    '    lines = NUDfc07.Value
+    '    reps = 1 'NUDreps07.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        keyword = TBkw09.Text
-        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex))
-        lines = NUDfc09.Value
-        reps = 1 'NUDreps09.Value
-        newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
+    '    keyword = TBkw08.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex))
+    '    lines = NUDfc08.Value
+    '    reps = 1 'NUDreps08.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
+    '    keyword = TBkw09.Text
+    '    pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex))
+    '    lines = NUDfc09.Value
+    '    reps = 1 'NUDreps09.Value
+    '    newtextdata.AddRange(combotab_generatepattern(pattern, keyword, lines, reps))
 
-        Const EEpromspace As Int16 = 512
 
-        Dim EEpromconfigbytes As Int16 = 2 'linecount and line length
-        Dim EEpromreservedbytes As Int16 = 11 'valid aplication, memory map and 9 reserved
-        Dim EEpromtrickdata As Int16 = trickdata.Count
+    '    Const EEpromspace As Int16 = 512
 
-        Dim maxlines As Int16
-        Dim availableEEprom As Int16 = EEpromspace - EEpromconfigbytes - EEpromreservedbytes - EEpromtrickdata
-        If settings(settingsindex.linelength) = 0 Then
-            MsgBox("error linelentght = 0!")
-            maxlines = availableEEprom / 1
+    '    Dim EEpromconfigbytes As Int16 = 2 'linecount and line length
+    '    Dim EEpromreservedbytes As Int16 = 11 'valid aplication, memory map and 9 reserved
+    '    Dim EEpromtrickdata As Int16 = trickdata.Count
 
-        Else
-            maxlines = availableEEprom / settings(settingsindex.linelength)
-        End If
+    '    Dim maxlines As Int16
+    '    Dim availableEEprom As Int16 = EEpromspace - EEpromconfigbytes - EEpromreservedbytes - EEpromtrickdata
+    '    If settings(settingsindex.linelength) = 0 Then
+    '        MsgBox("error linelentght = 0!")
+    '        maxlines = availableEEprom / 1
 
-        If newtextdata.Count > maxlines Then
-            Return False
+    '    Else
+    '        maxlines = availableEEprom / settings(settingsindex.linelength)
+    '    End If
 
-        Else
+    '    If newtextdata.Count > maxlines Then
+    '        Return False
 
-            If newtextdata.Count = 0 Then
-                'tiniwindow gets out of kilter if linelineth is 0
-                'therfore add a blank line
-                newtextdata.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
+    '    Else
 
-            End If
-            set_linecount(newtextdata.Count, line_configuration.add_or_truncate_position._end)
-            textdata = newtextdata
+    '        If newtextdata.Count = 0 Then
+    '            'tiniwindow gets out of kilter if linelineth is 0
+    '            'therfore add a blank line
+    '            newtextdata.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
 
-            
-            If Not tricks_set_activetrick(1) Then
-                'this trick is rotate through lines
-                MsgBox("error setting trick data in combotab_generatelines" + Constants.vbCrLf + "please report this bug")
+    '        End If
+    '        set_linecount(newtextdata.Count, line_configuration.add_or_truncate_position._end)
+    '        textdata = newtextdata
 
 
-                Return False
-            End If
+    '        If Not tricks_set_activetrick(1) Then
+    '            'this trick is rotate through lines
+    '            MsgBox("error setting trick data in combotab_generatelines" + Constants.vbCrLf + "please report this bug")
 
-            If Not tricks_set_parameter(1, 1, (newtextdata.Count)) Then
-                'specifies to rotate through all lines
-                MsgBox("error setting trick parameter in combotab_generatelines")
-                Return False
-            End If
 
+    '            Return False
+    '        End If
 
-            Return True
+    '        If Not tricks_set_parameter(1, 1, (newtextdata.Count)) Then
+    '            'specifies to rotate through all lines
+    '            MsgBox("error setting trick parameter in combotab_generatelines")
+    '            Return False
+    '        End If
 
-        End If
 
-    End Function
+    '        Return True
 
-    Private Sub NUDfc_common_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles NUDfc09.ValueChanged, NUDfc08.ValueChanged, NUDfc07.ValueChanged, NUDfc06.ValueChanged, NUDfc05.ValueChanged, NUDfc04.ValueChanged, NUDfc03.ValueChanged, NUDfc02.ValueChanged, NUDfc01.ValueChanged, NUDfc00.ValueChanged
+    '    End If
+
+    'End Function
+    ''here
+    Private Sub NUDfc_common_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
         If Not formloaded Then
             Return
@@ -23086,12 +21510,12 @@ Public Class Form1
         End If
 
 
-        If combotab_generatelines() Then
-            combotab_refreshlinedata()
-        Else
-            MsgBox("error generating lines in NUDfc_common_valuechanged() " + Constants.vbCrLf + "please report this bug")
+        'If combotab_generatelines() Then
+        '    combotab_refreshlinedata()
+        'Else
+        MsgBox("error generating lines in NUDfc_common_valuechanged() " + Constants.vbCrLf + "please report this bug")
 
-        End If
+        ' End If
         'combotab_refreshlinedata()
 
         change = True
@@ -23100,886 +21524,887 @@ Public Class Form1
     End Sub
 
     
-    Private Function combotab_maxlinelength(ByVal index As String) As Int16
-        'some functions store the index as a 2 character string of digits
-        Return combotab_maxlinelength(Convert.ToInt16(index))
-
-    End Function
-    Private Function combotab_maxlinelength(ByVal index As Int16) As Int16
-
-
-        Dim pattern As String
-        Dim keyword As String
-        If index = 0 Then
-            keyword = TBkw00.Text
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern00.Text
-        ElseIf index = 1 Then
-            keyword = TBkw01.Text
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern01.Text
-        ElseIf index = 2 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern02.Text
-            keyword = TBkw02.Text
-        ElseIf index = 3 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern03.Text
-            keyword = TBkw03.Text
-        ElseIf index = 4 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) ' CBpattern04.Text
-            keyword = TBkw04.Text
-        ElseIf index = 5 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) ' CBpattern05.Text
-            keyword = TBkw05.Text
-        ElseIf index = 6 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern06.Text
-            keyword = TBkw06.Text
-        ElseIf index = 7 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern07.Text
-            keyword = TBkw07.Text
-        ElseIf index = 8 Then
-            pattern = CBpattern08.Text
-            keyword = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'TBkw08.Text
-        ElseIf index = 9 Then
-            pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern09.Text
-            keyword = TBkw09.Text
-        End If
-        Return Me.get_maxlinelengthforpattern(pattern, keyword)
+   ' Private Function combotab_maxlinelength(ByVal index As String) As Int16
+   '     'some functions store the index as a 2 character string of digits
+   '     Return combotab_maxlinelength(Convert.ToInt16(index))
+
+   ' End Function
+   ' 'Private Function combotab_maxlinelength(ByVal index As Int16) As Int16
+
+
+   ' '    Dim pattern As String
+   ' '    Dim keyword As String
+   ' '    If index = 0 Then
+   ' '        keyword = TBkw00.Text
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern00.Text
+   ' '    ElseIf index = 1 Then
+   ' '        keyword = TBkw01.Text
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern01.Text
+   ' '    ElseIf index = 2 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern02.Text
+   ' '        keyword = TBkw02.Text
+   ' '    ElseIf index = 3 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern03.Text
+   ' '        keyword = TBkw03.Text
+   ' '    ElseIf index = 4 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) ' CBpattern04.Text
+   ' '        keyword = TBkw04.Text
+   ' '    ElseIf index = 5 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) ' CBpattern05.Text
+   ' '        keyword = TBkw05.Text
+   ' '    ElseIf index = 6 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern06.Text
+   ' '        keyword = TBkw06.Text
+   ' '    ElseIf index = 7 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern07.Text
+   ' '        keyword = TBkw07.Text
+   ' '    ElseIf index = 8 Then
+   ' '        pattern = CBpattern08.Text
+   ' '        keyword = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'TBkw08.Text
+   ' '    ElseIf index = 9 Then
+   ' '        pattern = combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)) 'CBpattern09.Text
+   ' '        keyword = TBkw09.Text
+   ' '    End If
+   ' '    Return Me.get_maxlinelengthforpattern(pattern, keyword)
 
-    End Function
-    Private Sub TBkw00_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBkw08.TextChanged, TBkw07.TextChanged, TBkw06.TextChanged, TBkw05.TextChanged, TBkw04.TextChanged, TBkw03.TextChanged, TBkw02.TextChanged, TBkw01.TextChanged, TBkw00.TextChanged, TBkw09.TextChanged
-        If databeinginternallymanipulated Then
-            Return
-        End If
+   ' 'End Function
 
-        Static Dim previous_strings As ArrayList = New ArrayList
-        'Static Dim recursive As Boolean = False
-        If previous_strings.Count <> 10 Then
-            'the only time this condidition should exist is the first time the textchange event is called
+   ' ''here
+   '' ''Private Sub TBkw00_TextChanged(ByVal sender As System.Object, ByVal e As System.EventArgs)
+   '' ''    If databeinginternallymanipulated Then
+   '' ''        Return
+   '' ''    End If
 
-            previous_strings = New ArrayList
-            previous_strings.Add(TBkw00.Text)
-            previous_strings.Add(TBkw01.Text)
-            previous_strings.Add(TBkw02.Text)
-            previous_strings.Add(TBkw03.Text)
-            previous_strings.Add(TBkw04.Text)
-            previous_strings.Add(TBkw05.Text)
-            previous_strings.Add(TBkw06.Text)
-            previous_strings.Add(TBkw07.Text)
-            previous_strings.Add(TBkw08.Text)
-            previous_strings.Add(TBkw09.Text)
+   '' ''    Static Dim previous_strings As ArrayList = New ArrayList
+   '' ''    'Static Dim recursive As Boolean = False
+   '' ''    If previous_strings.Count <> 10 Then
+   '' ''        'the only time this condidition should exist is the first time the textchange event is called
 
-        End If
+   '' ''        previous_strings = New ArrayList
+   '' ''        previous_strings.Add(TBkw00.Text)
+   '' ''        previous_strings.Add(TBkw01.Text)
+   '' ''        previous_strings.Add(TBkw02.Text)
+   '' ''        previous_strings.Add(TBkw03.Text)
+   '' ''        previous_strings.Add(TBkw04.Text)
+   '' ''        previous_strings.Add(TBkw05.Text)
+   '' ''        previous_strings.Add(TBkw06.Text)
+   '' ''        previous_strings.Add(TBkw07.Text)
+   '' ''        previous_strings.Add(TBkw08.Text)
+   '' ''        previous_strings.Add(TBkw09.Text)
 
+   '' ''    End If
 
 
-        Static previoustextblank As ArrayList = New ArrayList 'of booleans
-        Static returnlinecount As ArrayList = New ArrayList 'of int16 'if the user deletes text and then immediately types new text it should restore the line same count
 
-        Dim startinglength As Int16 = sender.Text.Length 'used if change is reversed
+   '' ''    Static previoustextblank As ArrayList = New ArrayList 'of booleans
+   '' ''    Static returnlinecount As ArrayList = New ArrayList 'of int16 'if the user deletes text and then immediately types new text it should restore the line same count
 
-        If previoustextblank.Count = 0 Then
-            Dim loopcounter As Int16 = 0
-            While loopcounter < 10
-                previoustextblank.Add(True)
+   '' ''    Dim startinglength As Int16 = sender.Text.Length 'used if change is reversed
 
-                loopcounter += 1
-            End While
+   '' ''    If previoustextblank.Count = 0 Then
+   '' ''        Dim loopcounter As Int16 = 0
+   '' ''        While loopcounter < 10
+   '' ''            previoustextblank.Add(True)
 
-        End If
+   '' ''            loopcounter += 1
+   '' ''        End While
 
-        If returnlinecount.Count = 0 Then
-            Dim loopcounter As Int16 = 0
-            While loopcounter < 10
-                returnlinecount.Add(1)
-                loopcounter += 1
-            End While
+   '' ''    End If
 
-        End If
+   '' ''    If returnlinecount.Count = 0 Then
+   '' ''        Dim loopcounter As Int16 = 0
+   '' ''        While loopcounter < 10
+   '' ''            returnlinecount.Add(1)
+   '' ''            loopcounter += 1
+   '' ''        End While
 
-        If Not formloaded Then
-            Return
-        End If
-        Static recursive As Boolean = False
+   '' ''    End If
 
-        If recursive Then
-            Return
+   '' ''    If Not formloaded Then
+   '' ''        Return
+   '' ''    End If
+   '' ''    Static recursive As Boolean = False
 
-        End If
-        recursive = True
+   '' ''    If recursive Then
+   '' ''        Return
 
-        Dim str As String = ""
-        'str.ToUpper()
+   '' ''    End If
+   '' ''    recursive = True
 
-        Dim cursor_pos As Integer = sender.SelectionStart
+   '' ''    Dim str As String = ""
+   '' ''    'str.ToUpper()
 
+   '' ''    Dim cursor_pos As Integer = sender.SelectionStart
 
-        sender.text = sender.text.ToUpper()
 
-        Dim sendername As String = sender.name
-        Dim senderindex As Int16 = Convert.ToInt16(sendername.Substring(sendername.Length - 2))
+   '' ''    sender.text = sender.text.ToUpper()
 
+   '' ''    Dim sendername As String = sender.name
+   '' ''    Dim senderindex As Int16 = Convert.ToInt16(sendername.Substring(sendername.Length - 2))
 
 
 
 
 
-        sender.SelectionStart = cursor_pos 'the allignment function require the cursor start out correct in order to reset it correctly
-        combotab_refresh_keywordallignment(senderindex)
-        cursor_pos = sender.SelectionStart 'the cursor postition changes with allignment
-        If keywordexceedlinelength(senderindex) = False Then 'arraylist not function
 
-            If sender.text.trim.length > Me.combotab_maxlinelength(senderindex) Then
+   '' ''    sender.SelectionStart = cursor_pos 'the allignment function require the cursor start out correct in order to reset it correctly
+   '' ''    combotab_refresh_keywordallignment(senderindex)
+   '' ''    cursor_pos = sender.SelectionStart 'the cursor postition changes with allignment
+   '' ''    If keywordexceedlinelength(senderindex) = False Then 'arraylist not function
 
-                sender.text = previous_strings(senderindex)
-                sender.SelectionStart = cursor_pos - (startinglength - sender.Text.Length)
-                Beep()
-                recursive = False
-                Return
-            End If
-        End If
+   '' ''        If sender.text.trim.length > Me.combotab_maxlinelength(senderindex) Then
 
+   '' ''            sender.text = previous_strings(senderindex)
+   '' ''            sender.SelectionStart = cursor_pos - (startinglength - sender.Text.Length)
+   '' ''            Beep()
+   '' ''            recursive = False
+   '' ''            Return
+   '' ''        End If
+   '' ''    End If
 
 
 
-        'make reps 0 if blank or 1 otherwise
-        If sender.text = "" And Not previoustextblank(senderindex) Then
 
-            If senderindex >= 10 Then
+   '' ''    'make reps 0 if blank or 1 otherwise
+   '' ''    If sender.text = "" And Not previoustextblank(senderindex) Then
 
-                'should not happen in this version of tiniwindow
-                MsgBox("index error in text change event")
-            ElseIf senderindex = 0 Then
+   '' ''        If senderindex >= 10 Then
 
-                returnlinecount(0) = NUDfc00.Value
-                NUDfc00.Value = NUDfc00.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            'should not happen in this version of tiniwindow
+   '' ''            MsgBox("index error in text change event")
+   '' ''        ElseIf senderindex = 0 Then
 
-                previoustextblank(senderindex) = True
+   '' ''            returnlinecount(0) = NUDfc00.Value
+   '' ''            NUDfc00.Value = NUDfc00.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-            ElseIf senderindex = 1 Then
+   '' ''            previoustextblank(senderindex) = True
 
-                returnlinecount(senderindex) = NUDfc01.Value
-                NUDfc01.Value = NUDfc01.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''        ElseIf senderindex = 1 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 2 Then
+   '' ''            returnlinecount(senderindex) = NUDfc01.Value
+   '' ''            NUDfc01.Value = NUDfc01.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc02.Value
-                NUDfc02.Value = NUDfc02.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 2 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 3 Then
+   '' ''            returnlinecount(senderindex) = NUDfc02.Value
+   '' ''            NUDfc02.Value = NUDfc02.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc03.Value
-                NUDfc03.Value = NUDfc03.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 3 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 4 Then
+   '' ''            returnlinecount(senderindex) = NUDfc03.Value
+   '' ''            NUDfc03.Value = NUDfc03.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc04.Value
-                NUDfc04.Value = NUDfc04.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 4 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 5 Then
+   '' ''            returnlinecount(senderindex) = NUDfc04.Value
+   '' ''            NUDfc04.Value = NUDfc04.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc05.Value
-                NUDfc05.Value = NUDfc05.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 5 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 6 Then
+   '' ''            returnlinecount(senderindex) = NUDfc05.Value
+   '' ''            NUDfc05.Value = NUDfc05.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc06.Value
-                NUDfc06.Value = NUDfc06.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 6 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 7 Then
+   '' ''            returnlinecount(senderindex) = NUDfc06.Value
+   '' ''            NUDfc06.Value = NUDfc06.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc07.Value
-                NUDfc07.Value = NUDfc07.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 7 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 8 Then
+   '' ''            returnlinecount(senderindex) = NUDfc07.Value
+   '' ''            NUDfc07.Value = NUDfc07.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc08.Value
-                NUDfc08.Value = NUDfc08.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 8 Then
 
-                previoustextblank(senderindex) = True
-            ElseIf senderindex = 9 Then
+   '' ''            returnlinecount(senderindex) = NUDfc08.Value
+   '' ''            NUDfc08.Value = NUDfc08.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
-                returnlinecount(senderindex) = NUDfc09.Value
-                NUDfc09.Value = NUDfc09.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
-                'the valuechange event will change the value to 0
+   '' ''            previoustextblank(senderindex) = True
+   '' ''        ElseIf senderindex = 9 Then
 
-                previoustextblank(senderindex) = True
+   '' ''            returnlinecount(senderindex) = NUDfc09.Value
+   '' ''            NUDfc09.Value = NUDfc09.Minimum 'this is a hack. the minimumvalue is one increment less then the min lines for pattern
+   '' ''            'the valuechange event will change the value to 0
 
+   '' ''            previoustextblank(senderindex) = True
 
 
 
-            End If
 
-        ElseIf previoustextblank(senderindex) Then
-            If senderindex >= 10 Then
-                'should not happen in this version of tiniwindow
-            ElseIf senderindex = 0 Then
+   '' ''        End If
 
-                If NUDfc00.Value = 0 Then
+   '' ''    ElseIf previoustextblank(senderindex) Then
+   '' ''        If senderindex >= 10 Then
+   '' ''            'should not happen in this version of tiniwindow
+   '' ''        ElseIf senderindex = 0 Then
 
-                    If returnlinecount(senderindex) - NUDfc00.Value > availablelines Then
-                        NUDfc00.Value += availablelines
-                    Else
-                        NUDfc00.Value = returnlinecount(senderindex)
-                    End If
+   '' ''            If NUDfc00.Value = 0 Then
 
-                End If
-                previoustextblank(senderindex) = False
+   '' ''                If returnlinecount(senderindex) - NUDfc00.Value > availablelines Then
+   '' ''                    NUDfc00.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc00.Value = returnlinecount(senderindex)
+   '' ''                End If
 
-            ElseIf senderindex = 1 Then
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
 
+   '' ''        ElseIf senderindex = 1 Then
 
-                If NUDfc01.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc01.Value > availablelines Then
-                        NUDfc01.Value += availablelines
-                    Else
-                        NUDfc01.Value = returnlinecount(senderindex)
-                    End If
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 2 Then
 
+   '' ''            If NUDfc01.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc01.Value > availablelines Then
+   '' ''                    NUDfc01.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc01.Value = returnlinecount(senderindex)
+   '' ''                End If
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 2 Then
 
-                If NUDfc02.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc02.Value > availablelines Then
-                        NUDfc02.Value += availablelines
-                    Else
-                        NUDfc02.Value = returnlinecount(senderindex)
-                    End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 3 Then
+   '' ''            If NUDfc02.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc02.Value > availablelines Then
+   '' ''                    NUDfc02.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc02.Value = returnlinecount(senderindex)
+   '' ''                End If
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 3 Then
 
-                If NUDfc03.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc03.Value > availablelines Then
-                        NUDfc03.Value += availablelines
-                    Else
-                        NUDfc03.Value = returnlinecount(senderindex)
-                    End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 4 Then
+   '' ''            If NUDfc03.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc03.Value > availablelines Then
+   '' ''                    NUDfc03.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc03.Value = returnlinecount(senderindex)
+   '' ''                End If
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 4 Then
 
-                If NUDfc04.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc04.Value > availablelines Then
-                        NUDfc04.Value += availablelines
-                    Else
-                        NUDfc04.Value = returnlinecount(senderindex)
-                    End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 5 Then
+   '' ''            If NUDfc04.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc04.Value > availablelines Then
+   '' ''                    NUDfc04.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc04.Value = returnlinecount(senderindex)
+   '' ''                End If
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 5 Then
 
-                If NUDfc05.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc05.Value > availablelines Then
-                        NUDfc05.Value += availablelines
-                    Else
-                        NUDfc05.Value = returnlinecount(senderindex)
-                    End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 6 Then
+   '' ''            If NUDfc05.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc05.Value > availablelines Then
+   '' ''                    NUDfc05.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc05.Value = returnlinecount(senderindex)
+   '' ''                End If
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 6 Then
 
-                If NUDfc06.Value = 0 Then
 
-                    If returnlinecount(senderindex) - NUDfc06.Value > availablelines Then
-                        NUDfc06.Value += availablelines
-                    Else
-                        NUDfc06.Value = returnlinecount(senderindex)
-                    End If
+   '' ''            If NUDfc06.Value = 0 Then
 
+   '' ''                If returnlinecount(senderindex) - NUDfc06.Value > availablelines Then
+   '' ''                    NUDfc06.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc06.Value = returnlinecount(senderindex)
+   '' ''                End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 7 Then
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 7 Then
 
-                If NUDfc07.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc07.Value > availablelines Then
-                        NUDfc07.Value += availablelines
-                    Else
-                        NUDfc07.Value = returnlinecount(senderindex)
-                    End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 8 Then
+   '' ''            If NUDfc07.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc07.Value > availablelines Then
+   '' ''                    NUDfc07.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc07.Value = returnlinecount(senderindex)
+   '' ''                End If
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 8 Then
 
-                If NUDfc08.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc08.Value > availablelines Then
-                        NUDfc08.Value += availablelines
-                    Else
-                        NUDfc08.Value = returnlinecount(senderindex)
-                    End If
 
-                End If
-                previoustextblank(senderindex) = False
-            ElseIf senderindex = 9 Then
+   '' ''            If NUDfc08.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc08.Value > availablelines Then
+   '' ''                    NUDfc08.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc08.Value = returnlinecount(senderindex)
+   '' ''                End If
 
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
+   '' ''        ElseIf senderindex = 9 Then
 
-                If NUDfc09.Value = 0 Then
-                    If returnlinecount(senderindex) - NUDfc09.Value > availablelines Then
-                        NUDfc09.Value += availablelines
-                    Else
-                        NUDfc09.Value = returnlinecount(senderindex)
-                    End If
-                End If
-                previoustextblank(senderindex) = False
 
-            End If
+   '' ''            If NUDfc09.Value = 0 Then
+   '' ''                If returnlinecount(senderindex) - NUDfc09.Value > availablelines Then
+   '' ''                    NUDfc09.Value += availablelines
+   '' ''                Else
+   '' ''                    NUDfc09.Value = returnlinecount(senderindex)
+   '' ''                End If
+   '' ''            End If
+   '' ''            previoustextblank(senderindex) = False
 
+   '' ''        End If
 
 
-        End If
 
+   '' ''    End If
 
 
-        combotab_generatelines()
-        sender.SelectionStart = cursor_pos
 
-        combotab_refreshlinedata()
+   '' ''    combotab_generatelines()
+   '' ''    sender.SelectionStart = cursor_pos
 
-        previous_strings(senderindex) = sender.text
-        change = True
-        recursive = False
+   '' ''    combotab_refreshlinedata()
 
+   '' ''    previous_strings(senderindex) = sender.text
+   '' ''    change = True
+   '' ''    recursive = False
 
-    End Sub
 
+   '' ''End Sub
 
 
-    Private Function combotabpatterns_indexvaluetoindexname(ByVal indexvalue) As String
-        Dim returnvalue As String = System.Enum.GetName(GetType(combotab_patterns), indexvalue)
 
+   ' Private Function combotabpatterns_indexvaluetoindexname(ByVal indexvalue) As String
+   '     Dim returnvalue As String = System.Enum.GetName(GetType(combotab_patterns), indexvalue)
 
-        Return returnvalue
-    End Function
 
+   '     Return returnvalue
+   ' End Function
 
 
-    Private Function combotabpatterns_indexnametoindexvalue(ByVal indexname As String) As Int16
 
-        Dim convertedindexname As String = combotabpatterns_indexname_anyformattodataformat(indexname)
-        Dim returnvalue As Int16 = System.Enum.Parse(GetType(combotab_patterns), convertedindexname)
-        Return returnvalue
+   ' Private Function combotabpatterns_indexnametoindexvalue(ByVal indexname As String) As Int16
 
+   '     Dim convertedindexname As String = combotabpatterns_indexname_anyformattodataformat(indexname)
+   '     Dim returnvalue As Int16 = System.Enum.Parse(GetType(combotab_patterns), convertedindexname)
+   '     Return returnvalue
 
-    End Function
 
-    Private Function combotabpatterns_indexname_anyformattodataformat(ByVal indexname As String) As String
-        'returnvalue has  all letters lowercase and spaces replaced by underscore
-        'no leading or trailing doublescores
-        'no repeating doublescores
+   ' End Function
 
-        'the format passed most likey represents format appearing in the combobox and may very depending on TiniWindow version but format used internaly and in files must remain constant for compatibility
+   ' Private Function combotabpatterns_indexname_anyformattodataformat(ByVal indexname As String) As String
+   '     'returnvalue has  all letters lowercase and spaces replaced by underscore
+   '     'no leading or trailing doublescores
+   '     'no repeating doublescores
 
-        Dim returnvalue As String = indexname
-        'replace spaces and make lowercase
+   '     'the format passed most likey represents format appearing in the combobox and may very depending on TiniWindow version but format used internaly and in files must remain constant for compatibility
 
-        returnvalue = returnvalue.Trim  'remove any leading or trailing spaces
-        returnvalue = returnvalue.Replace(" & ", " and ")
-        returnvalue = returnvalue.Replace(" ", "_") ' replace spaces with undersocres
+   '     Dim returnvalue As String = indexname
+   '     'replace spaces and make lowercase
 
-        returnvalue = returnvalue.ToLower() 'make lowercase
-        returnvalue = (jpstringsfunctions.removeduplicatechars(returnvalue, "_")) 'remove any duplicare underscores
+   '     returnvalue = returnvalue.Trim  'remove any leading or trailing spaces
+   '     returnvalue = returnvalue.Replace(" & ", " and ")
+   '     returnvalue = returnvalue.Replace(" ", "_") ' replace spaces with undersocres
 
+   '     returnvalue = returnvalue.ToLower() 'make lowercase
+   '     returnvalue = (jpstringsfunctions.removeduplicatechars(returnvalue, "_")) 'remove any duplicare underscores
 
 
 
-        Return returnvalue
-    End Function
-    '''''''''''''''''''''''''''''''''''''current display patterms
-    Private Function combotab_generatepattern_still(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
-        'If keyword.Length > settings(settingsindex.linelength) Then
-        '    MsgBox("error keyword for still pattern can not exceed the length of the sign")
-        '    Return returnvalue
-        'End If
 
-        If keyword.Length > settings(settingsindex.linelength) Then
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        End If
+   '     Return returnvalue
+   ' End Function
+   ' '''''''''''''''''''''''''''''''''''''current display patterms
+   ' Private Function combotab_generatepattern_still(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     Dim loopcounter As Int16 = 0
+   '     'If keyword.Length > settings(settingsindex.linelength) Then
+   '     '    MsgBox("error keyword for still pattern can not exceed the length of the sign")
+   '     '    Return returnvalue
+   '     'End If
 
-        While loopcounter < lines
-            returnvalue.Add(keyword.PadRight(settings(settingsindex.linelength)))
-            loopcounter += 1
-        End While
-        Return returnvalue
-    End Function
+   '     If keyword.Length > settings(settingsindex.linelength) Then
+   '         keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '     End If
 
-    'zoom_in_and_out
-    Private Function combotab_generatepattern_zoom_out_and_in(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     While loopcounter < lines
+   '         returnvalue.Add(keyword.PadRight(settings(settingsindex.linelength)))
+   '         loopcounter += 1
+   '     End While
+   '     Return returnvalue
+   ' End Function
 
-        'This numer of lines must be an even number for this function to work
-        'should be enforced on the user
+   ' 'zoom_in_and_out
+   ' Private Function combotab_generatepattern_zoom_out_and_in(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        Dim returnvalue As ArrayList
+   '     'This numer of lines must be an even number for this function to work
+   '     'should be enforced on the user
 
-        returnvalue = combotab_generatepattern_joinin(keyword, lines / 2)
+   '     Dim returnvalue As ArrayList
 
-        returnvalue.AddRange(combotab_generatepattern_splitout(keyword, lines / 2))
-        Return returnvalue
+   '     returnvalue = combotab_generatepattern_joinin(keyword, lines / 2)
 
-    End Function
-    Private Function combotab_generatepattern_zoom_in_and_out(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     returnvalue.AddRange(combotab_generatepattern_splitout(keyword, lines / 2))
+   '     Return returnvalue
 
-        'This numer of lines must be an even number for this function to work
-        'should be enforced on the user
+   ' End Function
+   ' Private Function combotab_generatepattern_zoom_in_and_out(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        Dim returnvalue As ArrayList
+   '     'This numer of lines must be an even number for this function to work
+   '     'should be enforced on the user
 
-        returnvalue = combotab_generatepattern_joinin(keyword, lines / 2)
+   '     Dim returnvalue As ArrayList
 
-        returnvalue.AddRange(combotab_generatepattern_splitout(keyword, lines / 2))
-        Return returnvalue
+   '     returnvalue = combotab_generatepattern_joinin(keyword, lines / 2)
 
-    End Function
-    Private Function combotab_generatepattern_addon(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     returnvalue.AddRange(combotab_generatepattern_splitout(keyword, lines / 2))
+   '     Return returnvalue
 
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
+   ' End Function
+   ' Private Function combotab_generatepattern_addon(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     Dim loopcounter As Int16 = 0
 
-        If keyword.Trim = "" Then
-            'specail condition to prevent errors
-            While loopcounter < lines
-                returnvalue.Add(Me.jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
-                loopcounter += 1
-            End While
 
-            Return returnvalue
+   '     If keyword.Trim = "" Then
+   '         'specail condition to prevent errors
+   '         While loopcounter < lines
+   '             returnvalue.Add(Me.jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
+   '             loopcounter += 1
+   '         End While
 
-        End If
+   '         Return returnvalue
 
+   '     End If
 
 
-        Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
-        keyword = keyword.Trim
-        Dim nonblanklinecount = lines 'since I removed blank lines this is identicle to lines
 
-        'Dim letteradd As Int16 = keyword.Length / nonblanklinecount
+   '     Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
+   '     keyword = keyword.Trim
+   '     Dim nonblanklinecount = lines 'since I removed blank lines this is identicle to lines
 
+   '     'Dim letteradd As Int16 = keyword.Length / nonblanklinecount
 
-        Dim segmentlength_allbutlast As Int16
-        Dim segmentlength_last
 
+   '     Dim segmentlength_allbutlast As Int16
+   '     Dim segmentlength_last
 
-        'the rule for adding on chars is that the count of number of chars to add on starts with the first nonspace character
 
-        'determine the length of each add on segment
-        'I want to as close as posible to an even division
+   '     'the rule for adding on chars is that the count of number of chars to add on starts with the first nonspace character
 
-        'the rule for adding chars makes things complicated.
+   '     'determine the length of each add on segment
+   '     'I want to as close as posible to an even division
 
-        Dim ratios As ArrayList = New ArrayList 'of singles. this stores the ratio of most segments to the last segment
-        Dim lengthdoesntwork As Boolean = False
+   '     'the rule for adding chars makes things complicated.
 
-        'segmentlength_allbutlast = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
+   '     Dim ratios As ArrayList = New ArrayList 'of singles. this stores the ratio of most segments to the last segment
+   '     Dim lengthdoesntwork As Boolean = False
 
-        segmentlength_allbutlast = keyword.Length 'start with a rediculously high value that usually doesnt work (and will be weeded out below)  but saves figuring out why calculation above is wrong
+   '     'segmentlength_allbutlast = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
 
+   '     segmentlength_allbutlast = keyword.Length 'start with a rediculously high value that usually doesnt work (and will be weeded out below)  but saves figuring out why calculation above is wrong
 
-        While segmentlength_allbutlast - loopcounter > 0
-            Dim tempword As String = keyword
-            Dim linecounter As Int16 = 0
-            While linecounter < nonblanklinecount - 1
-                Dim lettercounter As Int16 = 0
-                While lettercounter < segmentlength_allbutlast - loopcounter
 
-                    If tempword = "" Then
-                        lengthdoesntwork = True
-                        Exit While
-                    End If
-                    tempword = tempword.TrimStart()
-                    If tempword = "" Then
-                        lengthdoesntwork = True
-                        Exit While
-                    End If
-                    tempword = tempword.Substring(1)
+   '     While segmentlength_allbutlast - loopcounter > 0
+   '         Dim tempword As String = keyword
+   '         Dim linecounter As Int16 = 0
+   '         While linecounter < nonblanklinecount - 1
+   '             Dim lettercounter As Int16 = 0
+   '             While lettercounter < segmentlength_allbutlast - loopcounter
 
-                    lettercounter += 1
+   '                 If tempword = "" Then
+   '                     lengthdoesntwork = True
+   '                     Exit While
+   '                 End If
+   '                 tempword = tempword.TrimStart()
+   '                 If tempword = "" Then
+   '                     lengthdoesntwork = True
+   '                     Exit While
+   '                 End If
+   '                 tempword = tempword.Substring(1)
 
-                End While
+   '                 lettercounter += 1
 
-                If lengthdoesntwork Or tempword.TrimStart.Length = 0 Then
+   '             End While
 
-                    lengthdoesntwork = True 'has to be specified here in case second half of codition is trigger
+   '             If lengthdoesntwork Or tempword.TrimStart.Length = 0 Then
 
-                    Exit While
-                End If
+   '                 lengthdoesntwork = True 'has to be specified here in case second half of codition is trigger
 
-                linecounter += 1
+   '                 Exit While
+   '             End If
 
-                If lengthdoesntwork Then
+   '             linecounter += 1
 
-                    Exit While
+   '             If lengthdoesntwork Then
 
-                End If
-            End While
+   '                 Exit While
 
+   '             End If
+   '         End While
 
 
-            If lengthdoesntwork Then
-                ratios.Add(100) ' a really high ratio that will be rejected 
-                lengthdoesntwork = False
 
-            ElseIf linecounter = nonblanklinecount - 1 Then 'nature of looping makes this one less
+   '         If lengthdoesntwork Then
+   '             ratios.Add(100) ' a really high ratio that will be rejected 
+   '             lengthdoesntwork = False
 
-                segmentlength_last = tempword.TrimStart.Length
+   '         ElseIf linecounter = nonblanklinecount - 1 Then 'nature of looping makes this one less
 
-                If (segmentlength_allbutlast - loopcounter) > segmentlength_last Then
+   '             segmentlength_last = tempword.TrimStart.Length
 
-                    ratios.Add((segmentlength_allbutlast - loopcounter) - segmentlength_last)
+   '             If (segmentlength_allbutlast - loopcounter) > segmentlength_last Then
 
-                Else
+   '                 ratios.Add((segmentlength_allbutlast - loopcounter) - segmentlength_last)
 
-                    ratios.Add(segmentlength_last - (segmentlength_allbutlast - loopcounter))
+   '             Else
 
-                End If
+   '                 ratios.Add(segmentlength_last - (segmentlength_allbutlast - loopcounter))
 
-            Else
-                MsgBox("error linecounter = " & linecounter & " and should = " & nonblanklinecount)
+   '             End If
 
-            End If
+   '         Else
+   '             MsgBox("error linecounter = " & linecounter & " and should = " & nonblanklinecount)
 
-            loopcounter += 1
+   '         End If
 
-        End While
+   '         loopcounter += 1
 
-        If ratios.Count <> segmentlength_allbutlast Then
-            MsgBox("error with ratio count in generate addon function: " & ratios.Count)
-            Return New ArrayList
+   '     End While
 
-        End If
-        Dim selected_ratio_index As Int16 = 0
-        Dim selected_ratio = 100
-        loopcounter = 0
+   '     If ratios.Count <> segmentlength_allbutlast Then
+   '         MsgBox("error with ratio count in generate addon function: " & ratios.Count)
+   '         Return New ArrayList
 
-        ratios.Reverse()
-        While loopcounter < ratios.Count
+   '     End If
+   '     Dim selected_ratio_index As Int16 = 0
+   '     Dim selected_ratio = 100
+   '     loopcounter = 0
 
-            If ratios(loopcounter) < selected_ratio Then
-                selected_ratio_index = loopcounter
-                selected_ratio = ratios(loopcounter)
-            End If
+   '     ratios.Reverse()
+   '     While loopcounter < ratios.Count
 
-            loopcounter += 1
+   '         If ratios(loopcounter) < selected_ratio Then
+   '             selected_ratio_index = loopcounter
+   '             selected_ratio = ratios(loopcounter)
+   '         End If
 
-        End While
+   '         loopcounter += 1
 
-        segmentlength_allbutlast = selected_ratio_index + 1 'index 0 refers to segment length 1 etc
+   '     End While
 
+   '     segmentlength_allbutlast = selected_ratio_index + 1 'index 0 refers to segment length 1 etc
 
-        loopcounter = 0
 
+   '     loopcounter = 0
 
 
-        'returnvalue.Add(" ".PadRight(settings(settingsindex.linelength))) ' (used to) start with 1 blank line
 
-        loopcounter = 0
+   '     'returnvalue.Add(" ".PadRight(settings(settingsindex.linelength))) ' (used to) start with 1 blank line
 
-        Dim keywordcopy As String = keyword
-        Dim thisline As String = jpstringsfunctions.padleft(" ", " ", leadingspacecount) 'start out with leading spaces and add letters each time 
+   '     loopcounter = 0
 
+   '     Dim keywordcopy As String = keyword
+   '     Dim thisline As String = jpstringsfunctions.padleft(" ", " ", leadingspacecount) 'start out with leading spaces and add letters each time 
 
-        While loopcounter < nonblanklinecount - 1
-            thisline = thisline.Trim
-            'has to be written this way because first time through loop trims to null string
-            thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount)
 
-            Dim firstnonspaceencountered As Boolean = False
+   '     While loopcounter < nonblanklinecount - 1
+   '         thisline = thisline.Trim
+   '         'has to be written this way because first time through loop trims to null string
+   '         thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount)
 
-            Dim lettercounter As Int16 = 0
-            While lettercounter < segmentlength_allbutlast
-                If (keywordcopy = "") Then
-                    'this happens if the funtion is passed a keyword / linecount combo that doesnt work
-                    'the previous iterations of the loop added one char at a time
+   '         Dim firstnonspaceencountered As Boolean = False
 
-                    lengthdoesntwork = True
+   '         Dim lettercounter As Int16 = 0
+   '         While lettercounter < segmentlength_allbutlast
+   '             If (keywordcopy = "") Then
+   '                 'this happens if the funtion is passed a keyword / linecount combo that doesnt work
+   '                 'the previous iterations of the loop added one char at a time
 
-                    Exit While
-                End If
+   '                 lengthdoesntwork = True
 
-                'keywordcopy = keywordcopy.TrimStart
-                thisline &= keywordcopy(0)
+   '                 Exit While
+   '             End If
 
-                If keywordcopy(0) <> " " Or firstnonspaceencountered Then
-                    'leading spaces do not count towards letter count but subsequent spaces do
-                    lettercounter += 1
-                    firstnonspaceencountered = True
+   '             'keywordcopy = keywordcopy.TrimStart
+   '             thisline &= keywordcopy(0)
 
-                End If
+   '             If keywordcopy(0) <> " " Or firstnonspaceencountered Then
+   '                 'leading spaces do not count towards letter count but subsequent spaces do
+   '                 lettercounter += 1
+   '                 firstnonspaceencountered = True
 
+   '             End If
 
-                keywordcopy = keywordcopy.Substring(1)
 
+   '             keywordcopy = keywordcopy.Substring(1)
 
-            End While
-            If lengthdoesntwork Then
-                Exit While
-            End If
-            thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength))
-            returnvalue.Add(thisline)
-            loopcounter += 1
-        End While
 
+   '         End While
+   '         If lengthdoesntwork Then
+   '             Exit While
+   '         End If
+   '         thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength))
+   '         returnvalue.Add(thisline)
+   '         loopcounter += 1
+   '     End While
 
 
-        'create last line
-        thisline = thisline.TrimEnd
-        thisline &= keywordcopy
-        thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength))
-        returnvalue.Add(thisline)
 
-        loopcounter = returnvalue.Count - 1
-        While returnvalue.Count <> lines
-            'this loop is encounterd in the specail case that the function is passed a keyword/linecount combo that doesnt work
-            'lines are duplicated in order to fill in
+   '     'create last line
+   '     thisline = thisline.TrimEnd
+   '     thisline &= keywordcopy
+   '     thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength))
+   '     returnvalue.Add(thisline)
 
-            returnvalue.Insert(loopcounter, returnvalue(loopcounter)) 'duplicate the line
+   '     loopcounter = returnvalue.Count - 1
+   '     While returnvalue.Count <> lines
+   '         'this loop is encounterd in the specail case that the function is passed a keyword/linecount combo that doesnt work
+   '         'lines are duplicated in order to fill in
 
-            loopcounter -= 1
-            If loopcounter < 0 Then
-                loopcounter = returnvalue.Count - 1
-            End If
+   '         returnvalue.Insert(loopcounter, returnvalue(loopcounter)) 'duplicate the line
 
-        End While
+   '         loopcounter -= 1
+   '         If loopcounter < 0 Then
+   '             loopcounter = returnvalue.Count - 1
+   '         End If
 
-        Return returnvalue
+   '     End While
 
-    End Function
+   '     Return returnvalue
 
-    Private Function combotab_generatepattern_subtractoff(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   ' End Function
 
+   ' Private Function combotab_generatepattern_subtractoff(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
 
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
 
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     Dim loopcounter As Int16 = 0
 
-        If keyword.Trim = "" Then
-            'specail condition to prevent errors
-            While loopcounter < lines
-                returnvalue.Add(Me.jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
-                loopcounter += 1
-            End While
 
-            Return returnvalue
+   '     If keyword.Trim = "" Then
+   '         'specail condition to prevent errors
+   '         While loopcounter < lines
+   '             returnvalue.Add(Me.jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
+   '             loopcounter += 1
+   '         End While
 
-        End If
+   '         Return returnvalue
 
+   '     End If
 
 
-        Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
-        keyword = keyword.Trim
-        Dim nonblanklinecount = lines 'since blank lines removed, this is the same value as lines
-        'Dim letteradd As Int16 = keyword.Length / nonblanklinecount
 
+   '     Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
+   '     keyword = keyword.Trim
+   '     Dim nonblanklinecount = lines 'since blank lines removed, this is the same value as lines
+   '     'Dim letteradd As Int16 = keyword.Length / nonblanklinecount
 
-        Dim segmentlength_allbutlast As Int16
-        Dim segmentlength_last
 
+   '     Dim segmentlength_allbutlast As Int16
+   '     Dim segmentlength_last
 
-        'the rule for adding on chars is that the count of number of chars to add on starts with the first nonspace character
 
-        'determine the length of each add on segment
-        'I want to as close as posible to an even division
+   '     'the rule for adding on chars is that the count of number of chars to add on starts with the first nonspace character
 
-        'the rule for adding chars makes things complicated.
+   '     'determine the length of each add on segment
+   '     'I want to as close as posible to an even division
 
-        Dim ratios As ArrayList = New ArrayList 'of singles. this stores the ratio of most segments to the last segment
-        Dim lengthdoesntwork As Boolean = False
+   '     'the rule for adding chars makes things complicated.
 
-        'segmentlength_allbutlast = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
+   '     Dim ratios As ArrayList = New ArrayList 'of singles. this stores the ratio of most segments to the last segment
+   '     Dim lengthdoesntwork As Boolean = False
 
-        segmentlength_allbutlast = keyword.Length 'start with a rediculously high value that usually doesnt work (and will be weeded out below)  but saves figuring out why calculation above is wrong
+   '     'segmentlength_allbutlast = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
 
+   '     segmentlength_allbutlast = keyword.Length 'start with a rediculously high value that usually doesnt work (and will be weeded out below)  but saves figuring out why calculation above is wrong
 
-        While segmentlength_allbutlast - loopcounter > 0
-            Dim tempword As String = keyword
-            Dim linecounter As Int16 = 0
-            While linecounter < nonblanklinecount - 1
-                Dim lettercounter As Int16 = segmentlength_allbutlast - loopcounter - 1
-                While lettercounter >= 0
 
-                    If tempword = "" Then
-                        lengthdoesntwork = True
-                        Exit While
-                    End If
-                    tempword = tempword.TrimEnd
-                    If tempword = "" Then
-                        lengthdoesntwork = True
-                        Exit While
-                    End If
-                    tempword = tempword.Substring(0, tempword.Length - 1)
+   '     While segmentlength_allbutlast - loopcounter > 0
+   '         Dim tempword As String = keyword
+   '         Dim linecounter As Int16 = 0
+   '         While linecounter < nonblanklinecount - 1
+   '             Dim lettercounter As Int16 = segmentlength_allbutlast - loopcounter - 1
+   '             While lettercounter >= 0
 
-                    lettercounter -= 1
+   '                 If tempword = "" Then
+   '                     lengthdoesntwork = True
+   '                     Exit While
+   '                 End If
+   '                 tempword = tempword.TrimEnd
+   '                 If tempword = "" Then
+   '                     lengthdoesntwork = True
+   '                     Exit While
+   '                 End If
+   '                 tempword = tempword.Substring(0, tempword.Length - 1)
 
-                End While
+   '                 lettercounter -= 1
 
-                If lengthdoesntwork Or tempword.TrimEnd.Length = 0 Then
+   '             End While
 
-                    lengthdoesntwork = True 'has to be specified here in case second half of codition is trigger
+   '             If lengthdoesntwork Or tempword.TrimEnd.Length = 0 Then
 
-                    Exit While
-                End If
+   '                 lengthdoesntwork = True 'has to be specified here in case second half of codition is trigger
 
-                linecounter += 1
+   '                 Exit While
+   '             End If
 
-                If lengthdoesntwork Then
+   '             linecounter += 1
 
-                    Exit While
+   '             If lengthdoesntwork Then
 
-                End If
-            End While
+   '                 Exit While
 
+   '             End If
+   '         End While
 
 
-            If lengthdoesntwork Then
-                ratios.Add(100) ' a really high ratio that will be rejected 
-                lengthdoesntwork = False
 
-            ElseIf linecounter = nonblanklinecount - 1 Then 'nature of looping makes this one less
+   '         If lengthdoesntwork Then
+   '             ratios.Add(100) ' a really high ratio that will be rejected 
+   '             lengthdoesntwork = False
 
-                segmentlength_last = tempword.TrimStart.Length
+   '         ElseIf linecounter = nonblanklinecount - 1 Then 'nature of looping makes this one less
 
-                If (segmentlength_allbutlast - loopcounter) > segmentlength_last Then
+   '             segmentlength_last = tempword.TrimStart.Length
 
-                    ratios.Add((segmentlength_allbutlast - loopcounter) - segmentlength_last)
+   '             If (segmentlength_allbutlast - loopcounter) > segmentlength_last Then
 
-                Else
+   '                 ratios.Add((segmentlength_allbutlast - loopcounter) - segmentlength_last)
 
-                    ratios.Add(segmentlength_last - (segmentlength_allbutlast - loopcounter))
+   '             Else
 
-                End If
+   '                 ratios.Add(segmentlength_last - (segmentlength_allbutlast - loopcounter))
 
-            Else
-                MsgBox("error linecounter = " & linecounter & " and should = " & nonblanklinecount)
+   '             End If
 
-            End If
+   '         Else
+   '             MsgBox("error linecounter = " & linecounter & " and should = " & nonblanklinecount)
 
-            loopcounter += 1
+   '         End If
 
-        End While
+   '         loopcounter += 1
 
-        If ratios.Count <> segmentlength_allbutlast Then
-            MsgBox("error with ratio count in generate addon function: " & ratios.Count)
-            Return New ArrayList
+   '     End While
 
-        End If
-        Dim selected_ratio_index As Int16 = 0
-        Dim selected_ratio = 100
-        loopcounter = 0
+   '     If ratios.Count <> segmentlength_allbutlast Then
+   '         MsgBox("error with ratio count in generate addon function: " & ratios.Count)
+   '         Return New ArrayList
 
-        ratios.Reverse()
-        While loopcounter < ratios.Count
+   '     End If
+   '     Dim selected_ratio_index As Int16 = 0
+   '     Dim selected_ratio = 100
+   '     loopcounter = 0
 
-            If ratios(loopcounter) < selected_ratio Then
-                selected_ratio_index = loopcounter
-                selected_ratio = ratios(loopcounter)
-            End If
+   '     ratios.Reverse()
+   '     While loopcounter < ratios.Count
 
-            loopcounter += 1
+   '         If ratios(loopcounter) < selected_ratio Then
+   '             selected_ratio_index = loopcounter
+   '             selected_ratio = ratios(loopcounter)
+   '         End If
 
-        End While
+   '         loopcounter += 1
 
-        segmentlength_allbutlast = selected_ratio_index + 1 'index 0 refers to segment length 1 etc
+   '     End While
 
+   '     segmentlength_allbutlast = selected_ratio_index + 1 'index 0 refers to segment length 1 etc
 
-        loopcounter = 0
 
+   '     loopcounter = 0
 
 
-        'returnvalue.Add(" ".PadRight(settings(settingsindex.linelength))) 'start with 1 blank line
 
-        loopcounter = 0
+   '     'returnvalue.Add(" ".PadRight(settings(settingsindex.linelength))) 'start with 1 blank line
 
-        'Dim keywordcopy As String = keyword
+   '     loopcounter = 0
 
-        Dim thisline As String = jpstringsfunctions.padleft(keyword, " ", keyword.Length + leadingspacecount) 'add leadin space
-        thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'add trailing space
+   '     'Dim keywordcopy As String = keyword
 
-        returnvalue.Add(thisline) 'entire word
+   '     Dim thisline As String = jpstringsfunctions.padleft(keyword, " ", keyword.Length + leadingspacecount) 'add leadin space
+   '     thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'add trailing space
 
-        While loopcounter < nonblanklinecount - 1
+   '     returnvalue.Add(thisline) 'entire word
 
+   '     While loopcounter < nonblanklinecount - 1
 
-            Dim firstnonspaceencountered As Boolean = False
 
-            Dim lettercounter As Int16 = 0
-            While lettercounter < segmentlength_allbutlast
-                If (thisline = "") Then
-                    'this happens if the funtion is passed a keyword / linecount combo that doesnt work
-                    'the previous iterations of the loop added one char at a time
+   '         Dim firstnonspaceencountered As Boolean = False
 
-                    lengthdoesntwork = True
+   '         Dim lettercounter As Int16 = 0
+   '         While lettercounter < segmentlength_allbutlast
+   '             If (thisline = "") Then
+   '                 'this happens if the funtion is passed a keyword / linecount combo that doesnt work
+   '                 'the previous iterations of the loop added one char at a time
 
-                    Exit While
-                End If
+   '                 lengthdoesntwork = True
 
+   '                 Exit While
+   '             End If
 
-                If Not thisline.EndsWith(" ") Or firstnonspaceencountered Then
-                    'leading spaces do not count towards letter count but subsequent spaces do
 
-                    lettercounter += 1
-                    firstnonspaceencountered = True
+   '             If Not thisline.EndsWith(" ") Or firstnonspaceencountered Then
+   '                 'leading spaces do not count towards letter count but subsequent spaces do
 
-                End If
+   '                 lettercounter += 1
+   '                 firstnonspaceencountered = True
 
+   '             End If
 
-                thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", thisline.Length - 1) 'discard one letter from end 
 
-            End While
-            If lengthdoesntwork Then
-                Exit While
-            End If
-            thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'append trailing spaces to linelength
-            returnvalue.Add(thisline)
-            loopcounter += 1
-        End While
+   '             thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", thisline.Length - 1) 'discard one letter from end 
 
-        'returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))) ' (used to) end with empty line
+   '         End While
+   '         If lengthdoesntwork Then
+   '             Exit While
+   '         End If
+   '         thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'append trailing spaces to linelength
+   '         returnvalue.Add(thisline)
+   '         loopcounter += 1
+   '     End While
 
+   '     'returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))) ' (used to) end with empty line
 
-        loopcounter = 0
-        While returnvalue.Count <> lines
-            'this loop is encounterd in the special case that the function is passed a keyword/linecount combo that doesnt work
-            'lines are duplicated in order to fill in
 
-            returnvalue.Insert(loopcounter, returnvalue(loopcounter)) 'duplicate the line
+   '     loopcounter = 0
+   '     While returnvalue.Count <> lines
+   '         'this loop is encounterd in the special case that the function is passed a keyword/linecount combo that doesnt work
+   '         'lines are duplicated in order to fill in
 
-            loopcounter += 2 'advance skipping over line just added
-            If loopcounter > returnvalue.Count Then
-                loopcounter = 0
-            End If
+   '         returnvalue.Insert(loopcounter, returnvalue(loopcounter)) 'duplicate the line
 
-        End While
+   '         loopcounter += 2 'advance skipping over line just added
+   '         If loopcounter > returnvalue.Count Then
+   '             loopcounter = 0
+   '         End If
 
-        Return returnvalue
+   '     End While
 
+   '     Return returnvalue
 
 
 
@@ -23995,520 +22420,521 @@ Public Class Form1
 
 
 
-        ''''''''''''''''''''''''''''''''''''''''''''''''''''
-        ''If keyword.Length > Me.settings(settingsindex.linelength) Then
-        ''    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
 
-        ''    If keyword.Length > Me.settings(settingsindex.linelength) Then
-        ''        'if unable to make it fit by trimming space then give error
-        ''        MsgBox("error - keyword for 'subtract off' can not exceed sign size")
-        ''        Return New ArrayList
-        ''    End If
+   '     ''''''''''''''''''''''''''''''''''''''''''''''''''''
+   '     ''If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '     ''    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
 
-        ''End If
+   '     ''    If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '     ''        'if unable to make it fit by trimming space then give error
+   '     ''        MsgBox("error - keyword for 'subtract off' can not exceed sign size")
+   '     ''        Return New ArrayList
+   '     ''    End If
 
-        'If keyword.Length > settings(settingsindex.linelength) Then
-        '    keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        'End If
+   '     ''End If
 
-        'If lines < 3 Then
-        '    MsgBox("error pattern 'subtract off' must have at least 3 lines")
-        '    Return New ArrayList
-        'End If
+   '     'If keyword.Length > settings(settingsindex.linelength) Then
+   '     '    keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '     'End If
 
-        'Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
-        'keyword = keyword.Trim
-        'Dim nonblanklinecount = lines - 1
+   '     'If lines < 3 Then
+   '     '    MsgBox("error pattern 'subtract off' must have at least 3 lines")
+   '     '    Return New ArrayList
+   '     'End If
 
-        'Dim segmentlength_allbutlast As Int16
-        'Dim segmentlength_last
+   '     'Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
+   '     'keyword = keyword.Trim
+   '     'Dim nonblanklinecount = lines - 1
 
+   '     'Dim segmentlength_allbutlast As Int16
+   '     'Dim segmentlength_last
 
-        ''determine the length of each add on segment
-        ''I want to as close as posible to an even division 
-        ''there are 2 posible ways to divide
-        ''  -divide the word length by the number of non blank lines and tack the remaider on to the last line
-        ''  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
-        ''in order to decide which to use, I will calculate which results in the closest to even
 
-        'Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
-        'Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
+   '     ''determine the length of each add on segment
+   '     ''I want to as close as posible to an even division 
+   '     ''there are 2 posible ways to divide
+   '     ''  -divide the word length by the number of non blank lines and tack the remaider on to the last line
+   '     ''  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
+   '     ''in order to decide which to use, I will calculate which results in the closest to even
 
-        'Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
-        'Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
+   '     'Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
+   '     'Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
 
-        'Dim ratio_usingnonblankline As Single
-        'Dim ratio_usingoneless As Single
+   '     'Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
+   '     'Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
 
-        'If allbutlast_usingnonblankline > last_usingnonblankline Then
-        '    ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
-        'Else
-        '    ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
-        'End If
+   '     'Dim ratio_usingnonblankline As Single
+   '     'Dim ratio_usingoneless As Single
 
-        'If allbutlast_usingoneless > last_usingoneless Then
-        '    ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
-        'Else
-        '    ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
-        'End If
+   '     'If allbutlast_usingnonblankline > last_usingnonblankline Then
+   '     '    ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
+   '     'Else
+   '     '    ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
+   '     'End If
 
-        'If ratio_usingnonblankline > ratio_usingoneless Then
+   '     'If allbutlast_usingoneless > last_usingoneless Then
+   '     '    ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
+   '     'Else
+   '     '    ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
+   '     'End If
 
-        '    segmentlength_allbutlast = allbutlast_usingnonblankline
-        '    segmentlength_last = last_usingnonblankline
-        'Else
+   '     'If ratio_usingnonblankline > ratio_usingoneless Then
 
-        '    segmentlength_allbutlast = allbutlast_usingoneless
-        '    segmentlength_last = last_usingoneless
+   '     '    segmentlength_allbutlast = allbutlast_usingnonblankline
+   '     '    segmentlength_last = last_usingnonblankline
+   '     'Else
 
-        'End If
+   '     '    segmentlength_allbutlast = allbutlast_usingoneless
+   '     '    segmentlength_last = last_usingoneless
 
-        ''Dim returnvalue As ArrayList = New ArrayList
+   '     'End If
 
-        'Dim returnvalue As ArrayList = New ArrayList
-        'Dim loopcounter As Int16 = 0
+   '     ''Dim returnvalue As ArrayList = New ArrayList
 
+   '     'Dim returnvalue As ArrayList = New ArrayList
+   '     'Dim loopcounter As Int16 = 0
 
 
-        ''
 
+   '     ''
 
-        'returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
 
-        'loopcounter = nonblanklinecount
-        'While loopcounter >= 1
+   '     'returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
 
-        '    Dim thisline As String
-        '    If loopcounter <> nonblanklinecount Then
-        '        thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
+   '     'loopcounter = nonblanklinecount
+   '     'While loopcounter >= 1
 
-        '    Else
-        '        thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
-        '    End If
+   '     '    Dim thisline As String
+   '     '    If loopcounter <> nonblanklinecount Then
+   '     '        thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
 
+   '     '    Else
+   '     '        thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
+   '     '    End If
 
-        '    thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
 
-        '    thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
-        '    returnvalue.Add(thisline)
-        '    loopcounter -= 1
-        'End While
+   '     '    thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
 
+   '     '    thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
+   '     '    returnvalue.Add(thisline)
+   '     '    loopcounter -= 1
+   '     'End While
 
-        'Return returnvalue
-    End Function
 
+   '     'Return returnvalue
+   ' End Function
 
-    Private Function combotab_generatepattern_blinkfast(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        'lines must be an even number
 
-        Dim reps As Int16 = lines / 2
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim blancline As String = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
+   ' Private Function combotab_generatepattern_blinkfast(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     'lines must be an even number
 
-        Dim loopcounter As Int16 = 0
-        While loopcounter < reps
-            returnvalue.Add(keyword)
-            returnvalue.Add(blancline)
-            loopcounter += 1
-        End While
-        Return returnvalue
+   '     Dim reps As Int16 = lines / 2
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     Dim blancline As String = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
 
-    End Function
-    Private Function combotab_generatepattern_blinkslow(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        'lines must be multiple of 5
-        '3 on 2 off
+   '     Dim loopcounter As Int16 = 0
+   '     While loopcounter < reps
+   '         returnvalue.Add(keyword)
+   '         returnvalue.Add(blancline)
+   '         loopcounter += 1
+   '     End While
+   '     Return returnvalue
 
-        Dim reps As Int16 = lines / 5
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim blancline As String = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
+   ' End Function
+   ' Private Function combotab_generatepattern_blinkslow(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     'lines must be multiple of 5
+   '     '3 on 2 off
 
-        Dim loopcounter As Int16 = 0
-        While loopcounter < reps
-            returnvalue.Add(keyword)
-            returnvalue.Add(keyword)
-            returnvalue.Add(keyword)
-            returnvalue.Add(blancline)
-            returnvalue.Add(blancline)
-            loopcounter += 1
-        End While
-        Return returnvalue
-    End Function
+   '     Dim reps As Int16 = lines / 5
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     Dim blancline As String = jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))
 
-    Private Function combotab_generatepattern_addandsubtract(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        Dim returnvalue As ArrayList = New ArrayList
-        returnvalue.AddRange(combotab_generatepattern_addon(keyword, (lines + 1) / 2))
-        returnvalue.RemoveAt(returnvalue.Count - 1) 'so that the whole word only shows once
-        returnvalue.AddRange(combotab_generatepattern_subtractoff(keyword, (lines + 1) / 2))
-        Return returnvalue
-    End Function
+   '     Dim loopcounter As Int16 = 0
+   '     While loopcounter < reps
+   '         returnvalue.Add(keyword)
+   '         returnvalue.Add(keyword)
+   '         returnvalue.Add(keyword)
+   '         returnvalue.Add(blancline)
+   '         returnvalue.Add(blancline)
+   '         loopcounter += 1
+   '     End While
+   '     Return returnvalue
+   ' End Function
 
-    Private Function combotab_generatepattern_subtractandadd(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   ' Private Function combotab_generatepattern_addandsubtract(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     returnvalue.AddRange(combotab_generatepattern_addon(keyword, (lines + 1) / 2))
+   '     returnvalue.RemoveAt(returnvalue.Count - 1) 'so that the whole word only shows once
+   '     returnvalue.AddRange(combotab_generatepattern_subtractoff(keyword, (lines + 1) / 2))
+   '     Return returnvalue
+   ' End Function
 
-        Dim returnvalue As ArrayList = New ArrayList
-        returnvalue.AddRange(combotab_generatepattern_subtractoff(keyword, lines / 2))
-        returnvalue.RemoveAt(returnvalue.Count - 1) 'so that the first letter only shows once
-        returnvalue.AddRange(combotab_generatepattern_addon(keyword, lines / 2))
-        Return returnvalue
+   ' Private Function combotab_generatepattern_subtractandadd(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-    End Function
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     returnvalue.AddRange(combotab_generatepattern_subtractoff(keyword, lines / 2))
+   '     returnvalue.RemoveAt(returnvalue.Count - 1) 'so that the first letter only shows once
+   '     returnvalue.AddRange(combotab_generatepattern_addon(keyword, lines / 2))
+   '     Return returnvalue
 
-    Private Function combotab_generatepattern_scrollright(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   ' End Function
 
+   ' Private Function combotab_generatepattern_scrollright(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim repcounter As Int16 = 0
-        Dim loopcounter As Int16 = 0
 
-        'Dim nonblanklinecount = lines
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     Dim repcounter As Int16 = 0
+   '     Dim loopcounter As Int16 = 0
 
-        Dim letterjump As Int16 = (settings(settingsindex.linelength) - keyword.TrimEnd.Length) / lines
+   '     'Dim nonblanklinecount = lines
 
-        'padd the end with space up to line length. normally auto allignment measn no beginning spaces otherwise assume they want space
-        keyword = jpstringsfunctions.sizeexactlyright(keyword, " ", settings(settingsindex.linelength))
+   '     Dim letterjump As Int16 = (settings(settingsindex.linelength) - keyword.TrimEnd.Length) / lines
 
+   '     'padd the end with space up to line length. normally auto allignment measn no beginning spaces otherwise assume they want space
+   '     keyword = jpstringsfunctions.sizeexactlyright(keyword, " ", settings(settingsindex.linelength))
 
-        'add first line
-        returnvalue.Add(keyword)
 
-        'use loop to add remaining non blank lines
+   '     'add first line
+   '     returnvalue.Add(keyword)
 
+   '     'use loop to add remaining non blank lines
 
-        loopcounter = 1
 
+   '     loopcounter = 1
 
-        While loopcounter < lines
 
-            keyword = jpstringsfunctions.padleft(keyword, " ", keyword.Length + letterjump) 'append space to beginning to scroll
-            keyword = jpstringsfunctions.truncateright(keyword, settings(settingsindex.linelength)) 'truncate letters from end so as to remain proper linelength
-            returnvalue.Add(keyword)
-            loopcounter += 1
+   '     While loopcounter < lines
 
-        End While
-        'returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
+   '         keyword = jpstringsfunctions.padleft(keyword, " ", keyword.Length + letterjump) 'append space to beginning to scroll
+   '         keyword = jpstringsfunctions.truncateright(keyword, settings(settingsindex.linelength)) 'truncate letters from end so as to remain proper linelength
+   '         returnvalue.Add(keyword)
+   '         loopcounter += 1
 
-        Return returnvalue
+   '     End While
+   '     'returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength)))
 
-    End Function
+   '     Return returnvalue
 
+   ' End Function
 
-    Private Function combotab_generatepattern_scrollleft(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        Dim returnvalue As ArrayList = New ArrayList
-        'Dim repcounter As Int16 = 0
-        Dim loopcounter As Int16 = 0
+   ' Private Function combotab_generatepattern_scrollleft(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        'Dim nonblanklinecount = lines 'since blanc lines removed this is sames as lines
+   '     Dim returnvalue As ArrayList = New ArrayList
+   '     'Dim repcounter As Int16 = 0
+   '     Dim loopcounter As Int16 = 0
 
-        Dim oldletterjump As Int16 = (settings(settingsindex.linelength) - keyword.TrimEnd.Length) / (lines - 1)
-        Dim letterjump As ArrayList = New ArrayList
+   '     'Dim nonblanklinecount = lines 'since blanc lines removed this is sames as lines
 
-        'previously some keyword / line combinations resulted in the last line several spaces from left. 
-        'to fix this we calculate the number of extra spaces and try to insert them as evenly as possible
-        Dim oldspacesused = oldletterjump * (lines - 1)
-        Dim totalspacesneeded As Int16 = settings(settingsindex.linelength) - keyword.TrimEnd.Length
-        Dim spacestoadd As Int16 = totalspacesneeded - oldspacesused
-        If spacestoadd > lines Then
-            'this should not happen
-            MsgBox("error spaces to add should not exceed lines in scroll left" & Constants.vbCrLf & "please report this bug")
+   '     Dim oldletterjump As Int16 = (settings(settingsindex.linelength) - keyword.TrimEnd.Length) / (lines - 1)
+   '     Dim letterjump As ArrayList = New ArrayList
 
+   '     'previously some keyword / line combinations resulted in the last line several spaces from left. 
+   '     'to fix this we calculate the number of extra spaces and try to insert them as evenly as possible
+   '     Dim oldspacesused = oldletterjump * (lines - 1)
+   '     Dim totalspacesneeded As Int16 = settings(settingsindex.linelength) - keyword.TrimEnd.Length
+   '     Dim spacestoadd As Int16 = totalspacesneeded - oldspacesused
+   '     If spacestoadd > lines Then
+   '         'this should not happen
+   '         MsgBox("error spaces to add should not exceed lines in scroll left" & Constants.vbCrLf & "please report this bug")
 
-        ElseIf spacestoadd = 0 Then
-            loopcounter = 1 'starts with 1 because first line (index 0) is entire word
-            While loopcounter < lines
-                letterjump.Add(oldletterjump)
-                loopcounter += 1
-            End While
-        Else
-            Dim addtoeveryNTHline As Int16
 
-            If spacestoadd > 0 Then
-                addtoeveryNTHline = lines / (spacestoadd + 1) '1 space is inserted @ 1/2 mark, 2 @ 1/3 and 2/3 etc
-            ElseIf spacestoadd < 0 Then
-                addtoeveryNTHline = lines / (-spacestoadd + 1) '1 space is inserted @ 1/2 mark, 2 @ 1/3 and 2/3 etc
-            End If
-            'lines / (spacestoadd + 1) '1 space is inserted @ 1/2 mark, 2 @ 1/3 and 2/3 etc
-            loopcounter = 1 'starts with 1 because first line (index 0) is entire word
-            While loopcounter < lines
-                If (loopcounter) Mod addtoeveryNTHline = 0 And loopcounter <> lines - 1 Then
-                    'without second half of condition above algorithm would always incorrectly add to last line
+   '     ElseIf spacestoadd = 0 Then
+   '         loopcounter = 1 'starts with 1 because first line (index 0) is entire word
+   '         While loopcounter < lines
+   '             letterjump.Add(oldletterjump)
+   '             loopcounter += 1
+   '         End While
+   '     Else
+   '         Dim addtoeveryNTHline As Int16
 
-                    If spacestoadd > 0 Then
-                        letterjump.Add(oldletterjump + 1)
-                    Else
-                        letterjump.Add(oldletterjump - 1)
-                    End If
-                Else
-                    letterjump.Add(oldletterjump)
-                End If
-                loopcounter += 1
-            End While
-        End If
+   '         If spacestoadd > 0 Then
+   '             addtoeveryNTHline = lines / (spacestoadd + 1) '1 space is inserted @ 1/2 mark, 2 @ 1/3 and 2/3 etc
+   '         ElseIf spacestoadd < 0 Then
+   '             addtoeveryNTHline = lines / (-spacestoadd + 1) '1 space is inserted @ 1/2 mark, 2 @ 1/3 and 2/3 etc
+   '         End If
+   '         'lines / (spacestoadd + 1) '1 space is inserted @ 1/2 mark, 2 @ 1/3 and 2/3 etc
+   '         loopcounter = 1 'starts with 1 because first line (index 0) is entire word
+   '         While loopcounter < lines
+   '             If (loopcounter) Mod addtoeveryNTHline = 0 And loopcounter <> lines - 1 Then
+   '                 'without second half of condition above algorithm would always incorrectly add to last line
 
+   '                 If spacestoadd > 0 Then
+   '                     letterjump.Add(oldletterjump + 1)
+   '                 Else
+   '                     letterjump.Add(oldletterjump - 1)
+   '                 End If
+   '             Else
+   '                 letterjump.Add(oldletterjump)
+   '             End If
+   '             loopcounter += 1
+   '         End While
+   '     End If
 
-        'trim space from end and padd the beginning with space up to line length
-        keyword = jpstringsfunctions.sizeexactlyleft(keyword.TrimEnd, " ", settings(settingsindex.linelength))
 
+   '     'trim space from end and padd the beginning with space up to line length
+   '     keyword = jpstringsfunctions.sizeexactlyleft(keyword.TrimEnd, " ", settings(settingsindex.linelength))
 
-        'add first line
-        returnvalue.Add(keyword)
 
-        'use loop to add remaining non blank lines
+   '     'add first line
+   '     returnvalue.Add(keyword)
 
+   '     'use loop to add remaining non blank lines
 
-        loopcounter = 0
 
+   '     loopcounter = 0
 
-        While loopcounter < lines - 1
 
-            keyword = jpstringsfunctions.padright(keyword, " ", keyword.Length + letterjump(loopcounter)) 'append space to beginning to scroll
-            keyword = jpstringsfunctions.truncateleft(keyword, settings(settingsindex.linelength)) 'truncate letters from end so as to remain proper linelength
-            returnvalue.Add(keyword)
-            loopcounter += 1
+   '     While loopcounter < lines - 1
 
-        End While
-        'returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))) '(used to) end with blank line
+   '         keyword = jpstringsfunctions.padright(keyword, " ", keyword.Length + letterjump(loopcounter)) 'append space to beginning to scroll
+   '         keyword = jpstringsfunctions.truncateleft(keyword, settings(settingsindex.linelength)) 'truncate letters from end so as to remain proper linelength
+   '         returnvalue.Add(keyword)
+   '         loopcounter += 1
 
-        Return returnvalue
+   '     End While
+   '     'returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))) '(used to) end with blank line
 
-    End Function
+   '     Return returnvalue
 
-    Private Function combotab_generatepattern_joinin(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        Dim returnvalue As ArrayList = combotab_generatepattern_splitout(keyword, lines)
-        returnvalue.Reverse()
-        Return returnvalue
-    End Function
-    Private Function combotab_generatepattern_splitout(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   ' End Function
 
-        If lines < 3 Then
-            MsgBox("error pattern 'split out' must have at least 3 lines")
-            Return New ArrayList
-        End If
+   ' Private Function combotab_generatepattern_joinin(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '     Dim returnvalue As ArrayList = combotab_generatepattern_splitout(keyword, lines)
+   '     returnvalue.Reverse()
+   '     Return returnvalue
+   ' End Function
+   ' Private Function combotab_generatepattern_splitout(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        Dim returnvalue As ArrayList = New ArrayList
+   '     If lines < 3 Then
+   '         MsgBox("error pattern 'split out' must have at least 3 lines")
+   '         Return New ArrayList
+   '     End If
 
-        Dim loopcounter As Int16 = 0
+   '     Dim returnvalue As ArrayList = New ArrayList
 
-        If keyword.Length > settings(settingsindex.linelength) Then
+   '     Dim loopcounter As Int16 = 0
 
+   '     If keyword.Length > settings(settingsindex.linelength) Then
 
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
 
-        End If
+   '         keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
 
+   '     End If
 
-        keyword = jpstringsfunctions.padright(keyword, " ", settings(settingsindex.linelength))
 
+   '     keyword = jpstringsfunctions.padright(keyword, " ", settings(settingsindex.linelength))
 
 
 
-        'step 1 properly split the key word
 
-        '
-        keyword = keyword.Trim
+   '     'step 1 properly split the key word
 
+   '     '
+   '     keyword = keyword.Trim
 
 
 
-        Dim lefthalf As String = keyword.Substring(0, (keyword.Length / 2))
-        Dim righthalf As String = keyword.Substring(lefthalf.Length)
 
+   '     Dim lefthalf As String = keyword.Substring(0, (keyword.Length / 2))
+   '     Dim righthalf As String = keyword.Substring(lefthalf.Length)
 
-        'If lefthalf.EndsWith(" ") Or righthalf.StartsWith(" ") Then
-        '    MsgBox("have not yet implimented dealing with space typed on the split")
-        '    Return returnvalue
-        'End If
 
-        While lefthalf.Length - righthalf.Length >= 2
-            'move one char from left to right
-            righthalf = lefthalf(lefthalf.Length - 1) & righthalf
-            lefthalf = lefthalf.Substring(0, lefthalf.Length - 1)
-        End While
+   '     'If lefthalf.EndsWith(" ") Or righthalf.StartsWith(" ") Then
+   '     '    MsgBox("have not yet implimented dealing with space typed on the split")
+   '     '    Return returnvalue
+   '     'End If
 
-        While righthalf.Length - lefthalf.Length >= 2
-            'move 1 char from right to left
+   '     While lefthalf.Length - righthalf.Length >= 2
+   '         'move one char from left to right
+   '         righthalf = lefthalf(lefthalf.Length - 1) & righthalf
+   '         lefthalf = lefthalf.Substring(0, lefthalf.Length - 1)
+   '     End While
 
-            lefthalf &= righthalf(0)
-            righthalf = righthalf.Substring(1)
+   '     While righthalf.Length - lefthalf.Length >= 2
+   '         'move 1 char from right to left
 
-        End While
+   '         lefthalf &= righthalf(0)
+   '         righthalf = righthalf.Substring(1)
 
+   '     End While
 
 
-        Dim addpadtoright As Boolean = True
 
+   '     Dim addpadtoright As Boolean = True
 
-        If righthalf.Length - lefthalf.Length >= 1 Then
-            'start with shorter half so that if linelength is odd the shorter half gets extra pad.
-            'later on an extra space will be inserted in center to truncated this pad
-            addpadtoright = False
 
+   '     If righthalf.Length - lefthalf.Length >= 1 Then
+   '         'start with shorter half so that if linelength is odd the shorter half gets extra pad.
+   '         'later on an extra space will be inserted in center to truncated this pad
+   '         addpadtoright = False
 
-        End If
 
-        While (lefthalf & righthalf).Length < settings(settingsindex.linelength)
-            'pad spaces to the outside of each half untill they conbine to form a line of linelength characters
+   '     End If
 
-            If addpadtoright Then
-                righthalf &= " "
+   '     While (lefthalf & righthalf).Length < settings(settingsindex.linelength)
+   '         'pad spaces to the outside of each half untill they conbine to form a line of linelength characters
 
-            Else
-                lefthalf = " " & lefthalf
+   '         If addpadtoright Then
+   '             righthalf &= " "
 
-            End If
-            addpadtoright = Not addpadtoright
-        End While
+   '         Else
+   '             lefthalf = " " & lefthalf
 
+   '         End If
+   '         addpadtoright = Not addpadtoright
+   '     End While
 
 
 
 
 
-        'step 2 calculate the space that must be insetered in center for each line
 
-        Dim spaceinsertedperline As Int16 = settings(settingsindex.linelength) / lines
+   '     'step 2 calculate the space that must be insetered in center for each line
 
+   '     Dim spaceinsertedperline As Int16 = settings(settingsindex.linelength) / lines
 
 
-        'step 3 generate lines
 
+   '     'step 3 generate lines
 
-        'insert first line before loop otherwise the extra added space per line messes it up
 
-        Dim truncateextrafromright As Boolean = True
-        If lefthalf.TrimStart.Length > righthalf.TrimEnd.Length Then
-            truncateextrafromright = False
-        End If
+   '     'insert first line before loop otherwise the extra added space per line messes it up
 
+   '     Dim truncateextrafromright As Boolean = True
+   '     If lefthalf.TrimStart.Length > righthalf.TrimEnd.Length Then
+   '         truncateextrafromright = False
+   '     End If
 
-        'flags for tryingthing
-        Dim spacestoadd = 4
-        Dim truncatefromrightreversed = False
-        Dim outsidepaddingreversed As Int16 = False
-        While True
 
+   '     'flags for tryingthing
+   '     Dim spacestoadd = 4
+   '     Dim truncatefromrightreversed = False
+   '     Dim outsidepaddingreversed As Int16 = False
+   '     While True
 
 
-            returnvalue.Clear()
-            returnvalue.Add(lefthalf & righthalf)
-            loopcounter = 1
 
-            While loopcounter < lines
-                Dim spacetoinsertthiseline As Int16 = spaceinsertedperline * loopcounter
+   '         returnvalue.Clear()
+   '         returnvalue.Add(lefthalf & righthalf)
+   '         loopcounter = 1
 
-                'If lefthalf.TrimStart.Length <> righthalf.Trim.Length Then
-                'commnet out condition so as to try it everytime
-                'subsequent times through outer loop it does not add or subtracts 1
-                spacetoinsertthiseline += spacestoadd
+   '         While loopcounter < lines
+   '             Dim spacetoinsertthiseline As Int16 = spaceinsertedperline * loopcounter
 
-                If spacetoinsertthiseline < 0 Then
-                    spacetoinsertthiseline = 0
-                End If
-                'End If
+   '             'If lefthalf.TrimStart.Length <> righthalf.Trim.Length Then
+   '             'commnet out condition so as to try it everytime
+   '             'subsequent times through outer loop it does not add or subtracts 1
+   '             spacetoinsertthiseline += spacestoadd
 
-                'If lefthalf.TrimStart.Length <> righthalf.Trim.Length Then
-                '    If Not reverseaddingspace Then
-                '        spacetoinsertthiseline += 1
-                '    End If
+   '             If spacetoinsertthiseline < 0 Then
+   '                 spacetoinsertthiseline = 0
+   '             End If
+   '             'End If
 
+   '             'If lefthalf.TrimStart.Length <> righthalf.Trim.Length Then
+   '             '    If Not reverseaddingspace Then
+   '             '        spacetoinsertthiseline += 1
+   '             '    End If
 
-                'End If
 
+   '             'End If
 
-                Dim thisline = lefthalf & jpstringsfunctions.sizeexactlyright(" ", " ", spacetoinsertthiseline) & righthalf
-                If spacetoinsertthiseline Mod 2 = 0 Then
-                    'even
-                    'truncate half of the spaces inserted from either end
 
-                    thisline = jpstringsfunctions.truncateleft(thisline, thisline.length - spacetoinsertthiseline / 2)
-                    thisline = jpstringsfunctions.truncateright(thisline, thisline.length - spacetoinsertthiseline / 2)
-                Else
-                    'odd
-                    Dim smallerhalf As Int16 = (spacetoinsertthiseline) / 2
-                    Dim largerhalf As Int16 = spacetoinsertthiseline - smallerhalf
+   '             Dim thisline = lefthalf & jpstringsfunctions.sizeexactlyright(" ", " ", spacetoinsertthiseline) & righthalf
+   '             If spacetoinsertthiseline Mod 2 = 0 Then
+   '                 'even
+   '                 'truncate half of the spaces inserted from either end
 
-                    If smallerhalf > largerhalf Then
+   '                 thisline = jpstringsfunctions.truncateleft(thisline, thisline.length - spacetoinsertthiseline / 2)
+   '                 thisline = jpstringsfunctions.truncateright(thisline, thisline.length - spacetoinsertthiseline / 2)
+   '             Else
+   '                 'odd
+   '                 Dim smallerhalf As Int16 = (spacetoinsertthiseline) / 2
+   '                 Dim largerhalf As Int16 = spacetoinsertthiseline - smallerhalf
 
-                        largerhalf = smallerhalf
-                        smallerhalf = spacetoinsertthiseline - largerhalf
+   '                 If smallerhalf > largerhalf Then
 
-                    End If
+   '                     largerhalf = smallerhalf
+   '                     smallerhalf = spacetoinsertthiseline - largerhalf
 
-                    If truncateextrafromright Then
-                        thisline = jpstringsfunctions.truncateleft(thisline, thisline.length - smallerhalf)
-                        thisline = jpstringsfunctions.truncateright(thisline, thisline.length - largerhalf)
-                    Else
-                        thisline = jpstringsfunctions.truncateleft(thisline, thisline.length - largerhalf)
-                        thisline = jpstringsfunctions.truncateright(thisline, thisline.length - smallerhalf)
+   '                 End If
 
-                    End If
+   '                 If truncateextrafromright Then
+   '                     thisline = jpstringsfunctions.truncateleft(thisline, thisline.length - smallerhalf)
+   '                     thisline = jpstringsfunctions.truncateright(thisline, thisline.length - largerhalf)
+   '                 Else
+   '                     thisline = jpstringsfunctions.truncateleft(thisline, thisline.length - largerhalf)
+   '                     thisline = jpstringsfunctions.truncateright(thisline, thisline.length - smallerhalf)
 
-                    'truncateextrafromright = Not truncateextrafromright
+   '                 End If
 
-                End If
+   '                 'truncateextrafromright = Not truncateextrafromright
 
+   '             End If
 
-                loopcounter += 1
 
-                returnvalue.Add(thisline)
-            End While
+   '             loopcounter += 1
 
-            'step 4 validate lines
-            If splitoutlastlinecorrect(returnvalue(returnvalue.Count - 1)) Then
-                Exit While
-            ElseIf spacestoadd > -4 Then
-                spacestoadd -= 1
-                Continue While
+   '             returnvalue.Add(thisline)
+   '         End While
 
-            ElseIf Not truncatefromrightreversed Then
-                truncateextrafromright = Not truncateextrafromright
-                spacestoadd = 1 'repeat all possibilities of this again
-                truncatefromrightreversed = True
-                Continue While
+   '         'step 4 validate lines
+   '         If splitoutlastlinecorrect(returnvalue(returnvalue.Count - 1)) Then
+   '             Exit While
+   '         ElseIf spacestoadd > -4 Then
+   '             spacestoadd -= 1
+   '             Continue While
 
-            ElseIf Not outsidepaddingreversed Then
-                Dim oldleftpadding As Int16 = jpstringsfunctions.getleadingspace(lefthalf)
-                Dim oldrightpadding As Int16 = jpstringsfunctions.gettrailingspace(righthalf)
+   '         ElseIf Not truncatefromrightreversed Then
+   '             truncateextrafromright = Not truncateextrafromright
+   '             spacestoadd = 1 'repeat all possibilities of this again
+   '             truncatefromrightreversed = True
+   '             Continue While
 
-                lefthalf = lefthalf.TrimStart
-                righthalf = righthalf.TrimEnd
+   '         ElseIf Not outsidepaddingreversed Then
+   '             Dim oldleftpadding As Int16 = jpstringsfunctions.getleadingspace(lefthalf)
+   '             Dim oldrightpadding As Int16 = jpstringsfunctions.gettrailingspace(righthalf)
 
-                lefthalf = jpstringsfunctions.padleft(lefthalf, " ", lefthalf.Length + oldrightpadding)
-                righthalf = jpstringsfunctions.padright(righthalf, " ", righthalf.Length + oldleftpadding)
+   '             lefthalf = lefthalf.TrimStart
+   '             righthalf = righthalf.TrimEnd
 
+   '             lefthalf = jpstringsfunctions.padleft(lefthalf, " ", lefthalf.Length + oldrightpadding)
+   '             righthalf = jpstringsfunctions.padright(righthalf, " ", righthalf.Length + oldleftpadding)
 
 
-                'reverse the flag for this condition
-                outsidepaddingreversed = True
 
-                'reset these flags to go through all of the above combinations again
-                spacestoadd = 2
-                truncatefromrightreversed = False
+   '             'reverse the flag for this condition
+   '             outsidepaddingreversed = True
 
+   '             'reset these flags to go through all of the above combinations again
+   '             spacestoadd = 2
+   '             truncatefromrightreversed = False
 
 
 
 
 
-            Else
 
+   '         Else
 
 
-                'not correct but giving up
-                'MsgBox("pattern not correct")
-                'only get here with multiple spaces on the split
 
-                Exit While
+   '             'not correct but giving up
+   '             'MsgBox("pattern not correct")
+   '             'only get here with multiple spaces on the split
 
-            End If
+   '             Exit While
 
+   '         End If
 
-        End While
 
-        'step 5 return lines 
-        Return returnvalue
+   '     End While
 
-    End Function
+   '     'step 5 return lines 
+   '     Return returnvalue
+
+   ' End Function
 
     Private Function splitoutlastlinecorrect(ByVal lastline As String) As Boolean
         If lastline.EndsWith(" ") Or lastline.StartsWith(" ") Then
@@ -24531,863 +22957,863 @@ Public Class Form1
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''
     '''''''''''''legacy display patterns''''''''''''''''''''
     ''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
-    Private Sub initialize_legacysettings(Optional ByVal forcereinitialize As Boolean = False)
+   'Private Sub initialize_legacysettings(Optional ByVal forcereinitialize As Boolean = False)
 
-        Static alreadyinitialized As Boolean = False
-        Static functionbusy As Boolean = False
-
-
-        If alreadyinitialized And Not forcereinitialize Then
-            Return
-        End If
+   '    Static alreadyinitialized As Boolean = False
+   '    Static functionbusy As Boolean = False
 
 
-        While functionbusy
-            'wait for another function call (in another thread?) to finish
-        End While
-
-        functionbusy = True
-
-        Dim legacypatternames As String() = System.Enum.GetNames(GetType(combotab_patterns_legacy))
-        Dim legacypatterncount As Int16 = legacypatternames.Length
-        Dim loopcounter As Int16 = 0
-
-        Dim legacysettingnames As String() = System.Enum.GetNames(GetType(legacysettingsindex))
-        Dim legacysettingscount As Int16 = legacysettingnames.Length
-
-        While loopcounter < legacypatterncount
+   '    If alreadyinitialized And Not forcereinitialize Then
+   '        Return
+   '    End If
 
 
+   '    While functionbusy
+   '        'wait for another function call (in another thread?) to finish
+   '    End While
 
-            legacypatternsettings.Add(0)
+   '    functionbusy = True
 
-            loopcounter += 1
+   '    Dim legacypatternames As String() = System.Enum.GetNames(GetType(combotab_patterns_legacy))
+   '    Dim legacypatterncount As Int16 = legacypatternames.Length
+   '    Dim loopcounter As Int16 = 0
 
-        End While
+   '    Dim legacysettingnames As String() = System.Enum.GetNames(GetType(legacysettingsindex))
+   '    Dim legacysettingscount As Int16 = legacysettingnames.Length
 
-        loopcounter = 0
-        While loopcounter < legacysettingscount
-
-            'set all to 0 meaning no
-            'these may be set to 
-            ' 1 - yes for curent file (will be unset when file close 
-            ' 2 = always yes  if and only it the user choses this setting
+   '    While loopcounter < legacypatterncount
 
 
 
-            legacysettings.Add(0)
-            loopcounter += 1
+   '        legacypatternsettings.Add(0)
+
+   '        loopcounter += 1
+
+   '    End While
+
+   '    loopcounter = 0
+   '    While loopcounter < legacysettingscount
+
+   '        'set all to 0 meaning no
+   '        'these may be set to 
+   '        ' 1 - yes for curent file (will be unset when file close 
+   '        ' 2 = always yes  if and only it the user choses this setting
 
 
-        End While
 
-        functionbusy = False
-        alreadyinitialized = True
-    End Sub
+   '        legacysettings.Add(0)
+   '        loopcounter += 1
+
+
+   '    End While
+
+   '    functionbusy = False
+   '    alreadyinitialized = True
+   'End Sub
 
 
 
     'the convention is to 
-    Private Function combotab_generatepattern__zlegacy_still_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
-        'If keyword.Length > settings(settingsindex.linelength) Then
-        '    MsgBox("error keyword for still pattern can not exceed the length of the sign")
-        '    Return returnvalue
-        'End If
+   'Private Function combotab_generatepattern__zlegacy_still_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    Dim loopcounter As Int16 = 0
+   '    'If keyword.Length > settings(settingsindex.linelength) Then
+   '    '    MsgBox("error keyword for still pattern can not exceed the length of the sign")
+   '    '    Return returnvalue
+   '    'End If
 
-        If keyword.Length > settings(settingsindex.linelength) Then
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        End If
+   '    If keyword.Length > settings(settingsindex.linelength) Then
+   '        keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '    End If
 
-        While loopcounter < lines
-            returnvalue.Add(keyword.PadRight(settings(settingsindex.linelength)))
-            loopcounter += 1
-        End While
-        Return returnvalue
-    End Function
+   '    While loopcounter < lines
+   '        returnvalue.Add(keyword.PadRight(settings(settingsindex.linelength)))
+   '        loopcounter += 1
+   '    End While
+   '    Return returnvalue
+   'End Function
 
-    Private Function combotab_generatepattern__zlegacy_addon_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        'If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
+   'Private Function combotab_generatepattern__zlegacy_addon_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    'If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
 
-        '    If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '        'if unable to make it fit by trimming space then give error
-        '        MsgBox("error - keyword for 'add on' can not exceed sign size")
-        '        Return New ArrayList
-        '    End If
+   '    '    If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '        'if unable to make it fit by trimming space then give error
+   '    '        MsgBox("error - keyword for 'add on' can not exceed sign size")
+   '    '        Return New ArrayList
+   '    '    End If
 
-        'End If
+   '    'End If
 
-        If keyword.Length > settings(settingsindex.linelength) Then
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        End If
+   '    If keyword.Length > settings(settingsindex.linelength) Then
+   '        keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '    End If
 
-        If lines < 3 Then
-            MsgBox("error pattern 'add on' must have at least 3 lines")
-            Return New ArrayList
-        End If
+   '    If lines < 3 Then
+   '        MsgBox("error pattern 'add on' must have at least 3 lines")
+   '        Return New ArrayList
+   '    End If
 
-        Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
-        keyword = keyword.Trim
-        Dim nonblanklinecount = lines - 1
+   '    Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
+   '    keyword = keyword.Trim
+   '    Dim nonblanklinecount = lines - 1
 
-        Dim segmentlength_allbutlast As Int16
-        Dim segmentlength_last
+   '    Dim segmentlength_allbutlast As Int16
+   '    Dim segmentlength_last
 
 
-        'determine the length of each add on segment
-        'I want to as close as posible to an even division 
-        'there are 2 posible ways to divide
-        '  -divide the word length by the number of non blank lines and tack the remaider on to the last line
-        '  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
-        'in order to decide which to use, I will calculate which results in the closest to even
+   '    'determine the length of each add on segment
+   '    'I want to as close as posible to an even division 
+   '    'there are 2 posible ways to divide
+   '    '  -divide the word length by the number of non blank lines and tack the remaider on to the last line
+   '    '  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
+   '    'in order to decide which to use, I will calculate which results in the closest to even
 
-        Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
-        Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
+   '    Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
+   '    Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
 
-        Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
-        Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
+   '    Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
+   '    Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
 
-        Dim ratio_usingnonblankline As Single
-        Dim ratio_usingoneless As Single
+   '    Dim ratio_usingnonblankline As Single
+   '    Dim ratio_usingoneless As Single
 
-        If allbutlast_usingnonblankline > last_usingnonblankline Then
-            ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
-        Else
-            ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
-        End If
+   '    If allbutlast_usingnonblankline > last_usingnonblankline Then
+   '        ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
+   '    Else
+   '        ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
+   '    End If
 
-        If allbutlast_usingoneless > last_usingoneless Then
-            ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
-        Else
-            ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
-        End If
+   '    If allbutlast_usingoneless > last_usingoneless Then
+   '        ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
+   '    Else
+   '        ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
+   '    End If
 
-        If ratio_usingnonblankline > ratio_usingoneless Then
+   '    If ratio_usingnonblankline > ratio_usingoneless Then
 
-            segmentlength_allbutlast = allbutlast_usingnonblankline
-            segmentlength_last = last_usingnonblankline
-        Else
+   '        segmentlength_allbutlast = allbutlast_usingnonblankline
+   '        segmentlength_last = last_usingnonblankline
+   '    Else
 
-            segmentlength_allbutlast = allbutlast_usingoneless
-            segmentlength_last = last_usingoneless
+   '        segmentlength_allbutlast = allbutlast_usingoneless
+   '        segmentlength_last = last_usingoneless
 
-        End If
+   '    End If
 
-        'Dim returnvalue As ArrayList = New ArrayList
+   '    'Dim returnvalue As ArrayList = New ArrayList
 
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    Dim loopcounter As Int16 = 0
 
 
 
-        '
+   '    '
 
 
-        returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
+   '    returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
 
-        loopcounter = 1
-        While loopcounter <= nonblanklinecount
+   '    loopcounter = 1
+   '    While loopcounter <= nonblanklinecount
 
-            Dim thisline As String
-            If loopcounter <> nonblanklinecount Then
-                thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
+   '        Dim thisline As String
+   '        If loopcounter <> nonblanklinecount Then
+   '            thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
 
-            Else
-                thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
-            End If
+   '        Else
+   '            thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
+   '        End If
 
 
-            thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
+   '        thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
 
-            thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
-            returnvalue.Add(thisline)
-            loopcounter += 1
-        End While
+   '        thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
+   '        returnvalue.Add(thisline)
+   '        loopcounter += 1
+   '    End While
 
 
-        Return returnvalue
-    End Function
+   '    Return returnvalue
+   'End Function
 
-    Private Function combotab_generatepattern__zlegacy_subtractoff_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        'If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
+   'Private Function combotab_generatepattern__zlegacy_subtractoff_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    'If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
 
-        '    If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '        'if unable to make it fit by trimming space then give error
-        '        MsgBox("error - keyword for 'subtract off' can not exceed sign size")
-        '        Return New ArrayList
-        '    End If
+   '    '    If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '        'if unable to make it fit by trimming space then give error
+   '    '        MsgBox("error - keyword for 'subtract off' can not exceed sign size")
+   '    '        Return New ArrayList
+   '    '    End If
 
-        'End If
+   '    'End If
 
-        If keyword.Length > settings(settingsindex.linelength) Then
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        End If
+   '    If keyword.Length > settings(settingsindex.linelength) Then
+   '        keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '    End If
 
-        If lines < 3 Then
-            MsgBox("error pattern 'subtract off' must have at least 3 lines")
-            Return New ArrayList
-        End If
+   '    If lines < 3 Then
+   '        MsgBox("error pattern 'subtract off' must have at least 3 lines")
+   '        Return New ArrayList
+   '    End If
 
-        Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
-        keyword = keyword.Trim
-        Dim nonblanklinecount = lines - 1
+   '    Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
+   '    keyword = keyword.Trim
+   '    Dim nonblanklinecount = lines - 1
 
-        Dim segmentlength_allbutlast As Int16
-        Dim segmentlength_last
+   '    Dim segmentlength_allbutlast As Int16
+   '    Dim segmentlength_last
 
 
-        'determine the length of each add on segment
-        'I want to as close as posible to an even division 
-        'there are 2 posible ways to divide
-        '  -divide the word length by the number of non blank lines and tack the remaider on to the last line
-        '  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
-        'in order to decide which to use, I will calculate which results in the closest to even
+   '    'determine the length of each add on segment
+   '    'I want to as close as posible to an even division 
+   '    'there are 2 posible ways to divide
+   '    '  -divide the word length by the number of non blank lines and tack the remaider on to the last line
+   '    '  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
+   '    'in order to decide which to use, I will calculate which results in the closest to even
 
-        Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
-        Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
+   '    Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
+   '    Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
 
-        Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
-        Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
+   '    Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
+   '    Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
 
-        Dim ratio_usingnonblankline As Single
-        Dim ratio_usingoneless As Single
+   '    Dim ratio_usingnonblankline As Single
+   '    Dim ratio_usingoneless As Single
 
-        If allbutlast_usingnonblankline > last_usingnonblankline Then
-            ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
-        Else
-            ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
-        End If
+   '    If allbutlast_usingnonblankline > last_usingnonblankline Then
+   '        ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
+   '    Else
+   '        ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
+   '    End If
 
-        If allbutlast_usingoneless > last_usingoneless Then
-            ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
-        Else
-            ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
-        End If
+   '    If allbutlast_usingoneless > last_usingoneless Then
+   '        ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
+   '    Else
+   '        ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
+   '    End If
 
-        If ratio_usingnonblankline > ratio_usingoneless Then
+   '    If ratio_usingnonblankline > ratio_usingoneless Then
 
-            segmentlength_allbutlast = allbutlast_usingnonblankline
-            segmentlength_last = last_usingnonblankline
-        Else
+   '        segmentlength_allbutlast = allbutlast_usingnonblankline
+   '        segmentlength_last = last_usingnonblankline
+   '    Else
 
-            segmentlength_allbutlast = allbutlast_usingoneless
-            segmentlength_last = last_usingoneless
+   '        segmentlength_allbutlast = allbutlast_usingoneless
+   '        segmentlength_last = last_usingoneless
 
-        End If
+   '    End If
 
-        'Dim returnvalue As ArrayList = New ArrayList
+   '    'Dim returnvalue As ArrayList = New ArrayList
 
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    Dim loopcounter As Int16 = 0
 
 
 
-        '
+   '    '
 
 
-        returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
+   '    returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
 
-        loopcounter = nonblanklinecount
-        While loopcounter >= 1
+   '    loopcounter = nonblanklinecount
+   '    While loopcounter >= 1
 
-            Dim thisline As String
-            If loopcounter <> nonblanklinecount Then
-                thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
+   '        Dim thisline As String
+   '        If loopcounter <> nonblanklinecount Then
+   '            thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
 
-            Else
-                thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
-            End If
+   '        Else
+   '            thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
+   '        End If
 
 
-            thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
+   '        thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
 
-            thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
-            returnvalue.Add(thisline)
-            loopcounter -= 1
-        End While
+   '        thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
+   '        returnvalue.Add(thisline)
+   '        loopcounter -= 1
+   '    End While
 
 
-        Return returnvalue
-    End Function
+   '    Return returnvalue
+   'End Function
 
 
-    Private Function combotab_generatepattern_zlegacy_addandsubtract_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        'If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
+   'Private Function combotab_generatepattern_zlegacy_addandsubtract_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    'If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '    keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
 
-        '    If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '        'if unable to make it fit by trimming space then give error
-        '        MsgBox("error - keyword for 'add & subtract' can not exceed sign size")
-        '        Return New ArrayList
-        '    End If
+   '    '    If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '        'if unable to make it fit by trimming space then give error
+   '    '        MsgBox("error - keyword for 'add & subtract' can not exceed sign size")
+   '    '        Return New ArrayList
+   '    '    End If
 
-        'End If
+   '    'End If
 
-        If keyword.Length > settings(settingsindex.linelength) Then
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        End If
+   '    If keyword.Length > settings(settingsindex.linelength) Then
+   '        keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '    End If
 
-        If lines < 5 Then
-            MsgBox("error pattern 'add and subtract' must have at least 5 lines")
-            Return New ArrayList
-        End If
+   '    If lines < 5 Then
+   '        MsgBox("error pattern 'add and subtract' must have at least 5 lines")
+   '        Return New ArrayList
+   '    End If
 
 
-        Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
-        keyword = keyword.Trim
+   '    Dim leadingspacecount As Int16 = jpstringsfunctions.leftcharatercount(keyword, " ")
+   '    keyword = keyword.Trim
 
-        Dim doublemiddleline As Boolean = False 'if an evan number of lines selected the middle line is doubled
+   '    Dim doublemiddleline As Boolean = False 'if an evan number of lines selected the middle line is doubled
 
-        Dim nonblanklinecount As Int16
+   '    Dim nonblanklinecount As Int16
 
-        If lines Mod 2 = 1 Then
-            'odd number of lines
-            nonblanklinecount = (lines - 1) / 2
-            doublemiddleline = True
-        ElseIf lines Mod 2 = 0 Then
-            nonblanklinecount = (lines) / 2
-            doublemiddleline = False
+   '    If lines Mod 2 = 1 Then
+   '        'odd number of lines
+   '        nonblanklinecount = (lines - 1) / 2
+   '        doublemiddleline = True
+   '    ElseIf lines Mod 2 = 0 Then
+   '        nonblanklinecount = (lines) / 2
+   '        doublemiddleline = False
 
-        End If
-        Dim segmentlength_allbutlast As Int16
-        Dim segmentlength_last
+   '    End If
+   '    Dim segmentlength_allbutlast As Int16
+   '    Dim segmentlength_last
 
 
-        'determine the length of each add on segment
-        'I want to as close as posible to an even division 
-        'there are 2 posible ways to divide
-        '  -divide the word length by the number of non blank lines and tack the remaider on to the last line
-        '  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
-        'in order to decide which to use, I will calculate which results in the closest to even
+   '    'determine the length of each add on segment
+   '    'I want to as close as posible to an even division 
+   '    'there are 2 posible ways to divide
+   '    '  -divide the word length by the number of non blank lines and tack the remaider on to the last line
+   '    '  -devide the word length by one less then the number of nonblank lines and use the remainder as last line
+   '    'in order to decide which to use, I will calculate which results in the closest to even
 
 
-        Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
-        Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
+   '    Dim allbutlast_usingnonblankline As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle(nonblanklinecount))
+   '    Dim last_usingnonblankline As Int16 = allbutlast_usingnonblankline + keyword.Length Mod nonblanklinecount
 
-        Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
-        Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
+   '    Dim allbutlast_usingoneless As Int16 = Math.Truncate(Convert.ToSingle(keyword.Length) / Convert.ToSingle((nonblanklinecount - 1)))
+   '    Dim last_usingoneless As Int16 = keyword.Length Mod (nonblanklinecount - 1)
 
-        Dim ratio_usingnonblankline As Single
-        Dim ratio_usingoneless As Single
+   '    Dim ratio_usingnonblankline As Single
+   '    Dim ratio_usingoneless As Single
 
-        If allbutlast_usingnonblankline > last_usingnonblankline Then
-            ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
-        Else
-            ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
-        End If
+   '    If allbutlast_usingnonblankline > last_usingnonblankline Then
+   '        ratio_usingnonblankline = last_usingnonblankline / allbutlast_usingnonblankline
+   '    Else
+   '        ratio_usingnonblankline = allbutlast_usingnonblankline / last_usingnonblankline
+   '    End If
 
-        If allbutlast_usingoneless > last_usingoneless Then
-            ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
-        Else
-            ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
-        End If
+   '    If allbutlast_usingoneless > last_usingoneless Then
+   '        ratio_usingoneless = last_usingoneless / allbutlast_usingoneless
+   '    Else
+   '        ratio_usingoneless = allbutlast_usingoneless / last_usingoneless
+   '    End If
 
-        If ratio_usingnonblankline > ratio_usingoneless Then
+   '    If ratio_usingnonblankline > ratio_usingoneless Then
 
-            segmentlength_allbutlast = allbutlast_usingnonblankline
-            segmentlength_last = last_usingnonblankline
-        Else
+   '        segmentlength_allbutlast = allbutlast_usingnonblankline
+   '        segmentlength_last = last_usingnonblankline
+   '    Else
 
-            segmentlength_allbutlast = allbutlast_usingoneless
-            segmentlength_last = last_usingoneless
+   '        segmentlength_allbutlast = allbutlast_usingoneless
+   '        segmentlength_last = last_usingoneless
 
-        End If
+   '    End If
 
-        'Dim returnvalue As ArrayList = New ArrayList
+   '    'Dim returnvalue As ArrayList = New ArrayList
 
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim loopcounter As Int16 = 0
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    Dim loopcounter As Int16 = 0
 
 
 
-        '
+   '    '
 
 
-        returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
-        'goingup and loopcounter <= nonblanklinecount
-        Dim goingup As Boolean = True
-        loopcounter = 1 'nonblanklinecount
-        While True 'loopcounter >= 1
+   '    returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
+   '    'goingup and loopcounter <= nonblanklinecount
+   '    Dim goingup As Boolean = True
+   '    loopcounter = 1 'nonblanklinecount
+   '    While True 'loopcounter >= 1
 
-            Dim thisline As String
-            If loopcounter <> nonblanklinecount Then
-                thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
+   '        Dim thisline As String
+   '        If loopcounter <> nonblanklinecount Then
+   '            thisline = keyword.Substring(0, segmentlength_allbutlast * loopcounter)
 
-            Else
-                thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
-            End If
+   '        Else
+   '            thisline = keyword.Substring(0, segmentlength_allbutlast * (loopcounter - 1) + segmentlength_last)
+   '        End If
 
 
-            thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
+   '        thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + leadingspacecount) 'return the space that was trimmed from begining
 
-            thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
-            returnvalue.Add(thisline)
+   '        thisline = jpstringsfunctions.padright(thisline, " ", settings(settingsindex.linelength)) 'pad to end to make an intireline. it should not be neccesary to truncate because long keywords generate error prior to this point
+   '        returnvalue.Add(thisline)
 
-            If goingup And loopcounter < nonblanklinecount Then
-                loopcounter += 1
-            ElseIf goingup And loopcounter = nonblanklinecount Then
-                goingup = False
-                If Not doublemiddleline Then
-                    loopcounter -= 1
-                End If
-            ElseIf Not goingup And loopcounter > 1 Then
-                loopcounter -= 1
-            ElseIf Not goingup And loopcounter = 1 Then
-                Exit While
-            Else
-                MsgBox("error loop is out of kilter in combotab_generatepattern_addandsubtract()")
-                Exit While
-            End If
+   '        If goingup And loopcounter < nonblanklinecount Then
+   '            loopcounter += 1
+   '        ElseIf goingup And loopcounter = nonblanklinecount Then
+   '            goingup = False
+   '            If Not doublemiddleline Then
+   '                loopcounter -= 1
+   '            End If
+   '        ElseIf Not goingup And loopcounter > 1 Then
+   '            loopcounter -= 1
+   '        ElseIf Not goingup And loopcounter = 1 Then
+   '            Exit While
+   '        Else
+   '            MsgBox("error loop is out of kilter in combotab_generatepattern_addandsubtract()")
+   '            Exit While
+   '        End If
 
-        End While
+   '    End While
 
 
-        Return returnvalue
-    End Function
+   '    Return returnvalue
+   'End Function
 
 
 
-    Private Function combotab_generatepattern__zlegacy_scrollright_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        If lines Mod 2 = 1 Then
-            MsgBox("error scroll patterns must have even number of lines")
-            Return New ArrayList
-        End If
-        'Dim returnvalue As ArrayList = New ArrayList
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim repcounter As Int16 = 0
-        Dim loopcounter As Int16 = 0
+   'Private Function combotab_generatepattern__zlegacy_scrollright_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    If lines Mod 2 = 1 Then
+   '        MsgBox("error scroll patterns must have even number of lines")
+   '        Return New ArrayList
+   '    End If
+   '    'Dim returnvalue As ArrayList = New ArrayList
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    Dim repcounter As Int16 = 0
+   '    Dim loopcounter As Int16 = 0
 
-        Dim nonblanklinecount = lines - 1
+   '    Dim nonblanklinecount = lines - 1
 
-        Dim worddivisor As Int16 = (nonblanklinecount + 1) / 2
+   '    Dim worddivisor As Int16 = (nonblanklinecount + 1) / 2
 
-        While keyword.Length < settings(settingsindex.linelength)
-            keyword += " "
-        End While
+   '    While keyword.Length < settings(settingsindex.linelength)
+   '        keyword += " "
+   '    End While
 
-        While keyword.Length Mod worddivisor <> 0
+   '    While keyword.Length Mod worddivisor <> 0
 
-            keyword = " " + keyword
-            If keyword.Length Mod worddivisor <> 0 Then
-                keyword += " "
-            End If
+   '        keyword = " " + keyword
+   '        If keyword.Length Mod worddivisor <> 0 Then
+   '            keyword += " "
+   '        End If
 
-        End While
-        Dim newkeyword As String = keyword 'used to call function recursively to try to eliminate empty lines
-        Dim substringfactor As Int16 = keyword.Length / worddivisor
-        'build a rep
+   '    End While
+   '    Dim newkeyword As String = keyword 'used to call function recursively to try to eliminate empty lines
+   '    Dim substringfactor As Int16 = keyword.Length / worddivisor
+   '    'build a rep
 
-        While keyword.Length < substringfactor * nonblanklinecount
-            keyword += " "
-        End While
+   '    While keyword.Length < substringfactor * nonblanklinecount
+   '        keyword += " "
+   '    End While
 
-        returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
+   '    returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
 
-        loopcounter = 0
-        While loopcounter < nonblanklinecount
+   '    loopcounter = 0
+   '    While loopcounter < nonblanklinecount
 
-            Dim thisline As String
-            If loopcounter < worddivisor Then
+   '        Dim thisline As String
+   '        If loopcounter < worddivisor Then
 
 
-                thisline = keyword.Substring((worddivisor - loopcounter - 1) * (substringfactor))
+   '            thisline = keyword.Substring((worddivisor - loopcounter - 1) * (substringfactor))
 
-            Else
-                thisline = jpstringsfunctions.padleft(keyword, " ", keyword.Length + (loopcounter - worddivisor + 1) * substringfactor)
+   '        Else
+   '            thisline = jpstringsfunctions.padleft(keyword, " ", keyword.Length + (loopcounter - worddivisor + 1) * substringfactor)
 
-            End If
+   '        End If
 
 
-            'make the line exactly the legth of a line by added or truncating from right
-            thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", settings(settingsindex.linelength))
+   '        'make the line exactly the legth of a line by added or truncating from right
+   '        thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", settings(settingsindex.linelength))
 
-            returnvalue.Add(thisline)
-            loopcounter += 1
-        End While
-        If (returnvalue(lines - 1).trim = "" Or returnvalue(1).trim = "") And keyword.Trim <> "" Then
+   '        returnvalue.Add(thisline)
+   '        loopcounter += 1
+   '    End While
+   '    If (returnvalue(lines - 1).trim = "" Or returnvalue(1).trim = "") And keyword.Trim <> "" Then
 
-            'the function will be called recursively untill either the 2nd and last lines are not blanc or the keyword no longer end with space
-            'if the process is terminated because of runing out of space then we will use the original return value
+   '        'the function will be called recursively untill either the 2nd and last lines are not blanc or the keyword no longer end with space
+   '        'if the process is terminated because of runing out of space then we will use the original return value
 
-            Dim newreturnvalue As ArrayList
-            'Dim spaceshiftlength As Int16 = returnvalue(1).trim.length / 2
-            'Dim newkeyword
-            If newkeyword.StartsWith(" ") Then
+   '        Dim newreturnvalue As ArrayList
+   '        'Dim spaceshiftlength As Int16 = returnvalue(1).trim.length / 2
+   '        'Dim newkeyword
+   '        If newkeyword.StartsWith(" ") Then
 
 
 
-                newkeyword = newkeyword.Substring(1) 'remove spaces at begining
-                newkeyword += " " 'add spaces to end, the new newkeyword should be same length as old newkeyword
-                'the length is important so that the recursive function call does not pad addition space 
+   '            newkeyword = newkeyword.Substring(1) 'remove spaces at begining
+   '            newkeyword += " " 'add spaces to end, the new newkeyword should be same length as old newkeyword
+   '            'the length is important so that the recursive function call does not pad addition space 
 
 
-                newreturnvalue = combotab_generatepattern__zlegacy_scrollright_108001(newkeyword, lines)
+   '            newreturnvalue = combotab_generatepattern__zlegacy_scrollright_108001(newkeyword, lines)
 
-                If newreturnvalue(lines - 1).trim <> "" And newreturnvalue(1).trim <> "" Then
-                    returnvalue = newreturnvalue
-                End If
+   '            If newreturnvalue(lines - 1).trim <> "" And newreturnvalue(1).trim <> "" Then
+   '                returnvalue = newreturnvalue
+   '            End If
 
-            End If
-        End If
+   '        End If
+   '    End If
 
-        Return returnvalue
-    End Function
-    Private Function combotab_generatepattern__zlegacy_scrollleft_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    Return returnvalue
+   'End Function
+   'Private Function combotab_generatepattern__zlegacy_scrollleft_108001(ByVal keyword As String, ByVal lines As Int16) As ArrayList
 
-        If lines Mod 2 = 1 Then
-            MsgBox("error scroll patterns must have even number of lines")
-            Return New ArrayList
-        End If
-        'Dim returnvalue As ArrayList = New ArrayList
-        Dim returnvalue As ArrayList = New ArrayList
-        Dim repcounter As Int16 = 0
-        Dim loopcounter As Int16 = 0
+   '    If lines Mod 2 = 1 Then
+   '        MsgBox("error scroll patterns must have even number of lines")
+   '        Return New ArrayList
+   '    End If
+   '    'Dim returnvalue As ArrayList = New ArrayList
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    Dim repcounter As Int16 = 0
+   '    Dim loopcounter As Int16 = 0
 
-        Dim nonblanklinecount = lines - 1
+   '    Dim nonblanklinecount = lines - 1
 
-        Dim worddivisor As Int16 = (nonblanklinecount + 1) / 2
+   '    Dim worddivisor As Int16 = (nonblanklinecount + 1) / 2
 
-        While keyword.Length < settings(settingsindex.linelength)
-            keyword += " "
-        End While
+   '    While keyword.Length < settings(settingsindex.linelength)
+   '        keyword += " "
+   '    End While
 
-        While keyword.Length Mod worddivisor <> 0
+   '    While keyword.Length Mod worddivisor <> 0
 
-            keyword = " " + keyword
-            If keyword.Length Mod worddivisor <> 0 Then
-                keyword += " "
-            End If
+   '        keyword = " " + keyword
+   '        If keyword.Length Mod worddivisor <> 0 Then
+   '            keyword += " "
+   '        End If
 
-        End While
+   '    End While
 
-        Dim newkeyword = keyword ' used if we need to call the function recursivly to eliminate blank lines
-        Dim substringfactor As Int16 = keyword.Length / worddivisor
-        'build a rep
+   '    Dim newkeyword = keyword ' used if we need to call the function recursivly to eliminate blank lines
+   '    Dim substringfactor As Int16 = keyword.Length / worddivisor
+   '    'build a rep
 
-        While keyword.Length < substringfactor * nonblanklinecount
-            keyword += " "
-        End While
+   '    While keyword.Length < substringfactor * nonblanklinecount
+   '        keyword += " "
+   '    End While
 
-        returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
+   '    returnvalue.Add(" ".PadRight(settings(settingsindex.linelength)))
 
-        Dim rightpadfactor As Int16 = worddivisor - 1 'determined by playing around on notepad and seeing how word needs to be padded 
-        loopcounter = 0
-        While loopcounter < nonblanklinecount
+   '    Dim rightpadfactor As Int16 = worddivisor - 1 'determined by playing around on notepad and seeing how word needs to be padded 
+   '    loopcounter = 0
+   '    While loopcounter < nonblanklinecount
 
-            Dim thisline As String
-            If loopcounter < worddivisor Then
-                'substring starts from 0 and we padleft to make word fragment appear on right
+   '        Dim thisline As String
+   '        If loopcounter < worddivisor Then
+   '            'substring starts from 0 and we padleft to make word fragment appear on right
 
-                thisline = keyword.Substring(0, (loopcounter + 1) * (substringfactor))
-                thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + (rightpadfactor * substringfactor))
+   '            thisline = keyword.Substring(0, (loopcounter + 1) * (substringfactor))
+   '            thisline = jpstringsfunctions.padleft(thisline, " ", thisline.Length + (rightpadfactor * substringfactor))
 
-                rightpadfactor -= 1
-                If rightpadfactor < 0 Then
-                    rightpadfactor = 0
-                End If
-            Else
-                thisline = keyword.Substring((loopcounter - worddivisor + 1) * (substringfactor))
+   '            rightpadfactor -= 1
+   '            If rightpadfactor < 0 Then
+   '                rightpadfactor = 0
+   '            End If
+   '        Else
+   '            thisline = keyword.Substring((loopcounter - worddivisor + 1) * (substringfactor))
 
-            End If
+   '        End If
 
 
-            'make the line exactly the legth of a line by added or truncating from right
-            thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", settings(settingsindex.linelength))
+   '        'make the line exactly the legth of a line by added or truncating from right
+   '        thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", settings(settingsindex.linelength))
 
-            returnvalue.Add(thisline)
-            loopcounter += 1
-        End While
+   '        returnvalue.Add(thisline)
+   '        loopcounter += 1
+   '    End While
 
-        If (returnvalue(lines - 1).trim = "" Or returnvalue(1).trim = "") And keyword.Trim <> "" Then
+   '    If (returnvalue(lines - 1).trim = "" Or returnvalue(1).trim = "") And keyword.Trim <> "" Then
 
-            'the function will be called recursively untill either the 2nd and last lines are not blanc or the keyword no longer end with space
-            'if the process is terminated because of runing out of space then we will use the original return value
+   '        'the function will be called recursively untill either the 2nd and last lines are not blanc or the keyword no longer end with space
+   '        'if the process is terminated because of runing out of space then we will use the original return value
 
-            Dim newreturnvalue As ArrayList
-            'Dim spaceshiftlength As Int16 = returnvalue(1).trim.length / 2
-            'Dim newkeyword
-            If newkeyword.EndsWith(" ") Then
+   '        Dim newreturnvalue As ArrayList
+   '        'Dim spaceshiftlength As Int16 = returnvalue(1).trim.length / 2
+   '        'Dim newkeyword
+   '        If newkeyword.EndsWith(" ") Then
 
 
 
-                newkeyword = newkeyword.Remove(newkeyword.Length - 1) 'remove spaces at end
-                newkeyword = " " + newkeyword 'add spaces to beginning, the new newkeyword should be same length as old newkeyword
-                'the length is important so that the recursive function call does not pad addition space 
+   '            newkeyword = newkeyword.Remove(newkeyword.Length - 1) 'remove spaces at end
+   '            newkeyword = " " + newkeyword 'add spaces to beginning, the new newkeyword should be same length as old newkeyword
+   '            'the length is important so that the recursive function call does not pad addition space 
 
 
-                newreturnvalue = combotab_generatepattern__zlegacy_scrollleft_108001(newkeyword, lines)
+   '            newreturnvalue = combotab_generatepattern__zlegacy_scrollleft_108001(newkeyword, lines)
 
-                If newreturnvalue(lines - 1).trim <> "" And newreturnvalue(1).trim <> "" Then
-                    returnvalue = newreturnvalue
-                End If
+   '            If newreturnvalue(lines - 1).trim <> "" And newreturnvalue(1).trim <> "" Then
+   '                returnvalue = newreturnvalue
+   '            End If
 
-            End If
-        End If
+   '        End If
+   '    End If
 
 
-        Return returnvalue
-    End Function
+   '    Return returnvalue
+   'End Function
 
-    Private Function combotab_generatepattern_zlegacy108001_splitout(ByVal keyword As String, ByVal lines As Int16) As ArrayList
-        'If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '    keyword = keyword.TrimEnd
+   'Private Function combotab_generatepattern_zlegacy108001_splitout(ByVal keyword As String, ByVal lines As Int16) As ArrayList
+   '    'If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '    keyword = keyword.TrimEnd
 
-        '    If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '        keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
-        '    End If
+   '    '    If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '        keyword = jpstringsfunctions.trimtolength(keyword, " ", settings(settingsindex.linelength))
+   '    '    End If
 
 
-        '    If keyword.Length > Me.settings(settingsindex.linelength) Then
-        '        'if unable to make it fit by trimming space then give error
-        '        MsgBox("error - keyword for 'subtract off' can not exceed sign size")
-        '        Return New ArrayList
-        '    End If
+   '    '    If keyword.Length > Me.settings(settingsindex.linelength) Then
+   '    '        'if unable to make it fit by trimming space then give error
+   '    '        MsgBox("error - keyword for 'subtract off' can not exceed sign size")
+   '    '        Return New ArrayList
+   '    '    End If
 
-        'End If
+   '    'End If
 
-        If keyword.Length > settings(settingsindex.linelength) Then
-            keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
-        End If
+   '    If keyword.Length > settings(settingsindex.linelength) Then
+   '        keyword = keyword.Remove(settings(settingsindex.linelength)) 'truncate to linelength
+   '    End If
 
-        keyword = jpstringsfunctions.padright(keyword, " ", settings(settingsindex.linelength))
+   '    keyword = jpstringsfunctions.padright(keyword, " ", settings(settingsindex.linelength))
 
-        If lines < 3 Then
-            MsgBox("error pattern 'subtract off' must have at least 3 lines")
-            Return New ArrayList
-        End If
+   '    If lines < 3 Then
+   '        MsgBox("error pattern 'subtract off' must have at least 3 lines")
+   '        Return New ArrayList
+   '    End If
 
 
-        Dim nonblanklinecount = lines - 1
+   '    Dim nonblanklinecount = lines - 1
 
-        Dim divisorfordiscard = nonblanklinecount * 2
-        'divide the length of the word by this number, discard this many cards from either end then fill space in center
+   '    Dim divisorfordiscard = nonblanklinecount * 2
+   '    'divide the length of the word by this number, discard this many cards from either end then fill space in center
 
 
-        Dim returnvalue As ArrayList = New ArrayList
-        returnvalue.Add(keyword) 'print the word once at begining before messing with
+   '    Dim returnvalue As ArrayList = New ArrayList
+   '    returnvalue.Add(keyword) 'print the word once at begining before messing with
 
-        While keyword.Length Mod divisorfordiscard <> 0
-            keyword = keyword.Substring(0, keyword.Length - 1)
-            If keyword.Length Mod divisorfordiscard <> 0 Then
-                keyword = keyword.Substring(1)
-            End If
+   '    While keyword.Length Mod divisorfordiscard <> 0
+   '        keyword = keyword.Substring(0, keyword.Length - 1)
+   '        If keyword.Length Mod divisorfordiscard <> 0 Then
+   '            keyword = keyword.Substring(1)
+   '        End If
 
-        End While
-        Dim truncatefromeitherend As Int16 = keyword.Length / divisorfordiscard
+   '    End While
+   '    Dim truncatefromeitherend As Int16 = keyword.Length / divisorfordiscard
 
 
 
-        Dim loopcounter = 1
-        While loopcounter < nonblanklinecount
-            'intentionaly starting with index 1 and then doing one rep less then nonblanklinecount
-            'the first nonblank line has already been added
+   '    Dim loopcounter = 1
+   '    While loopcounter < nonblanklinecount
+   '        'intentionaly starting with index 1 and then doing one rep less then nonblanklinecount
+   '        'the first nonblank line has already been added
 
-            Dim thisline As String = keyword
+   '        Dim thisline As String = keyword
 
-            thisline = jpstringsfunctions.sizeexactlyleft(thisline, " ", thisline.Length - (truncatefromeitherend * loopcounter))
-            thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", thisline.Length - (truncatefromeitherend * loopcounter))
+   '        thisline = jpstringsfunctions.sizeexactlyleft(thisline, " ", thisline.Length - (truncatefromeitherend * loopcounter))
+   '        thisline = jpstringsfunctions.sizeexactlyright(thisline, " ", thisline.Length - (truncatefromeitherend * loopcounter))
 
-            Dim lefthalf As String = thisline.Substring(0, thisline.Length / 2)
-            Dim righthalf As String = thisline.Substring(lefthalf.Length)
+   '        Dim lefthalf As String = thisline.Substring(0, thisline.Length / 2)
+   '        Dim righthalf As String = thisline.Substring(lefthalf.Length)
 
-            lefthalf = jpstringsfunctions.padright(lefthalf, " ", settings(settingsindex.linelength) / 2)
-            righthalf = jpstringsfunctions.padleft(righthalf, " ", settings(settingsindex.linelength) - (settings(settingsindex.linelength) / 2))
+   '        lefthalf = jpstringsfunctions.padright(lefthalf, " ", settings(settingsindex.linelength) / 2)
+   '        righthalf = jpstringsfunctions.padleft(righthalf, " ", settings(settingsindex.linelength) - (settings(settingsindex.linelength) / 2))
 
-            thisline = lefthalf & righthalf
+   '        thisline = lefthalf & righthalf
 
-            returnvalue.Add(thisline)
-            loopcounter += 1
-        End While
-        returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))) 'empty line
+   '        returnvalue.Add(thisline)
+   '        loopcounter += 1
+   '    End While
+   '    returnvalue.Add(jpstringsfunctions.padright(" ", " ", settings(settingsindex.linelength))) 'empty line
 
 
-        Return returnvalue
-    End Function
+   '    Return returnvalue
+   'End Function
 
-    Private Sub combotab_initialize_keywordallignment(Optional ByVal forcereinitialize As Boolean = False)
+   'Private Sub combotab_initialize_keywordallignment(Optional ByVal forcereinitialize As Boolean = False)
 
-        Static alreadyinitialized As Boolean = False
-        If alreadyinitialized And Not forcereinitialize Then
-            Return
-        End If
+   '    Static alreadyinitialized As Boolean = False
+   '    If alreadyinitialized And Not forcereinitialize Then
+   '        Return
+   '    End If
 
-        keywordallignment.Clear()
-        keywordexceedlinelength.Clear()
-        Dim loopcounter As Int16 = 0
-        While loopcounter < 10
-            keywordallignment.Add(Mod_textboxfunctions.txtbox_alignment_type._none)
-            keywordexceedlinelength.Add(False)
-            loopcounter += 1
-        End While
-    End Sub
+   '    keywordallignment.Clear()
+   '    keywordexceedlinelength.Clear()
+   '    Dim loopcounter As Int16 = 0
+   '    While loopcounter < 10
+   '        keywordallignment.Add(Mod_textboxfunctions.txtbox_alignment_type._none)
+   '        keywordexceedlinelength.Add(False)
+   '        loopcounter += 1
+   '    End While
+   'End Sub
 
-    Private Sub TBkw_common_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles TBkw09.MouseDown, TBkw08.MouseDown, TBkw07.MouseDown, TBkw06.MouseDown, TBkw05.MouseDown, TBkw04.MouseDown, TBkw03.MouseDown, TBkw02.MouseDown, TBkw01.MouseDown, TBkw00.MouseDown
+   'Private Sub TBkw_common_MouseDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.MouseEventArgs)
 
-        If e.Button = Windows.Forms.MouseButtons.Right Then
-            Dim sendername As String = sender.name
-            Dim senderindex As String = sendername.Substring(sendername.Length - 2)
+   '    If e.Button = Windows.Forms.MouseButtons.Right Then
+   '        Dim sendername As String = sender.name
+   '        Dim senderindex As String = sendername.Substring(sendername.Length - 2)
 
 
-            ContextMenu_combokeywords.Tag = senderindex
-            sender.ContextMenuStrip = ContextMenu_combokeywords
-            sender.ContextMenuStrip.show()
+   '        ContextMenu_combokeywords.Tag = senderindex
+   '        sender.ContextMenuStrip = ContextMenu_combokeywords
+   '        sender.ContextMenuStrip.show()
 
 
-        End If
+   '    End If
 
 
-    End Sub
+   'End Sub
 
-    Private Sub ContextMenu_combokeywords_Opening(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles ContextMenu_combokeywords.Opening
-        Dim index As Int16 = Convert.ToInt16(sender.tag)
+   'Private Sub ContextMenu_combokeywords_Opening(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles ContextMenu_combokeywords.Opening
+   '    Dim index As Int16 = Convert.ToInt16(sender.tag)
 
-        Dim currentallignment As Int16 = keywordallignment(index)
+   '    Dim currentallignment As Int16 = keywordallignment(index)
 
 
-        Men_combokeywordallign_left.Checked = False
-        Men_combokeywordallign_center.Checked = False
-        Men_combokeywordallign_right.Checked = False
-        Men_combokeywordallign_none.Checked = False
-        'Men_combo_center.Checked = False
+   '    Men_combokeywordallign_left.Checked = False
+   '    Men_combokeywordallign_center.Checked = False
+   '    Men_combokeywordallign_right.Checked = False
+   '    Men_combokeywordallign_none.Checked = False
+   '    'Men_combo_center.Checked = False
 
 
 
-        If currentallignment = Mod_textboxfunctions.txtbox_alignment_type._left Then
-            Men_combokeywordallign_left.Checked = True
-        ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._center Then
-            Men_combokeywordallign_center.Checked = True
+   '    If currentallignment = Mod_textboxfunctions.txtbox_alignment_type._left Then
+   '        Men_combokeywordallign_left.Checked = True
+   '    ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._center Then
+   '        Men_combokeywordallign_center.Checked = True
 
-        ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._right Then
-            Men_combokeywordallign_right.Checked = True
-        ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._none Then
-            Men_combokeywordallign_none.Checked = True
+   '    ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._right Then
+   '        Men_combokeywordallign_right.Checked = True
+   '    ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._none Then
+   '        Men_combokeywordallign_none.Checked = True
 
-            'ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._none Then
+   '        'ElseIf currentallignment = Mod_textboxfunctions.txtbox_alignment_type._none Then
 
-        End If
+   '    End If
 
-        Men_combo_allowexceedwordlength.Text = "Allow keyword to exceed " & settings(settingsindex.linelength) & " letters"
+   '    Men_combo_allowexceedwordlength.Text = "Allow keyword to exceed " & settings(settingsindex.linelength) & " letters"
 
-        If keywordexceedlinelength(index) Then
+   '    If keywordexceedlinelength(index) Then
 
-            Men_combo_allowexceedwordlength.Checked = True
+   '        Men_combo_allowexceedwordlength.Checked = True
 
-            Men_combokeywordallign_center.Enabled = False
-            Men_combokeywordallign_right.Enabled = False
-        Else
-            Men_combo_allowexceedwordlength.Checked = False
-            Men_combokeywordallign_center.Enabled = True
-            Men_combokeywordallign_right.Enabled = True
-        End If
+   '        Men_combokeywordallign_center.Enabled = False
+   '        Men_combokeywordallign_right.Enabled = False
+   '    Else
+   '        Men_combo_allowexceedwordlength.Checked = False
+   '        Men_combokeywordallign_center.Enabled = True
+   '        Men_combokeywordallign_right.Enabled = True
+   '    End If
 
-        'Men_combo_allowexceedwordlength
+   '    'Men_combo_allowexceedwordlength
 
 
 
 
 
-    End Sub
+   'End Sub
 
-    Private Sub combotab_refresh_keywordallignment(ByVal index As Int16)
+   'Private Sub combotab_refresh_keywordallignment(ByVal index As Int16)
 
 
-        Dim thisallignment As Int16 = keywordallignment(index)
+   '    Dim thisallignment As Int16 = keywordallignment(index)
 
 
-        If keywordexceedlinelength(index) = True Then
+   '    If keywordexceedlinelength(index) = True Then
 
-            If thisallignment <> Mod_textboxfunctions.txtbox_alignment_type._left Then
+   '        If thisallignment <> Mod_textboxfunctions.txtbox_alignment_type._left Then
 
-                thisallignment = Mod_textboxfunctions.txtbox_alignment_type._none
+   '            thisallignment = Mod_textboxfunctions.txtbox_alignment_type._none
 
-            End If
+   '        End If
 
-        ElseIf thisallignment = Mod_textboxfunctions.txtbox_alignment_type._auto Then
+   '    ElseIf thisallignment = Mod_textboxfunctions.txtbox_alignment_type._auto Then
 
-            If index = 0 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern00.Text)
-            ElseIf index = 1 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern01.Text)
-            ElseIf index = 2 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern02.Text)
-            ElseIf index = 3 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern03.Text)
-            ElseIf index = 4 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern04.Text)
-            ElseIf index = 5 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern05.Text)
-            ElseIf index = 6 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern06.Text)
-            ElseIf index = 7 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern07.Text)
-            ElseIf index = 8 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern08.Text)
-            ElseIf index = 9 Then
-                thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern09.Text)
+   '        If index = 0 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern00.Text)
+   '        ElseIf index = 1 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern01.Text)
+   '        ElseIf index = 2 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern02.Text)
+   '        ElseIf index = 3 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern03.Text)
+   '        ElseIf index = 4 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern04.Text)
+   '        ElseIf index = 5 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern05.Text)
+   '        ElseIf index = 6 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern06.Text)
+   '        ElseIf index = 7 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern07.Text)
+   '        ElseIf index = 8 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern08.Text)
+   '        ElseIf index = 9 Then
+   '            thisallignment = Me.get_keywordallignmentforpattern(Me.CBpattern09.Text)
 
-            End If
+   '        End If
 
 
-        End If
+   '    End If
 
-        If index = 0 Then
+   '    If index = 0 Then
 
 
 
-            Mod_textboxfunctions.txtbox_aligntext(TBkw00, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)), TBkw00.Text))
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw00, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern00.SelectedIndex)), TBkw00.Text))
 
-        ElseIf index = 1 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw01, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex)), TBkw01.Text))
-        ElseIf index = 2 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw02, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex)), TBkw02.Text))
-        ElseIf index = 3 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw03, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex)), TBkw03.Text))
-        ElseIf index = 4 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw04, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex)), TBkw04.Text))
-        ElseIf index = 5 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw05, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex)), TBkw05.Text))
-        ElseIf index = 6 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw06, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex)), TBkw06.Text))
-        ElseIf index = 7 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw07, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex)), TBkw07.Text))
-        ElseIf index = 8 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw08, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex)), TBkw08.Text))
-        ElseIf index = 9 Then
-            Mod_textboxfunctions.txtbox_aligntext(TBkw09, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex)), TBkw09.Text))
-        End If
+   '    ElseIf index = 1 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw01, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern01.SelectedIndex)), TBkw01.Text))
+   '    ElseIf index = 2 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw02, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern02.SelectedIndex)), TBkw02.Text))
+   '    ElseIf index = 3 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw03, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern03.SelectedIndex)), TBkw03.Text))
+   '    ElseIf index = 4 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw04, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern04.SelectedIndex)), TBkw04.Text))
+   '    ElseIf index = 5 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw05, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern05.SelectedIndex)), TBkw05.Text))
+   '    ElseIf index = 6 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw06, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern06.SelectedIndex)), TBkw06.Text))
+   '    ElseIf index = 7 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw07, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern07.SelectedIndex)), TBkw07.Text))
+   '    ElseIf index = 8 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw08, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern08.SelectedIndex)), TBkw08.Text))
+   '    ElseIf index = 9 Then
+   '        Mod_textboxfunctions.txtbox_aligntext(TBkw09, thisallignment, get_maxlinelengthforpattern(combotabpatterns_dataname_to_legaydisplayname(combotabpatterns_indexvaluetoindexname(CBpattern09.SelectedIndex)), TBkw09.Text))
+   '    End If
 
-    End Sub
+   'End Sub
 
-    Private Sub ContextMenu_combokeywords_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ContextMenu_combokeywords.ItemClicked, Menu_comboallignment.DropDownItemClicked
-        Dim index As Int16 = Convert.ToInt16(ContextMenu_combokeywords.Tag) 'can not be sender.tag because sender is some times a submenu of ContextMenu_combokeywords 
+   'Private Sub ContextMenu_combokeywords_ItemClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ToolStripItemClickedEventArgs) Handles ContextMenu_combokeywords.ItemClicked, Menu_comboallignment.DropDownItemClicked
+   '    Dim index As Int16 = Convert.ToInt16(ContextMenu_combokeywords.Tag) 'can not be sender.tag because sender is some times a submenu of ContextMenu_combokeywords 
 
 
-        If e.ClickedItem Is Men_combokeywordallign_left Then
-            keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._left
-            combotab_refresh_keywordallignment(index)
+   '    If e.ClickedItem Is Men_combokeywordallign_left Then
+   '        keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._left
+   '        combotab_refresh_keywordallignment(index)
 
-        ElseIf e.ClickedItem Is Men_combokeywordallign_center Then
-            keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._center
-            combotab_refresh_keywordallignment(index)
+   '    ElseIf e.ClickedItem Is Men_combokeywordallign_center Then
+   '        keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._center
+   '        combotab_refresh_keywordallignment(index)
 
-        ElseIf e.ClickedItem Is Men_combokeywordallign_right Then
-            keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._right
-            combotab_refresh_keywordallignment(index)
+   '    ElseIf e.ClickedItem Is Men_combokeywordallign_right Then
+   '        keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._right
+   '        combotab_refresh_keywordallignment(index)
 
-        ElseIf e.ClickedItem Is Men_combokeywordallign_none Then
-            keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._none
-            combotab_refresh_keywordallignment(index)
+   '    ElseIf e.ClickedItem Is Men_combokeywordallign_none Then
+   '        keywordallignment(index) = Mod_textboxfunctions.txtbox_alignment_type._none
+   '        combotab_refresh_keywordallignment(index)
 
 
-        ElseIf e.ClickedItem Is Men_combo_allowexceedwordlength Then
+   '        'ElseIf e.ClickedItem Is Men_combo_allowexceedwordlength Then
 
-            Me.keywordexceedlinelength(index) = Not Men_combo_allowexceedwordlength.Checked
-        End If
+   '        '    Me.keywordexceedlinelength(index) = Not Men_combo_allowexceedwordlength.Checked
+   '        'End If
 
-    End Sub
+   'End Sub
 
     
     Private Sub Timer_flagwatchdog_Tick(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles Timer_flagwatchdog.Tick
@@ -28260,7 +26686,7 @@ Public Class Form1
     End Sub
 
 
-    Private Sub TBKEYWORD_Common_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles TBkw09.Click, TBkw08.Click, TBkw07.Click, TBkw06.Click, TBkw05.Click, TBkw04.Click, TBkw03.Click, TBkw02.Click, TBkw01.Click, TBkw00.Click
+    Private Sub TBKEYWORD_Common_Enter(ByVal sender As System.Object, ByVal e As System.EventArgs)
         Dim sendername As String = sender.name
         Dim senderindex As Int16 = Convert.ToInt16(sendername.Substring(sendername.Length - 2))
         If keywordallignment(senderindex) = Mod_textboxfunctions.txtbox_alignment_type._none Or keywordallignment(senderindex) = Mod_textboxfunctions.txtbox_alignment_type._left Then
@@ -28610,47 +27036,47 @@ Public Class Form1
 
             'jp jan/1/2010: for now leave these warning prompts same as for lines tab
             'jp march 19 2011: modifications to handle new file format
-            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
-                If promptbeforedisablingstandadtab Then
+            'If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Or currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_CURRENT Then
+            '    If promptbeforedisablingstandadtab Then
 
 
-                    Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
+            '        Dim message As String = "If you proceed with editing data in this tab you will not be able to return to combo tab!" + Constants.vbCrLf
 
-                    message += "Are you sure you want to proceed"
+            '        message += "Are you sure you want to proceed"
 
-                    Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
+            '        Dim result As DialogResult = MsgBox(message, MsgBoxStyle.OkCancel)
 
-                    If result = Windows.Forms.DialogResult.Cancel Then
+            '        If result = Windows.Forms.DialogResult.Cancel Then
 
-                        sender.text = previous_text
+            '            sender.text = previous_text
 
-                        recursive = False
-                        Return
-                    Else
+            '            recursive = False
+            '            Return
+            '        Else
 
-                        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+            '            If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
 
-                            ''assume they want to stick with old file format
-                            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                        Else
-                            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
-                        End If
-
-
-
-                    End If
-                Else
+            '                ''assume they want to stick with old file format
+            '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+            '            Else
+            '                currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+            '            End If
 
 
-                    If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
-                        ''assume they want to stick with old file format
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
-                    Else
-                        currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
-                    End If
 
-                End If
-            End If
+            '        End If
+            '    Else
+
+
+            '        If currenttrickcodingversion = TRICKCODINGVERSION_COMBOKEYWORDS_PRE_20110310 Then
+            '            ''assume they want to stick with old file format
+            '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_PRE_20110310
+            '        Else
+            '            currenttrickcodingversion = TRICKCODINGVERSION_LINESONLY_CURRENT
+            '        End If
+
+            '    End If
+            'End If
 
 
             deviceandmemorymatch = False 'this variable was used for monitor mode. many changes since this functionality removed

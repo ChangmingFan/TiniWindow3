@@ -3,10 +3,22 @@
     Dim filename As String = "remoteSignlist.rsl"
     Dim initialized As Boolean = False
 
+    'Dim arrIP_list(5) As String
+
+
+
+    '082513 CMF
+    'Format of remotrSignlist.rsl :
+    '[start SIGNAME]
+    'username:USERNAME
+    'ips:IP0I|IP1|IP2|IP3|IP4|IP5   'Total 5 IPs in format xx:xx:xx:xx
+    '[end SIGNAME]
+
+    'Jp's old format
     'format is
     '[start SIGNAME]
     'username:USERNAME
-    'ip:IP
+    'ip:IP                      ' Single one IP only
     '[end SIGNAME]
 
     'information not between start and end tag are ignored and may be used as notes
