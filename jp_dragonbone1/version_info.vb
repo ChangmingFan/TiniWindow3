@@ -2,6 +2,7 @@
     'by design this file will often show up in git conflicts. Please combine verion comments in a sensible manor and use our conventions to select a new version number
 
     'version coments go here
+    '2013082813-JP-CMF: Modify remote sign IP txt validate, some bug remain,  not finish.
     '2013082613-JP: REMOVED COMBO TAP BY COMMNET OUT .  Test easy-line-text saving and re-opening OK.
     '2013082513-JP: now use list of FTP servers (instead of single) read list from local or global file or use harcoded default if neither file exist. 
     '2013081413-CMF-JP: Remove debugging msgs. 

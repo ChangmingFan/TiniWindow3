@@ -11,13 +11,6 @@
     'ips:IP0|IP1|IP2|IP3|IP4   'Total 5 IPs in format xx.xx.xx.xx
     '[end SIGNAME]
 
-    'Jp's old format
-    'format is
-    '[start SIGNAME]
-    'username:USERNAME
-    'ip:IP                      ' Single one IP only
-    '[end SIGNAME]
-
     'information not between start and end tag are ignored and may be used as notes
     Public Structure remoteSign
 
@@ -542,5 +535,12 @@
     End Sub
 
 
+    Private Sub CB_remoteSignList_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles CB_remoteSignList.KeyPress
+        If e.KeyChar = vbCr Or e.KeyChar = vbLf Then
+            Return
+        End If
+        e.Handled = True
+
+    End Sub
 End Class
 

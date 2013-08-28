@@ -220,16 +220,6 @@ Public Class SignConnection_Base
     End Property
 
     
-
-
-
-
-
-
-
-
-
-
     'end experimenting with marshaling
 
 

@@ -1,17 +1,10 @@
 [start sign1]
 username:signdata
 password:Fan!46616E1428
-ips:97.74.144.142|184.168.86.30|8.8.4.4|97.74.144.142|184.168.86.3
+ips:
 [end sign1]
-[start sign2]
-username:signdata
-password:abc123ABC
-[end sign2]
-[start Sign-3-1]
+[start HEW1]
 username:CMF
-ip:ekjfasjfakjsfakosf
-[end Sign-3-1]
-[start unnamed_sign]
-username:cz
-ip:asfsafarf
-[end unnamed_sign]
+password:1234cmf
+ips:
+[end HEW1]
