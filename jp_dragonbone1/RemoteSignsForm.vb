@@ -135,11 +135,15 @@
             If this_sign.password <> "" Then
                 SW.Write("password:" & this_sign.password & Constants.vbCrLf)
             End If
-            If this_sign.arrIP_list Is Nothing Then
+            If Not this_sign.arrIP_list Is Nothing Then
                 SW.Write("ips:" & Join(this_sign.arrIP_list, "|") & Constants.vbCrLf)
             End If
             If this_sign.datafilename <> "" Then
                 SW.Write("datafilename:" & this_sign.datafilename & Constants.vbCrLf)
+            End If
+
+            If this_sign.directory <> "" Then
+                SW.Write("directory:" & this_sign.directory & Constants.vbCrLf)
             End If
             SW.Write("[end " & this_sign.signname & "]" & Constants.vbCrLf)
         Next
@@ -221,6 +225,9 @@
 
                         ElseIf (this_data_item_name.ToLower = "datafilename") Then
                             this_remoteSign.datafilename = this_data_item_value
+
+                        ElseIf (this_data_item_name.ToLower = "directory") Then
+                            this_remoteSign.directory = this_data_item_value
 
                         End If
                     Next 'datafield in this sign
@@ -467,6 +474,7 @@
     Private Sub RemoteSignsForm_VisibleChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.VisibleChanged
 
         If Me.Visible Then
+            Me.CB_promptforpassword.Checked = True
             If (IO.File.Exists((filename))) Then
                 rsl_loadfile(filename)
             End If
@@ -500,7 +508,7 @@
         TB_signname.Enabled = False
         TB_username.Enabled = False
         TB_password.Enabled = False
-
+        CB_promptforpassword.Checked = True
         databeinginternallymanipulated = False
 
 

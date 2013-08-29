@@ -20,8 +20,14 @@
         If Me.Visible Then
             If Working_sign.arrIP_list Is Nothing Then
                 'check default box
+                Txt_IP4.Text = ""
+                Txt_IP3.Text = ""
+                Txt_IP2.Text = ""
+                Txt_IP1.Text = ""
+                Txt_IP0.Text = ""
                 Chk_IP.Checked = True
             Else
+                Chk_IP.Checked = False
                 If Working_sign.arrIP_list.Length > 5 Then
                     MsgBox("Warning only 5 IPs")
                 End If
@@ -132,52 +138,57 @@
             Beep()
             Return False
         End If
-        If (arr_IP_Txt_split(0).Length < 0 Or arr_IP_Txt_split(0).Length > 3) Then
+        If (arr_IP_Txt_split(0).Length = 0 Or arr_IP_Txt_split(0).Length > 3) Then
             Return False
         End If
-        If (arr_IP_Txt_split(1).Length < 0 Or arr_IP_Txt_split(1).Length > 3) Then
+        If (arr_IP_Txt_split(1).Length = 0 Or arr_IP_Txt_split(1).Length > 3) Then
             Return False
         End If
-        If (arr_IP_Txt_split(2).Length < 0 Or arr_IP_Txt_split(2).Length > 3) Then
+        If (arr_IP_Txt_split(2).Length = 0 Or arr_IP_Txt_split(2).Length > 3) Then
             Return False
         End If
-        If (arr_IP_Txt_split(3).Length < 0 Or arr_IP_Txt_split(3).Length > 3) Then
+        If (arr_IP_Txt_split(3).Length = 0 Or arr_IP_Txt_split(3).Length > 3) Then
             Return False
         End If
+        'if it doesnt fail any test, it must be valid
+        Return True
     End Function
 
     'Function for validtare IP list
 
     Function arrIP_list_validate() As Boolean
         'test txt of IPs
+
+        Dim returnvalue As Boolean = True 'assume all valid unless one of more fails test
+
         If Not valid_IP(Txt_IP0.Text) Then
             Txt_IP0.ForeColor = Color.Red
-            Return False
+            returnvalue = False
         Else
             Txt_IP0.ForeColor = Color.Black
         End If
 
         If Not valid_IP(Txt_IP1.Text) Then
             Txt_IP1.ForeColor = Color.Red
-            Return False
+            returnvalue = False
         Else
             Txt_IP1.ForeColor = Color.Black
         End If
         If Not valid_IP(Txt_IP2.Text) Then
             Txt_IP2.ForeColor = Color.Red
-            Return False
+            returnvalue = False
         Else
             Txt_IP2.ForeColor = Color.Black
         End If
 
         If Not valid_IP(Txt_IP3.Text) Then
             Txt_IP3.ForeColor = Color.Red
-            Return False
+            returnvalue = False
         Else
             Txt_IP3.ForeColor = Color.Black
         End If
 
-        Return True
+        Return returnvalue
 
     End Function
 
@@ -197,7 +208,15 @@
                 array_size += 1
             End If
 
-            Dim temp_ip_list(array_size) As String
+
+
+            If array_size = 0 Then
+                Working_sign.arrIP_list = Nothing
+                Return
+            End If
+
+
+            Dim temp_ip_list(array_size - 1) As String
             Dim i As Int16 = 0
             If Txt_IP0.Text <> "" Then
                 temp_ip_list(i) = Txt_IP0.Text
@@ -230,12 +249,20 @@
     End Sub
 
     Private Sub Txt_IP_common_KeyPress(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles Txt_IP4.KeyPress, Txt_IP3.KeyPress, Txt_IP2.KeyPress, Txt_IP1.KeyPress, Txt_IP0.KeyPress
+        'MsgBox(Asc(e.KeyChar))
 
-        If e.KeyChar = "." Then
+        Dim BACK_SPACE As Char = Chr(8)
+        Dim CONTROL_A As Char = Chr(1)
+        Dim CONTROL_C As Char = Chr(3)
+        'we do not yet support CONTROl_V because pasting is more difficult to ensure valid values
+
+        If e.KeyChar = "." Or e.KeyChar = BACK_SPACE Or e.KeyChar = CONTROL_A Or e.KeyChar = CONTROL_C Then
+            'these special non-digit character are allowed
             Return
         End If
 
         If e.KeyChar < "0" Or e.KeyChar > "9" Then
+            'reach here if characters are not digits
             Beep()
             e.Handled = True
         End If
