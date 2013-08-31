@@ -2,6 +2,8 @@
     'by design this file will often show up in git conflicts. Please combine verion comments in a sensible manor and use our conventions to select a new version number
 
     'version coments go here
+
+    '2013083113B-JP-CMF: To be continye
     '2013082813B-JP-CMF: fixed many bug with remote sign configuration 
     '2013082813-JP-CMF: (version date not changed in code!) Modify remote sign IP txt validate, some bug remain,  not finish.
     '2013082613-JP: REMOVED COMBO TAP BY COMMNET OUT .  Test easy-line-text saving and re-opening OK.
@@ -19,7 +21,7 @@
     Public Const TiniWindowVersionStandard As Int16 = 1 'first used with version 1.01.005 its abscence warns the update process of inconsistencies in other value
     Public Const TiniWindowMajorVersion As Int16 = 3
     Public Const TiniWindowMinorVersion As String = "01.001"
-    Public Const TiniWindoCompileDate As String = "20130828B"
+    Public Const TiniWindoCompileDate As String = "20130831"
     Public Shared TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()
     Public Shared TiniWindowVersion_display_string As String = TiniWindowVersion + "." + TiniWindoCompileDate.ToString + " (Tini-Pi-Lite supported) " ' not used in update process
 

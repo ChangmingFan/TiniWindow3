@@ -37,6 +37,7 @@ Partial Class RemoteSignsForm
         Me.CB_promptforpassword = New System.Windows.Forms.CheckBox()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.But_apply = New System.Windows.Forms.Button()
+        Me.Label5 = New System.Windows.Forms.Label()
         Me.SuspendLayout()
         '
         'CB_remoteSignList
@@ -189,12 +190,23 @@ Partial Class RemoteSignsForm
         Me.But_apply.UseVisualStyleBackColor = True
         Me.But_apply.Visible = False
         '
+        'Label5
+        '
+        Me.Label5.AutoSize = True
+        Me.Label5.ForeColor = System.Drawing.Color.Coral
+        Me.Label5.Location = New System.Drawing.Point(4, 39)
+        Me.Label5.Name = "Label5"
+        Me.Label5.Size = New System.Drawing.Size(185, 12)
+        Me.Label5.TabIndex = 16
+        Me.Label5.Text = "Please type SIgn name below:"
+        '
         'RemoteSignsForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(7.0!, 12.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(432, 241)
         Me.ControlBox = False
+        Me.Controls.Add(Me.Label5)
         Me.Controls.Add(Me.But_apply)
         Me.Controls.Add(Me.Label4)
         Me.Controls.Add(Me.CB_promptforpassword)
@@ -232,4 +244,5 @@ Partial Class RemoteSignsForm
     Friend WithEvents CB_promptforpassword As System.Windows.Forms.CheckBox
     Friend WithEvents Label4 As System.Windows.Forms.Label
     Friend WithEvents But_apply As System.Windows.Forms.Button
+    Friend WithEvents Label5 As System.Windows.Forms.Label
 End Class

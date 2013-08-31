@@ -88,7 +88,7 @@
                 signcopy.directory = sign.directory
             End If
             If signcopy.arrIP_list Is Nothing Then
-                Dim temp_arr_list(remoteSign.default_IP_list.Count) As String
+                Dim temp_arr_list(remoteSign.default_IP_list.Count - 1) As String
                 signcopy.arrIP_list = temp_arr_list
                 Dim j As Int16 = 0
                 For Each ip As String In remoteSign.default_IP_list
@@ -96,7 +96,7 @@
                     j += 1
                 Next
             Else
-                Dim temp_arr_list(sign.arrIP_list.Length) As String
+                Dim temp_arr_list(sign.arrIP_list.Length - 1) As String
                 signcopy.arrIP_list = temp_arr_list
 
                 For Each ip As String In sign.arrIP_list

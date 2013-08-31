@@ -10,6 +10,9 @@ Public Class SignConnection_FTP
 
 
     Dim FTP_directory As String
+    Dim failedFTP_list As ArrayList = New ArrayList
+    Dim counter_failedFTP_list As Integer = 0
+    Dim counter_suceedFTP_list As Integer = 0
 
 
     Public Overrides ReadOnly Property allSigns_working() As ArrayList
@@ -79,13 +82,41 @@ Public Class SignConnection_FTP
     Dim bgw As System.ComponentModel.BackgroundWorker
     Private WithEvents myFtpUploadWebClient As New Net.WebClient
 
-    Private Sub myFtpUploadWebClient_UploadProgress(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
+    Private Sub myFtpUploadWebClient_UploadFileCompleted(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
         'MsgBox(e.Result)
+        Dim process As String = "Sending data to sign" & Constants.vbCr
         Try
             Dim res As Byte() = e.Result
+            counter_suceedFTP_list += 1
         Catch ex As Exception
-            MsgBox("an error occurs sendign the file!")
+            ' failedFTP_list.Add(sender.) 
+            counter_failedFTP_list += 1
+
+            'MsgBox("Error occured sending the file!")
+
         End Try
+        Dim message As String = ""
+        Dim count_totalftp_list = FTP_IP_list.Count
+        If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
+            message = counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list & "  IPs in local_FTP_list; but " & counter_failedFTP_list & " File Uploads failed."
+
+        ElseIf counter_failedFTP_list > 0 Then
+            message = counter_failedFTP_list & " File Uploads failed out of " & count_totalftp_list & "   IPs in local_FTP_list. "
+        Else
+            message = counter_suceedFTP_list & " File Uploads suceeded out of " & count_totalftp_list & "   IPs in local_FTP_list.  "
+
+        End If
+
+
+
+        Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list
+
+        If percentprogress <> 100 Then
+            bgw.ReportProgress(percentprogress, process & message)
+            'else
+            'let another part of the program report the finish message
+        End If
+
 
         Dim breakointholder As Int16 = 5
 
@@ -120,11 +151,9 @@ Public Class SignConnection_FTP
     End Sub
     Protected Overrides Sub sendData_backgroundWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs)
         'Dim bgw As System.ComponentModel.BackgroundWorker = sender
-
+        Dim count_totalftp_list = FTP_IP_list.Count
         'Private WithEvents myFtpUploadWebClient As New Net.WebClient
         Dim myFtpUploadWebClients As ArrayList = New ArrayList
-
-
 
         bgw = sender
         'MsgBox("bgw ok")
@@ -169,12 +198,34 @@ Public Class SignConnection_FTP
             'myFtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
 
             'MsgBox(3)
+
+            counter_failedFTP_list = 0
+            failedFTP_list.Clear() 'clear fail list before starting uploads - not curretnly used
             For Each FTP_IP As String In FTP_IP_list
                 Dim FtpUploadWebClient As New Net.WebClient
-                FtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
+                Try
+                    FtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
+                    AddHandler FtpUploadWebClient.UploadFileCompleted, AddressOf myFtpUploadWebClient_UploadFileCompleted
+                    AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
+                    FtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"), selectedsign & ".data")
 
-                AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
-                FtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"), selectedsign & ".data")
+                Catch ex As Exception
+                    counter_failedFTP_list += 1
+                    Dim message2 As String = ""
+                    Dim count_totalftp_list2 = FTP_IP_list.Count
+                    If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
+                        message2 = counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list & "  IPs in local_FTP_list; but " & counter_failedFTP_list & " File Uploads failed."
+
+                    ElseIf counter_failedFTP_list > 0 Then
+                        message2 = counter_failedFTP_list & " File Uploads failed out of " & count_totalftp_list2
+                    Else
+                        message2 = counter_suceedFTP_list & " File Uploads suceeded out of " & count_totalftp_list2
+
+                    End If
+                    Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list2
+                    bgw.ReportProgress(percentprogress, process & message2)
+                End Try
+
                 myFtpUploadWebClients.Add(FtpUploadWebClient)
             Next
 
@@ -200,6 +251,23 @@ Public Class SignConnection_FTP
 
             End While
 
+            Dim i As Int16 = 0
+            While (count_totalftp_list <> counter_failedFTP_list + counter_suceedFTP_list)
+                Threading.Thread.Sleep(100)
+                i += 1
+                If i > 1000 Then
+
+                    'for some reasone the upload_complete event handler has not properly updated the counters
+                    'enoth time has passed to assume this is not going to happen
+
+                    'for now do nothing more, the user may see funny status info below
+
+                    Exit While
+                End If
+
+            End While
+
+
             If bgw.CancellationPending Then
                 For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
                     FtpUploadWebClient.CancelAsync()
@@ -222,8 +290,32 @@ Public Class SignConnection_FTP
         Catch ex As Exception
             MsgBox(ex.Message)
         End Try
-        bgw.ReportProgress(99, process & "Finished sending data to  to " & selectedsign)
-        bgw.ReportProgress(100, process & "Finished sending data to  to " & selectedsign)
+
+
+
+
+
+        Dim message As String = ""
+
+        If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
+            message = counter_failedFTP_list & " Uploads failed and " & counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list
+
+        ElseIf counter_failedFTP_list > 0 Then
+            message = counter_failedFTP_list & " Uploads failed out of " & count_totalftp_list
+        Else
+            message = counter_suceedFTP_list & " Uploads suceeded out of " & count_totalftp_list
+
+        End If
+
+
+        'Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list
+        bgw.ReportProgress(99, "Finished: " & process & message)
+        bgw.ReportProgress(100, "Finished: " & process & message)
+
+
+
+        'bgw.ReportProgress(99, process & "Finished sending data to  to " & selectedsign)
+        'bgw.ReportProgress(100, process & "Finished sending data to  to " & selectedsign)
 
         Return
 
