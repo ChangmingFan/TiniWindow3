@@ -207,7 +207,9 @@ Public Class SignConnection_FTP
                     FtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
                     AddHandler FtpUploadWebClient.UploadFileCompleted, AddressOf myFtpUploadWebClient_UploadFileCompleted
                     AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
-                    FtpUploadWebClient.UploadFileAsync(New Uri("ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"), selectedsign & ".data")
+                    Dim newstring As String = "ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"
+
+                    FtpUploadWebClient.UploadFileAsync(New Uri(newstring), selectedsign & ".data")
 
                 Catch ex As Exception
                     counter_failedFTP_list += 1
