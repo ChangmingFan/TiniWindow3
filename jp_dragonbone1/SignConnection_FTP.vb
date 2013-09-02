@@ -2,6 +2,167 @@
 Public Class SignConnection_FTP
     Inherits SignConnection_OneSign
 
+
+    ''''''' related to asyncronous FTP
+    Public Structure FtpState
+
+
+
+        Private wait As Threading.ManualResetEvent
+        Private m_request As System.Net.FtpWebRequest
+        Private m_fileName As String
+        'Private operationException As Exception = null
+        Private m_operationException As Exception
+        Dim status As String
+
+        Sub init()
+            'a structure does not allow to a new function
+            'this function does what would normally be done in new()
+            m_operationException = Nothing
+            wait = New Threading.ManualResetEvent(False)
+        End Sub
+
+        Public ReadOnly Property OperationComplete As Threading.ManualResetEvent
+            Get
+                Return wait
+            End Get
+        End Property
+
+
+        Public Property Request As Net.FtpWebRequest
+            Get
+                Return m_request
+            End Get
+            Set(ByVal value As Net.FtpWebRequest)
+                m_request = value
+            End Set
+        End Property
+
+        Public Property FileName As String
+            Get
+                Return m_fileName
+            End Get
+            Set(ByVal value As String)
+                m_fileName = value
+            End Set
+        End Property
+
+
+
+        Public Property OperationException As Exception
+            Get
+                Return m_operationException
+            End Get
+            Set(ByVal value As Exception)
+                m_operationException = value
+            End Set
+        End Property
+
+
+          
+        Public Property StatusDescription As String
+            Get
+                Return status
+            End Get
+            Set(ByVal value As String)
+                status = value
+            End Set
+        End Property
+
+    End Structure
+
+
+    ''''vvvvv'''''
+
+    Sub EndGetStreamCallback(ByVal ar As IAsyncResult)
+
+
+
+        Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
+
+        Dim requestStream As IO.Stream = Nothing
+        ' End the asynchronous call to get the request stream. 
+        Try
+
+            requestStream = state.Request.EndGetRequestStream(ar)
+            ' Copy the file contents to the request stream. 
+            Const bufferLength As Int16 = 2048
+            Dim buffer(bufferLength) As Byte
+            Dim count As Int16 = 0
+            Dim readBytes As Int16 = 1 'any dummy value other then 0
+            Dim stream As IO.FileStream = IO.File.OpenRead(state.FileName)
+            While (readBytes <> 0)
+                readBytes = stream.Read(buffer, 0, bufferLength)
+                requestStream.Write(buffer, 0, readBytes)
+                count += readBytes
+
+            End While
+
+            'Console.WriteLine ("Writing {0} bytes to the stream.", count);
+            '// IMPORTANT: Close the request stream before sending the request.
+            requestStream.Close()
+            '// Asynchronously get the response to the upload request.
+            state.Request.BeginGetResponse(
+                AddressOf EndGetResponseCallback,
+                state
+            )
+
+            '// Return exceptions to the main application thread. 
+        Catch e As Exception
+
+            Console.WriteLine("Could not get the request stream.")
+            state.OperationException = e
+            state.OperationComplete.Set()
+            Return
+        End Try
+
+
+
+
+    End Sub
+
+
+
+
+
+    ''''''wwwwww''''''
+    '// The EndGetResponseCallback method   
+    '   // completes a call to BeginGetResponse. 
+    Private Sub EndGetResponseCallback(ByVal ar As IAsyncResult)
+
+
+        Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
+        Dim response As Net.FtpWebResponse = Nothing
+        Try
+
+            response = DirectCast(state.Request.EndGetResponse(ar), Net.FtpWebResponse)
+            response.Close()
+            state.StatusDescription = response.StatusDescription
+            ' // Signal the main application thread that  
+            '// the operation is complete.
+            state.OperationComplete.Set()
+
+            '// Return exceptions to the main application thread. 
+        Catch e As Exception
+
+            'Console.WriteLine ("Error getting response.");
+            state.OperationException = e
+            state.OperationComplete.Set()
+        End Try
+
+
+    End Sub
+    ''''''wwwwww''''''
+
+
+
+
+
+
+
+
+
+
     Dim FTP_username As String
     Dim FTP_password As String
     'Dim FTP_IP As String '082413 change unto an array
@@ -154,6 +315,7 @@ Public Class SignConnection_FTP
         Dim count_totalftp_list = FTP_IP_list.Count
         'Private WithEvents myFtpUploadWebClient As New Net.WebClient
         Dim myFtpUploadWebClients As ArrayList = New ArrayList
+        Dim mystates As ArrayList = New ArrayList
 
         bgw = sender
         'MsgBox("bgw ok")
@@ -201,15 +363,49 @@ Public Class SignConnection_FTP
 
             counter_failedFTP_list = 0
             failedFTP_list.Clear() 'clear fail list before starting uploads - not curretnly used
+
+
+
+
+
             For Each FTP_IP As String In FTP_IP_list
-                Dim FtpUploadWebClient As New Net.WebClient
+
+                Dim state As FtpState = New FtpState
+                state.init()
+                Dim waitobject As Threading.ManualResetEvent = state.OperationComplete
+
+
+                Dim newstring As String = "ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"
+
+                'Dim FtpUploadWebClient As New Net.WebClient  090213  passive mode error
+                Dim FtpUploadWebClient As System.Net.FtpWebRequest = DirectCast(System.Net.WebRequest.Create(newstring), System.Net.FtpWebRequest)
+                FtpUploadWebClient.UsePassive = False
+
                 Try
                     FtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
-                    AddHandler FtpUploadWebClient.UploadFileCompleted, AddressOf myFtpUploadWebClient_UploadFileCompleted
-                    AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
-                    Dim newstring As String = "ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"
+                    FtpUploadWebClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile
 
-                    FtpUploadWebClient.UploadFileAsync(New Uri(newstring), selectedsign & ".data")
+                    state.Request = FtpUploadWebClient
+                    state.FileName = selectedsign & ".data"
+
+                    '// Get the event to wait on.
+                    waitobject = state.OperationComplete
+
+                    FtpUploadWebClient.BeginGetRequestStream(AddressOf EndGetStreamCallback, state)
+
+
+                    'Dim filecontents() As Byte = System.IO.File.ReadAllBytes(selectedsign & ".data")
+                    'Dim remote_stream As System.IO.Stream = FtpUploadWebClient.GetRequestStream()
+                    'remote_stream.Write(filecontents, 0, filecontents.Length)
+                    'remote_stream.Close()
+                    'remote_stream.Dispose()
+                    ' FtpUploadWebClient.UploadFileAsync(New Uri(newstring), selectedsign & ".data")
+
+                    '083113
+                    'AddHandler FtpUploadWebClient.UploadFileCompleted, AddressOf myFtpUploadWebClient_UploadFileCompleted
+                    'AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
+                    'FtpUploadWebClient. = False
+                    '//ftp.UsePassive = False copied from web
 
                 Catch ex As Exception
                     counter_failedFTP_list += 1
@@ -229,6 +425,7 @@ Public Class SignConnection_FTP
                 End Try
 
                 myFtpUploadWebClients.Add(FtpUploadWebClient)
+                mystates.Add(state)
             Next
 
             'MsgBox(4)
@@ -236,6 +433,15 @@ Public Class SignConnection_FTP
             Dim stilluploading As Boolean = True
             While stilluploading
                 stilluploading = False
+
+
+                For Each state As FtpState In mystates
+                    If state.Request.isbusy Then
+
+
+                    End If
+                Next
+
 
                 For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
                     If bgw.CancellationPending Then
