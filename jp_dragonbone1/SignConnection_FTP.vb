@@ -1,30 +1,71 @@
 ﻿
 Public Class SignConnection_FTP
     Inherits SignConnection_OneSign
-
+    
 
     ''''''' related to asyncronous FTP
     Public Structure FtpState
 
+        Public Shared counter_failedFTP_list As Integer = 0
+        Public Shared counter_suceedFTP_list As Integer = 0
+        Private Shared instantcount As Integer = 1
+        Public i As Integer
 
-
-        Private wait As Threading.ManualResetEvent
+        Private m_wait As Threading.ManualResetEvent
         Private m_request As System.Net.FtpWebRequest
         Private m_fileName As String
         'Private operationException As Exception = null
         Private m_operationException As Exception
-        Dim status As String
+
+        Private m_bytesinfile As Integer
+        Private m_bytesread As Integer
+
+        Dim m_status As String
+        Dim m_resultCode As System.Net.FtpStatusCode
+
+        Private m_operationComplete As Boolean
+
+        Public ReadOnly Property operationComplete As Boolean
+            Get
+                Return m_operationComplete
+            End Get
+        End Property
+
+
+        Public ReadOnly Property resultCode As System.Net.FtpStatusCode
+            Get
+                Return m_resultCode
+            End Get
+        End Property
+        Public ReadOnly Property bytesinfile As Integer
+            Get
+                Return m_bytesinfile
+            End Get
+        End Property
+        Public ReadOnly Property bytesread As Integer
+            Get
+                Return m_bytesread
+            End Get
+        End Property
+
 
         Sub init()
             'a structure does not allow to a new function
             'this function does what would normally be done in new()
+            i = instantcount
+            instantcount += 1
             m_operationException = Nothing
-            wait = New Threading.ManualResetEvent(False)
+            m_wait = New Threading.ManualResetEvent(False)
+            m_bytesinfile = -1
+            m_bytesread = 0
+            m_resultCode = Net.FtpStatusCode.Undefined
+            m_operationComplete = False
         End Sub
 
-        Public ReadOnly Property OperationComplete As Threading.ManualResetEvent
+        Public ReadOnly Property waitobject As Threading.ManualResetEvent
+            'call this property with waitone to block untill finished
             Get
-                Return wait
+                Return m_wait
             End Get
         End Property
 
@@ -59,100 +100,147 @@ Public Class SignConnection_FTP
         End Property
 
 
-          
-        Public Property StatusDescription As String
+
+        Public Property Status As String
             Get
-                Return status
+                Return m_status
             End Get
             Set(ByVal value As String)
-                status = value
+                m_status = value
             End Set
         End Property
 
+
+
+
+        Public Sub EndGetStreamCallback(ByVal ar As IAsyncResult)
+            m_operationComplete = False
+
+
+            Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
+
+            'state.m_status = "stream to server opened"
+            state.m_status = "stream to server opened"
+
+            Dim requestStream As IO.Stream = Nothing
+
+            ' End the asynchronous call to get the request stream. 
+            Try
+
+                'requestStream = state.Request.EndGetRequestStream(ar)
+                requestStream = state.Request.EndGetRequestStream(ar)
+
+
+
+
+                ' Copy the file contents to the request stream. 
+                Const bufferLength As Int16 = 2048
+                Dim buffer(bufferLength) As Byte
+                'Dim count As Int16 = 0
+                Dim readBytes As Int16 = 1 'any dummy value other then 0
+                Dim stream As IO.FileStream = IO.File.OpenRead(state.FileName)
+                state.m_status = "local file " & state.FileName & " opened"
+                state.m_bytesinfile = stream.Length
+                While (readBytes <> 0)
+                    readBytes = stream.Read(buffer, 0, bufferLength)
+                    requestStream.Write(buffer, 0, readBytes)
+                    '   count += readBytes
+                    state.m_bytesread += readBytes
+
+                    state.m_status = state.m_bytesread & " bytes out of " & state.m_bytesinfile & " sent"
+                End While
+
+                'Console.WriteLine ("Writing {0} bytes to the stream.", count);
+                '// IMPORTANT: Close the request stream before sending the request.
+                requestStream.Close()
+                '// Asynchronously get the response to the upload request.
+                state.Request.BeginGetResponse(
+                    AddressOf EndGetResponseCallback,
+                    state
+                )
+
+                '// Return exceptions to the main application thread. 
+            Catch e As Exception
+
+                state.m_resultCode = Net.FtpStatusCode.Undefined
+
+                'Console.WriteLine("Could not get the request stream.")
+                state.m_status = "an error occured"
+                state.OperationException = e
+
+
+
+                state.m_operationComplete = True
+
+                counter_failedFTP_list += 1
+                state.waitobject.Set()
+                
+                Return
+            End Try
+
+
+
+
+        End Sub
+
+        ''''''wwwwww''''''
+        '// The EndGetResponseCallback method   
+        '   // completes a call to BeginGetResponse. 
+        Public Sub EndGetResponseCallback(ByVal ar As IAsyncResult)
+
+
+            Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
+            'state.m_operationComplete = False
+            state.m_operationComplete = False
+            Dim response As Net.FtpWebResponse = Nothing
+            'state.m_resultCode = Net.FtpStatusCode.Undefined
+
+            state.m_resultCode = Net.FtpStatusCode.Undefined
+            Try
+
+                response = DirectCast(state.Request.EndGetResponse(ar), Net.FtpWebResponse)
+                response.Close()
+
+                'state.m_status = response.StatusDescription
+                state.m_status = response.StatusDescription
+                'state.m_resultCode = response.StatusCode
+                state.m_resultCode = response.StatusCode
+
+
+                ' // Signal the main application thread that  
+                '// the operation is complete.
+                'state.waitobject.Set()
+                state.waitobject.Set()
+                'state.m_operationComplete = True
+                state.m_operationComplete = True
+                '// Return exceptions to the main application thread. 
+            Catch e As Exception
+
+                'Console.WriteLine ("Error getting response.");
+                'state.m_status = "an error occured!"
+                state.m_status = "an error occured!"
+
+                'state.OperationException = e
+                state.OperationException = e
+
+                'state.m_operationComplete = True
+                state.m_operationComplete = True
+                ' state.waitobject.Set()
+
+                counter_failedFTP_list += 1
+                state.waitobject.Set()
+
+
+            End Try
+
+
+            counter_suceedFTP_list += 1
+            'state.m_operationComplete = True
+            state.m_operationComplete = True
+
+        End Sub
     End Structure
 
-
-    ''''vvvvv'''''
-
-    Sub EndGetStreamCallback(ByVal ar As IAsyncResult)
-
-
-
-        Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
-
-        Dim requestStream As IO.Stream = Nothing
-        ' End the asynchronous call to get the request stream. 
-        Try
-
-            requestStream = state.Request.EndGetRequestStream(ar)
-            ' Copy the file contents to the request stream. 
-            Const bufferLength As Int16 = 2048
-            Dim buffer(bufferLength) As Byte
-            Dim count As Int16 = 0
-            Dim readBytes As Int16 = 1 'any dummy value other then 0
-            Dim stream As IO.FileStream = IO.File.OpenRead(state.FileName)
-            While (readBytes <> 0)
-                readBytes = stream.Read(buffer, 0, bufferLength)
-                requestStream.Write(buffer, 0, readBytes)
-                count += readBytes
-
-            End While
-
-            'Console.WriteLine ("Writing {0} bytes to the stream.", count);
-            '// IMPORTANT: Close the request stream before sending the request.
-            requestStream.Close()
-            '// Asynchronously get the response to the upload request.
-            state.Request.BeginGetResponse(
-                AddressOf EndGetResponseCallback,
-                state
-            )
-
-            '// Return exceptions to the main application thread. 
-        Catch e As Exception
-
-            Console.WriteLine("Could not get the request stream.")
-            state.OperationException = e
-            state.OperationComplete.Set()
-            Return
-        End Try
-
-
-
-
-    End Sub
-
-
-
-
-
-    ''''''wwwwww''''''
-    '// The EndGetResponseCallback method   
-    '   // completes a call to BeginGetResponse. 
-    Private Sub EndGetResponseCallback(ByVal ar As IAsyncResult)
-
-
-        Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
-        Dim response As Net.FtpWebResponse = Nothing
-        Try
-
-            response = DirectCast(state.Request.EndGetResponse(ar), Net.FtpWebResponse)
-            response.Close()
-            state.StatusDescription = response.StatusDescription
-            ' // Signal the main application thread that  
-            '// the operation is complete.
-            state.OperationComplete.Set()
-
-            '// Return exceptions to the main application thread. 
-        Catch e As Exception
-
-            'Console.WriteLine ("Error getting response.");
-            state.OperationException = e
-            state.OperationComplete.Set()
-        End Try
-
-
-    End Sub
-    ''''''wwwwww''''''
 
 
 
@@ -172,8 +260,7 @@ Public Class SignConnection_FTP
 
     Dim FTP_directory As String
     Dim failedFTP_list As ArrayList = New ArrayList
-    Dim counter_failedFTP_list As Integer = 0
-    Dim counter_suceedFTP_list As Integer = 0
+   
 
 
     Public Overrides ReadOnly Property allSigns_working() As ArrayList
@@ -243,63 +330,63 @@ Public Class SignConnection_FTP
     Dim bgw As System.ComponentModel.BackgroundWorker
     Private WithEvents myFtpUploadWebClient As New Net.WebClient
 
-    Private Sub myFtpUploadWebClient_UploadFileCompleted(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
-        'MsgBox(e.Result)
-        Dim process As String = "Sending data to sign" & Constants.vbCr
-        Try
-            Dim res As Byte() = e.Result
-            counter_suceedFTP_list += 1
-        Catch ex As Exception
-            ' failedFTP_list.Add(sender.) 
-            counter_failedFTP_list += 1
+    'Private Sub myFtpUploadWebClient_UploadFileCompleted(ByVal sender As Object, ByVal e As System.Net.UploadFileCompletedEventArgs) Handles myFtpUploadWebClient.UploadFileCompleted
+    '    'MsgBox(e.Result)
+    '    Dim process As String = "Sending data to sign" & Constants.vbCr
+    '    Try
+    '        Dim res As Byte() = e.Result
+    '        counter_suceedFTP_list += 1
+    '    Catch ex As Exception
+    '        ' failedFTP_list.Add(sender.) 
+    '        counter_failedFTP_list += 1
 
-            'MsgBox("Error occured sending the file!")
+    '        'MsgBox("Error occured sending the file!")
 
-        End Try
-        Dim message As String = ""
-        Dim count_totalftp_list = FTP_IP_list.Count
-        If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
-            message = counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list & "  IPs in local_FTP_list; but " & counter_failedFTP_list & " File Uploads failed."
+    '    End Try
+    '    Dim message As String = ""
+    '    Dim count_totalftp_list = FTP_IP_list.Count
+    '    If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
+    '        message = counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list & "  IPs in local_FTP_list; but " & counter_failedFTP_list & " File Uploads failed."
 
-        ElseIf counter_failedFTP_list > 0 Then
-            message = counter_failedFTP_list & " File Uploads failed out of " & count_totalftp_list & "   IPs in local_FTP_list. "
-        Else
-            message = counter_suceedFTP_list & " File Uploads suceeded out of " & count_totalftp_list & "   IPs in local_FTP_list.  "
+    '    ElseIf counter_failedFTP_list > 0 Then
+    '        message = counter_failedFTP_list & " File Uploads failed out of " & count_totalftp_list & "   IPs in local_FTP_list. "
+    '    Else
+    '        message = counter_suceedFTP_list & " File Uploads suceeded out of " & count_totalftp_list & "   IPs in local_FTP_list.  "
 
-        End If
-
-
-
-        Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list
-
-        If percentprogress <> 100 Then
-            bgw.ReportProgress(percentprogress, process & message)
-            'else
-            'let another part of the program report the finish message
-        End If
+    '    End If
 
 
-        Dim breakointholder As Int16 = 5
 
-    End Sub
-    Private Sub FtpUploadWebClient_UploadProgressChanged(ByVal sender As Object, ByVal e As System.Net.UploadProgressChangedEventArgs)
-        Dim process As String = "Sending data to sign" & Constants.vbCr
+    '    Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list
 
-        'if you'll want to calculate some ratio between what has been uploaded and what must be
+    '    If percentprogress <> 100 Then
+    '        bgw.ReportProgress(percentprogress, process & message)
+    '        'else
+    '        'let another part of the program report the finish message
+    '    End If
 
-        'you can use those two:
 
-        Dim bytesAlreadySent As Long = e.BytesSent
+    '    Dim breakointholder As Int16 = 5
 
-        Dim totalBytesToSend As Long = e.TotalBytesToSend
+    'End Sub
+    'Private Sub FtpUploadWebClient_UploadProgressChanged(ByVal sender As Object, ByVal e As System.Net.UploadProgressChangedEventArgs)
+    '    Dim process As String = "Sending data to sign" & Constants.vbCr
 
-        Dim ustate = e.UserState
+    '    'if you'll want to calculate some ratio between what has been uploaded and what must be
 
-        'for reporting progress percentage, you have that already inside UploadProgressChangedEventArgs:
+    '    'you can use those two:
 
-        'bgw.ReportProgress(e.ProgressPercentage, process & "Uploading file to server, please wait......")
+    '    Dim bytesAlreadySent As Long = e.BytesSent
 
-    End Sub
+    '    Dim totalBytesToSend As Long = e.TotalBytesToSend
+
+    '    Dim ustate = e.UserState
+
+    '    'for reporting progress percentage, you have that already inside UploadProgressChangedEventArgs:
+
+    '    'bgw.ReportProgress(e.ProgressPercentage, process & "Uploading file to server, please wait......")
+
+    'End Sub
 
 
     'this delegate can not be defined within a funtion running in a seperate thread
@@ -315,7 +402,8 @@ Public Class SignConnection_FTP
         Dim count_totalftp_list = FTP_IP_list.Count
         'Private WithEvents myFtpUploadWebClient As New Net.WebClient
         Dim myFtpUploadWebClients As ArrayList = New ArrayList
-        Dim mystates As ArrayList = New ArrayList
+        Dim mystates(count_totalftp_list - 1) As FtpState
+        Dim mywaitobjects(count_totalftp_list - 1) As Threading.ManualResetEvent
 
         bgw = sender
         'MsgBox("bgw ok")
@@ -361,37 +449,47 @@ Public Class SignConnection_FTP
 
             'MsgBox(3)
 
-            counter_failedFTP_list = 0
+            FtpState.counter_failedFTP_list = 0
+            FtpState.counter_suceedFTP_list = 0
             failedFTP_list.Clear() 'clear fail list before starting uploads - not curretnly used
 
 
 
 
-
+            Dim i As Integer = 0
             For Each FTP_IP As String In FTP_IP_list
 
-                Dim state As FtpState = New FtpState
-                state.init()
-                Dim waitobject As Threading.ManualResetEvent = state.OperationComplete
+
+
+
+
+                'Dim state As New FtpState
+                'mystates.Add(New FtpState)
+                mystates(i).init()
+
+                'state.init()
+                'Dim waitobject As Threading.ManualResetEvent = state.waitobject
 
 
                 Dim newstring As String = "ftp://" & FTP_IP & "/" & FTP_directory & "/" & selectedsign & ".data"
 
-                'Dim FtpUploadWebClient As New Net.WebClient  090213  passive mode error
+                'Dim FtpUploadWebClient As System.Net.FtpWebRequest 'As New Net.FtpWebRequest  '090213  passive mode error FtpWebRequest
+                'FtpUploadWebClient = DirectCast(System.Net.WebRequest.Create(newstring), System.Net.FtpWebRequest)
                 Dim FtpUploadWebClient As System.Net.FtpWebRequest = DirectCast(System.Net.WebRequest.Create(newstring), System.Net.FtpWebRequest)
-                FtpUploadWebClient.UsePassive = False
+                FtpUploadWebClient.UsePassive = True
 
                 Try
                     FtpUploadWebClient.Credentials = New System.Net.NetworkCredential(FTP_username, FTP_password)
                     FtpUploadWebClient.Method = System.Net.WebRequestMethods.Ftp.UploadFile
-
-                    state.Request = FtpUploadWebClient
-                    state.FileName = selectedsign & ".data"
+                    mystates(i).Request = FtpUploadWebClient
+                    mystates(i).FileName = selectedsign & ".data"
 
                     '// Get the event to wait on.
-                    waitobject = state.OperationComplete
+                    'waitobject = state.waitobject
+                    mywaitobjects(i) = mystates(i).waitobject
 
-                    FtpUploadWebClient.BeginGetRequestStream(AddressOf EndGetStreamCallback, state)
+                    FtpUploadWebClient.BeginGetRequestStream(AddressOf mystates(i).EndGetStreamCallback, mystates(i))
+
 
 
                     'Dim filecontents() As Byte = System.IO.File.ReadAllBytes(selectedsign & ".data")
@@ -401,88 +499,150 @@ Public Class SignConnection_FTP
                     'remote_stream.Dispose()
                     ' FtpUploadWebClient.UploadFileAsync(New Uri(newstring), selectedsign & ".data")
 
+
                     '083113
+
                     'AddHandler FtpUploadWebClient.UploadFileCompleted, AddressOf myFtpUploadWebClient_UploadFileCompleted
                     'AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
                     'FtpUploadWebClient. = False
                     '//ftp.UsePassive = False copied from web
 
                 Catch ex As Exception
-                    counter_failedFTP_list += 1
-                    Dim message2 As String = ""
-                    Dim count_totalftp_list2 = FTP_IP_list.Count
-                    If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
-                        message2 = counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list & "  IPs in local_FTP_list; but " & counter_failedFTP_list & " File Uploads failed."
+                    FtpState.counter_failedFTP_list += 1
+                    Dim message2 As String = "error!: " & ex.Message
+                    'Dim count_totalftp_list2 = FTP_IP_list.Count
+                    'If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
+                    '    message2 = counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list & "  IPs in local_FTP_list; but " & counter_failedFTP_list & " File Uploads failed."
 
-                    ElseIf counter_failedFTP_list > 0 Then
-                        message2 = counter_failedFTP_list & " File Uploads failed out of " & count_totalftp_list2
-                    Else
-                        message2 = counter_suceedFTP_list & " File Uploads suceeded out of " & count_totalftp_list2
+                    'ElseIf counter_failedFTP_list > 0 Then
+                    '    message2 = counter_failedFTP_list & " File Uploads failed out of " & count_totalftp_list2
+                    'Else
+                    '    message2 = counter_suceedFTP_list & " File Uploads suceeded out of " & count_totalftp_list2
 
-                    End If
-                    Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list2
-                    bgw.ReportProgress(percentprogress, process & message2)
+                    'End If
+                    'Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list2
+                    bgw.ReportProgress(99, process & message2)
+                    bgw.ReportProgress(100, process & message2)
+
+
+
+                    'My.Computer.FileSystem.DeleteFile(selectedsign & ".data")
+                    ''MsgBox(6)
+                    'If tempfilcounter <> 0 Then
+                    '    'reach here if we started out with a user file that happend to have the same name as our data file
+
+                    '    My.Computer.FileSystem.RenameFile(selectedsign & "_back" & tempfilcounter & " .data", selectedsign & ".data")
+                    'End If
+
                 End Try
 
-                myFtpUploadWebClients.Add(FtpUploadWebClient)
-                mystates.Add(state)
+                
+                i += 1
             Next
 
-            'MsgBox(4)
 
-            Dim stilluploading As Boolean = True
-            While stilluploading
-                stilluploading = False
+            i = 0
+            While (FtpState.counter_failedFTP_list + FtpState.counter_suceedFTP_list < count_totalftp_list)
+                'update progress
 
-
-                For Each state As FtpState In mystates
-                    If state.Request.isbusy Then
-
-
-                    End If
-                Next
-
-
-                For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
-                    If bgw.CancellationPending Then
-                        Exit While
-                    End If
-
-                    If FtpUploadWebClient.IsBusy Then
-                        stilluploading = True
-                        Continue While
-                    End If
-
-
-                Next
-
-
-            End While
-
-            Dim i As Int16 = 0
-            While (count_totalftp_list <> counter_failedFTP_list + counter_suceedFTP_list)
-                Threading.Thread.Sleep(100)
-                i += 1
-                If i > 1000 Then
-
-                    'for some reasone the upload_complete event handler has not properly updated the counters
-                    'enoth time has passed to assume this is not going to happen
-
-                    'for now do nothing more, the user may see funny status info below
-
+                If i > 300 Then
+                    'time out after 5 minutes
+                    MsgBox("timeout")
                     Exit While
                 End If
+                Dim breakpointholder = 1
+                Threading.Thread.Sleep(1000)
 
+
+                i += 1
             End While
 
+            'For Each waitobject As System.Threading.ManualResetEvent In mywaitobjects
+            '    'do to problems with copies of state object being passed by reference, 
+            '    'this method did not work either
+            '    waitobject.WaitOne()
+            'Next
+            'MsgBox(4)
 
-            If bgw.CancellationPending Then
-                For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
-                    FtpUploadWebClient.CancelAsync()
-                Next
-                e.Cancel = True
-                Return
-            End If
+            'Dim stilluploading As Boolean = True
+            'While stilluploading
+            '    stilluploading = False
+
+            '    Dim percentupload As Integer = 100
+
+            '    For Each state As FtpState In mystates
+            '        If Not state.operationComplete Then
+            '            stilluploading = True
+            '        End If
+
+            '        Dim this_persent_upload As Integer '= 100.0 * state.bytesread / state.bytesinfile
+
+            '        If state.bytesinfile < 0 Then
+            '            'have not yet determnined size of file.
+            '            this_persent_upload = 0
+            '        ElseIf state.bytesinfile = 0 Then
+            '            'empty file! 
+            '            this_persent_upload = 99
+
+            '        Else
+            '            this_persent_upload = 100.0 * state.bytesread / state.bytesinfile
+            '        End If
+
+
+            '        If percentupload > this_persent_upload Then
+            '            percentupload = percentupload = this_persent_upload
+            '        End If
+
+            '        If percentupload = 100 Then
+            '            percentupload = 99
+            '        End If
+
+            '        bgw.ReportProgress(percentupload, process & "Uploading files       Please wait.............")
+
+
+            '    Next
+
+
+            'For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
+            '    If bgw.CancellationPending Then
+            '        Exit While
+            '    End If
+
+            '    If FtpUploadWebClient.IsBusy Then
+            '        stilluploading = True
+            '        Continue While
+            '    End If
+
+
+            'Next
+
+
+            'End While
+
+            'Dim i As Int16 = 0
+            'While (count_totalftp_list <> counter_failedFTP_list + counter_suceedFTP_list)
+            '    Threading.Thread.Sleep(100)
+            '    i += 1
+            '    If i > 1000 Then
+
+            '        'for some reasone the upload_complete event handler has not properly updated the counters
+            '        'enoth time has passed to assume this is not going to happen
+
+            '        'for now do nothing more, the user may see funny status info below
+
+            '        Exit While
+            '    End If
+
+            'End While
+
+
+            'If bgw.CancellationPending Then
+            '    For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
+            '        FtpUploadWebClient.CancelAsync()
+            '    Next
+            '    e.Cancel = True
+            '    Return
+            'End If
 
             'MsgBox(5)
             'MsgBox(5)
@@ -503,22 +663,22 @@ Public Class SignConnection_FTP
 
 
 
-        Dim message As String = ""
+        'Dim message As String = ""
 
-        If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
-            message = counter_failedFTP_list & " Uploads failed and " & counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list
+        'If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
+        '    message = counter_failedFTP_list & " Uploads failed and " & counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list
 
-        ElseIf counter_failedFTP_list > 0 Then
-            message = counter_failedFTP_list & " Uploads failed out of " & count_totalftp_list
-        Else
-            message = counter_suceedFTP_list & " Uploads suceeded out of " & count_totalftp_list
+        'ElseIf counter_failedFTP_list > 0 Then
+        '    message = counter_failedFTP_list & " Uploads failed out of " & count_totalftp_list
+        'Else
+        '    message = counter_suceedFTP_list & " Uploads suceeded out of " & count_totalftp_list
 
-        End If
+        'End If
 
 
         'Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list
-        bgw.ReportProgress(99, "Finished: " & process & message)
-        bgw.ReportProgress(100, "Finished: " & process & message)
+        bgw.ReportProgress(99, "Finished: " & process & "finished")
+        bgw.ReportProgress(100, "Finished: " & process & "finished")
 
 
 

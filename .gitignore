@@ -9,6 +9,9 @@ jp_dragonbone1/bin/Debug/*.udat
 jp_dragonbone1/bin/Debug/*.scp
 jp_dragonbone1/bin/Debug/*.rslTiniWindow-*
 jp_dragonbone1/obj/Debug/*
+jp_dragonbone1.suo
+jp_dragonbone1/bin/Debug/local_FTP_ip.lst
+jp_dragonbone1/bin/Debug/*.lst
 
 #these 2 .dll files should have versions left in the
 #the repository but automated updates should not be 

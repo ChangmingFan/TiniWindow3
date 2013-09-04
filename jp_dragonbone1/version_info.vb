@@ -2,6 +2,12 @@
     'by design this file will often show up in git conflicts. Please combine verion comments in a sensible manor and use our conventions to select a new version number
 
     'version coments go here
+    '20130904jp: this version works at Wholefoods and barnes and nobel but not at panera.  
+    '                 the reason we made these changes was to attempt to make FTP work at panera. Failed so
+    '                 we now use FtpWebRequest for FTP. this version uses passive mode because barnes and nobel only works with this mode
+    '                 we originally tried active mode because at panera we got an error that seemed to indicate using active mode.
+    '                 however active mode doesnt work either.
+
     '20130902JP-CMF: To be continue  Panera 5:00PM
     '20130902JP-CMF: To be continue
     '2013083113B-JP-CMF: To be continue
