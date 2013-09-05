@@ -118,6 +118,15 @@ Public Class SignConnection_OneSign
         myProgressForm.retryfunction = AddressOf connect_do
         connect_do()
         myProgressForm.ShowDialog()
+        '090413
+        'This hang while showing the form... Plan B
+        'Below whould be good place to put smthing, but may not be easy
+        'Because no access for status info.
+
+        '
+        '
+        '
+
 
 
         'this function completes when the user clicks OK on the dialog form

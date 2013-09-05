@@ -343,7 +343,7 @@ Public Class SignConnection_Base
     'functions related to background worker
 
     Protected Overridable Sub common_backgroundwork_ProgressChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs)
-        Dim userstate As String = e.UserState
+        Dim userstate As String = e.UserState  '090413
         Dim partsofuserstate As String() = userstate.Split(Constants.vbCrLf)
         Dim process As String
         Dim progress As String
@@ -438,6 +438,9 @@ Public Class SignConnection_Base
             'in other case it might be desirable to pass dialog to the progress form
 
         End If
+
+        '090413
+        'Plan A forsign connection progress report.. Status 
 
 
 

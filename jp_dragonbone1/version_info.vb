@@ -2,6 +2,9 @@
     'by design this file will often show up in git conflicts. Please combine verion comments in a sensible manor and use our conventions to select a new version number
 
     'version coments go here
+    '
+    '   '20130904C jp: FTP using FtpWebRequest for FTP now provides decent progres reporting
+    '20130904jp: tobe continue 4:43PM
     '20130904jp: this version works at Wholefoods and barnes and nobel but not at panera.  
     '                 the reason we made these changes was to attempt to make FTP work at panera. Failed so
     '                 we now use FtpWebRequest for FTP. this version uses passive mode because barnes and nobel only works with this mode
@@ -28,7 +31,7 @@
     Public Const TiniWindowVersionStandard As Int16 = 1 'first used with version 1.01.005 its abscence warns the update process of inconsistencies in other value
     Public Const TiniWindowMajorVersion As Int16 = 3
     Public Const TiniWindowMinorVersion As String = "01.001"
-    Public Const TiniWindoCompileDate As String = "20130902B"
+    Public Const TiniWindoCompileDate As String = "20130904C"
     Public Shared TiniWindowVersion As String = TiniWindowMajorVersion.ToString() + "." + TiniWindowMinorVersion.ToString()
     Public Shared TiniWindowVersion_display_string As String = TiniWindowVersion + "." + TiniWindoCompileDate.ToString + " (Tini-Pi-Lite supported) " ' not used in update process
 

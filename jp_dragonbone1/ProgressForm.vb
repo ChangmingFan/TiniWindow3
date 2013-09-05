@@ -66,6 +66,9 @@ Public Class ProgressForm
     End Sub
 
     Public Sub markfinished()
+
+        '090413  Plan C for  FTP file transfer status progress report
+
         'MsgBox("markfinished")
 
         _success = True
@@ -73,14 +76,21 @@ Public Class ProgressForm
             Threading.Thread.Sleep(3000)
             'reset()
             Me.Close()
+
+
+            '
+            ' May launch another form
+
+            '
+
         Else
 
             But_ok.Visible = True
             But_cancel.Visible = False
 
         End If
-        
-        
+
+
     End Sub
 
     Public Sub reset()

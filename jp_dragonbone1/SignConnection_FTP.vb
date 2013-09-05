@@ -8,8 +8,16 @@ Public Class SignConnection_FTP
 
         Public Shared counter_failedFTP_list As Integer = 0
         Public Shared counter_suceedFTP_list As Integer = 0
-        Private Shared instantcount As Integer = 1
-        Public i As Integer
+
+
+        Private Shared instances As ArrayList = New ArrayList
+
+        'Private Shared instantcount As Integer = 1
+
+        'Shared filecontents() As Byte
+
+
+        Private index As Integer
 
         Private m_wait As Threading.ManualResetEvent
         Private m_request As System.Net.FtpWebRequest
@@ -24,67 +32,101 @@ Public Class SignConnection_FTP
         Dim m_resultCode As System.Net.FtpStatusCode
 
         Private m_operationComplete As Boolean
+        Private Shared M_loadedfile() As Byte
+
+        'Shared Function loadfile(ByVal filename As String) As Boolean
+
+        'End Function
+
+
 
         Public ReadOnly Property operationComplete As Boolean
             Get
-                Return m_operationComplete
+                Dim temp As FtpState = instances(index)
+                Return temp.m_operationComplete
             End Get
         End Property
 
 
         Public ReadOnly Property resultCode As System.Net.FtpStatusCode
             Get
-                Return m_resultCode
+                Dim temp As FtpState = instances(index)
+                Return temp.m_resultCode
             End Get
         End Property
         Public ReadOnly Property bytesinfile As Integer
             Get
-                Return m_bytesinfile
+                Dim temp As FtpState = instances(index)
+                Return temp.m_bytesinfile
             End Get
         End Property
         Public ReadOnly Property bytesread As Integer
             Get
-                Return m_bytesread
+                Dim temp As FtpState = instances(index)
+                Return temp.m_bytesread
             End Get
         End Property
 
 
         Sub init()
             'a structure does not allow to a new function
-            'this function does what would normally be done in new()
-            i = instantcount
-            instantcount += 1
+
+            index = -1
             m_operationException = Nothing
             m_wait = New Threading.ManualResetEvent(False)
             m_bytesinfile = -1
             m_bytesread = 0
             m_resultCode = Net.FtpStatusCode.Undefined
             m_operationComplete = False
+
+
+            'add me to instances arraylist
+            Dim i As Integer = 0
+            For Each instance As Object In instances
+                If instance Is Nothing Then
+                    index = i
+                    Exit For
+                End If
+
+            Next
+
+            If index = -1 Then
+                instances.Add(Me)
+                index = instances.Count - 1
+            Else
+                instances(index) = Me
+            End If
         End Sub
 
         Public ReadOnly Property waitobject As Threading.ManualResetEvent
             'call this property with waitone to block untill finished
             Get
-                Return m_wait
+                Dim temp As FtpState = instances(index)
+                Return temp.m_wait
             End Get
         End Property
 
 
         Public Property Request As Net.FtpWebRequest
             Get
-                Return m_request
+                Dim temp As FtpState = instances(index)
+                Return temp.m_request
             End Get
             Set(ByVal value As Net.FtpWebRequest)
                 m_request = value
+
+                instances(index) = Me
             End Set
         End Property
 
         Public Property FileName As String
             Get
-                Return m_fileName
+                Dim temp As FtpState = instances(index)
+                Return temp.m_fileName
             End Get
             Set(ByVal value As String)
                 m_fileName = value
+                instances(index) = Me
             End Set
         End Property
 
@@ -92,10 +134,12 @@ Public Class SignConnection_FTP
 
         Public Property OperationException As Exception
             Get
-                Return m_operationException
+                Dim temp As FtpState = instances(index)
+                Return temp.m_operationException
             End Get
             Set(ByVal value As Exception)
                 m_operationException = value
+                instances(index) = Me
             End Set
         End Property
 
@@ -103,10 +147,11 @@ Public Class SignConnection_FTP
 
         Public Property Status As String
             Get
-                Return m_status
+                Dim temp As FtpState = instances(index)
+                Return temp.m_status
             End Get
             Set(ByVal value As String)
-                m_status = value
+                instances(index).m_status = value
             End Set
         End Property
 
@@ -118,6 +163,7 @@ Public Class SignConnection_FTP
 
 
             Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
+            state = instances(state.index) 'index is an unchanging value that gets passed in all copies
 
             'state.m_status = "stream to server opened"
             state.m_status = "stream to server opened"
@@ -140,20 +186,27 @@ Public Class SignConnection_FTP
                 Dim readBytes As Int16 = 1 'any dummy value other then 0
                 Dim stream As IO.FileStream = IO.File.OpenRead(state.FileName)
                 state.m_status = "local file " & state.FileName & " opened"
+                instances(state.index) = state
                 state.m_bytesinfile = stream.Length
+                instances(state.index) = state
                 While (readBytes <> 0)
                     readBytes = stream.Read(buffer, 0, bufferLength)
                     requestStream.Write(buffer, 0, readBytes)
                     '   count += readBytes
                     state.m_bytesread += readBytes
-
+                    instances(state.index) = state
                     state.m_status = state.m_bytesread & " bytes out of " & state.m_bytesinfile & " sent"
+                    instances(state.index) = state
                 End While
 
+
+                stream.Close()
                 'Console.WriteLine ("Writing {0} bytes to the stream.", count);
                 '// IMPORTANT: Close the request stream before sending the request.
                 requestStream.Close()
                 '// Asynchronously get the response to the upload request.
+
+                instances(state.index) = state
                 state.Request.BeginGetResponse(
                     AddressOf EndGetResponseCallback,
                     state
@@ -174,7 +227,7 @@ Public Class SignConnection_FTP
 
                 counter_failedFTP_list += 1
                 state.waitobject.Set()
-                
+                instances(state.index) = state
                 Return
             End Try
 
@@ -190,12 +243,14 @@ Public Class SignConnection_FTP
 
 
             Dim state As FtpState = DirectCast(ar.AsyncState, FtpState)
+            state = instances(state.index) 'index is an unchanging value that gets passed in all copies
             'state.m_operationComplete = False
             state.m_operationComplete = False
             Dim response As Net.FtpWebResponse = Nothing
             'state.m_resultCode = Net.FtpStatusCode.Undefined
 
             state.m_resultCode = Net.FtpStatusCode.Undefined
+            instances(state.index) = state
             Try
 
                 response = DirectCast(state.Request.EndGetResponse(ar), Net.FtpWebResponse)
@@ -210,9 +265,7 @@ Public Class SignConnection_FTP
                 ' // Signal the main application thread that  
                 '// the operation is complete.
                 'state.waitobject.Set()
-                state.waitobject.Set()
-                'state.m_operationComplete = True
-                state.m_operationComplete = True
+                
                 '// Return exceptions to the main application thread. 
             Catch e As Exception
 
@@ -229,34 +282,26 @@ Public Class SignConnection_FTP
 
                 counter_failedFTP_list += 1
                 state.waitobject.Set()
-
+                instances(state.index) = state 'index is an unchanging value that gets passed in all copies
 
             End Try
 
 
             counter_suceedFTP_list += 1
             'state.m_operationComplete = True
+            'state.m_operationComplete = True
             state.m_operationComplete = True
-
+            state.waitobject.Set()
+            'state.m_operationComplete = True
+            instances(state.index) = state
         End Sub
     End Structure
-
-
-
-
-
-
-
-
-
 
 
     Dim FTP_username As String
     Dim FTP_password As String
     'Dim FTP_IP As String '082413 change unto an array
     Dim FTP_IP_list As ArrayList = New ArrayList
-
-
 
     Dim FTP_directory As String
     Dim failedFTP_list As ArrayList = New ArrayList
@@ -460,9 +505,6 @@ Public Class SignConnection_FTP
             For Each FTP_IP As String In FTP_IP_list
 
 
-
-
-
                 'Dim state As New FtpState
                 'mystates.Add(New FtpState)
                 mystates(i).init()
@@ -476,6 +518,8 @@ Public Class SignConnection_FTP
                 'Dim FtpUploadWebClient As System.Net.FtpWebRequest 'As New Net.FtpWebRequest  '090213  passive mode error FtpWebRequest
                 'FtpUploadWebClient = DirectCast(System.Net.WebRequest.Create(newstring), System.Net.FtpWebRequest)
                 Dim FtpUploadWebClient As System.Net.FtpWebRequest = DirectCast(System.Net.WebRequest.Create(newstring), System.Net.FtpWebRequest)
+
+                '090413 CMF-JP  Passive
                 FtpUploadWebClient.UsePassive = True
 
                 Try
@@ -491,21 +535,6 @@ Public Class SignConnection_FTP
                     FtpUploadWebClient.BeginGetRequestStream(AddressOf mystates(i).EndGetStreamCallback, mystates(i))
 
 
-
-                    'Dim filecontents() As Byte = System.IO.File.ReadAllBytes(selectedsign & ".data")
-                    'Dim remote_stream As System.IO.Stream = FtpUploadWebClient.GetRequestStream()
-                    'remote_stream.Write(filecontents, 0, filecontents.Length)
-                    'remote_stream.Close()
-                    'remote_stream.Dispose()
-                    ' FtpUploadWebClient.UploadFileAsync(New Uri(newstring), selectedsign & ".data")
-
-
-                    '083113
-
-                    'AddHandler FtpUploadWebClient.UploadFileCompleted, AddressOf myFtpUploadWebClient_UploadFileCompleted
-                    'AddHandler FtpUploadWebClient.UploadProgressChanged, AddressOf FtpUploadWebClient_UploadProgressChanged
-                    'FtpUploadWebClient. = False
-                    '//ftp.UsePassive = False copied from web
 
                 Catch ex As Exception
                     FtpState.counter_failedFTP_list += 1
@@ -536,116 +565,92 @@ Public Class SignConnection_FTP
 
                 End Try
 
-                
+
                 i += 1
             Next
 
 
             i = 0
+
+
             While (FtpState.counter_failedFTP_list + FtpState.counter_suceedFTP_list < count_totalftp_list)
                 'update progress
 
-                If i > 300 Then
-                    'time out after 5 minutes
+               
+                If i > 1500 Then
+                    'time out after 2.5 minutes
+                    '1500 x 100 msc =2.5 min
                     MsgBox("timeout")
                     Exit While
                 End If
                 Dim breakpointholder = 1
-                Threading.Thread.Sleep(1000)
+                Threading.Thread.Sleep(100)
+
+
+                Dim allfinished As Boolean = True
+                Dim slowestpercent As Integer = 99 'do not send 100% until very end because built in functionality marks process 
+                '                                   complete and will not accept any further updates
+                For Each STATE As FtpState In mystates
+
+
+
+                    '''''''''''calculate percent to display to user
+                    Dim thispercent As Integer '= 100.0 * STATE.bytesread / STATE.bytesinfile
+                    If STATE.operationComplete Then
+                        'must check before checking bytesinfile in case an error causes aborting with no file size
+                        thispercent = 99
+                    ElseIf STATE.bytesinfile = -1 Then
+                        'have not yet gotton file size info
+                        thispercent = 0
+                    ElseIf STATE.bytesinfile = 0 Then
+                        'emty file!
+                        thispercent = 99
+                    Else
+                        thispercent = 100.0 * STATE.bytesread / STATE.bytesinfile
+                    End If
+
+                    If slowestpercent > thispercent Then
+                        slowestpercent = thispercent
+                    End If
+
+
+                    '''''''''''determine if done
+                    If Not STATE.operationComplete Then
+                        allfinished = False
+                    Else
+
+                        If Not STATE.OperationException Is Nothing Or STATE.resultCode <> System.Net.FtpStatusCode.FileActionOK Then
+                            'restry upload using active mode
+                            '090413 JP-CMF tobe continue.
+
+
+                        End If
+
+
+                        Dim breakpointholder2 = 1
+                    End If
+                Next
+
+                'display progress
+                Dim message2 As String = process & "Uploading files: "
+                message2 &= FtpState.counter_suceedFTP_list & " finished " & count_totalftp_list - (FtpState.counter_failedFTP_list + FtpState.counter_suceedFTP_list) & " pending " & FtpState.counter_failedFTP_list & " failed"
+
+
+                bgw.ReportProgress(slowestpercent, process & "Uploading files       Please wait.............")
+                'bgw.ReportProgress(98, "Finished: " & process & "finished")
+
+                If allfinished Then
+                    Exit While
+                End If
+
+
 
 
                 i += 1
             End While
 
-            'For Each waitobject As System.Threading.ManualResetEvent In mywaitobjects
-            '    'do to problems with copies of state object being passed by reference, 
-            '    'this method did not work either
-            '    waitobject.WaitOne()
-            'Next
-            'MsgBox(4)
-
-            'Dim stilluploading As Boolean = True
-            'While stilluploading
-            '    stilluploading = False
-
-            '    Dim percentupload As Integer = 100
-
-            '    For Each state As FtpState In mystates
-            '        If Not state.operationComplete Then
-            '            stilluploading = True
-            '        End If
-
-            '        Dim this_persent_upload As Integer '= 100.0 * state.bytesread / state.bytesinfile
-
-            '        If state.bytesinfile < 0 Then
-            '            'have not yet determnined size of file.
-            '            this_persent_upload = 0
-            '        ElseIf state.bytesinfile = 0 Then
-            '            'empty file! 
-            '            this_persent_upload = 99
-
-            '        Else
-            '            this_persent_upload = 100.0 * state.bytesread / state.bytesinfile
-            '        End If
 
 
-            '        If percentupload > this_persent_upload Then
-            '            percentupload = percentupload = this_persent_upload
-            '        End If
-
-            '        If percentupload = 100 Then
-            '            percentupload = 99
-            '        End If
-
-            '        bgw.ReportProgress(percentupload, process & "Uploading files       Please wait.............")
-
-
-            '    Next
-
-
-            'For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
-            '    If bgw.CancellationPending Then
-            '        Exit While
-            '    End If
-
-            '    If FtpUploadWebClient.IsBusy Then
-            '        stilluploading = True
-            '        Continue While
-            '    End If
-
-
-            'Next
-
-
-            'End While
-
-            'Dim i As Int16 = 0
-            'While (count_totalftp_list <> counter_failedFTP_list + counter_suceedFTP_list)
-            '    Threading.Thread.Sleep(100)
-            '    i += 1
-            '    If i > 1000 Then
-
-            '        'for some reasone the upload_complete event handler has not properly updated the counters
-            '        'enoth time has passed to assume this is not going to happen
-
-            '        'for now do nothing more, the user may see funny status info below
-
-            '        Exit While
-            '    End If
-
-            'End While
-
-
-            'If bgw.CancellationPending Then
-            '    For Each FtpUploadWebClient As Net.WebClient In myFtpUploadWebClients
-            '        FtpUploadWebClient.CancelAsync()
-            '    Next
-            '    e.Cancel = True
-            '    Return
-            'End If
-
-            'MsgBox(5)
-            'MsgBox(5)
             'delete temprary file
             My.Computer.FileSystem.DeleteFile(selectedsign & ".data")
             'MsgBox(6)
@@ -663,22 +668,24 @@ Public Class SignConnection_FTP
 
 
 
-        'Dim message As String = ""
-
-        'If counter_suceedFTP_list > 0 And counter_failedFTP_list > 0 Then
-        '    message = counter_failedFTP_list & " Uploads failed and " & counter_suceedFTP_list & " Suceeded out of " & count_totalftp_list
-
-        'ElseIf counter_failedFTP_list > 0 Then
-        '    message = counter_failedFTP_list & " Uploads failed out of " & count_totalftp_list
-        'Else
-        '    message = counter_suceedFTP_list & " Uploads suceeded out of " & count_totalftp_list
-
-        'End If
+        Dim message As String = "finished" & process
+        message &= FtpState.counter_suceedFTP_list & " finished " & count_totalftp_list - (FtpState.counter_failedFTP_list + FtpState.counter_suceedFTP_list) & " pending " & FtpState.counter_failedFTP_list & " failed"
 
 
-        'Dim percentprogress As Int16 = 100.0 * (counter_failedFTP_list + counter_suceedFTP_list) / count_totalftp_list
-        bgw.ReportProgress(99, "Finished: " & process & "finished")
-        bgw.ReportProgress(100, "Finished: " & process & "finished")
+        'multiple times required for it to show
+        bgw.ReportProgress(98, message)
+        System.Threading.Thread.Sleep(100)
+        bgw.ReportProgress(99, message)
+        System.Threading.Thread.Sleep(100)
+        bgw.ReportProgress(99, message)
+        System.Threading.Thread.Sleep(100)
+        bgw.ReportProgress(99, message)
+        System.Threading.Thread.Sleep(100)
+        bgw.ReportProgress(99, message)
+        System.Threading.Thread.Sleep(100)
+        bgw.ReportProgress(99, message)
+        System.Threading.Thread.Sleep(100)
+        bgw.ReportProgress(100, message)
 
 
 
