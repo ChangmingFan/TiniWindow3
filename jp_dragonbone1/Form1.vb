@@ -27443,5 +27443,7 @@ Public Class Form1
 
     End Sub
 
-    
+    Private Sub SimulatorToolStripMenuItem_Click(sender As Object, e As EventArgs)
+        simulator_form.Show()
+    End Sub
 End Class

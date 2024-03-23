@@ -14,7 +14,7 @@
     <ManifestCertificateThumbprint>514CA3BF694EED285D2FD44C58B73836A2E4F128</ManifestCertificateThumbprint>
     <ManifestKeyFile>jp_dragonbone1_TemporaryKey.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
-    <SignManifests>true</SignManifests>
+    <SignManifests>false</SignManifests>
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <ApplicationIcon>Thick-Logo-small1117.ico</ApplicationIcon>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
